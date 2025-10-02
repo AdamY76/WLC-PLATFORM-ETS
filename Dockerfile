@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
 # Créer répertoire de travail
 WORKDIR /app
 
-# Copier requirements
-COPY Backend/requirements.txt .
+# Copier requirements (sans ifcopenshell - parsing IFC fait sur machine hôte)
+COPY Backend/requirements-docker.txt requirements.txt
 
 # Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt

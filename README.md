@@ -6,7 +6,25 @@ Cette plateforme permet de visualiser et gérer le coût global (Whole Life Cost
 
 ## 🚀 Démarrage Rapide (Recommandé)
 
-### **🐳 Avec Docker (3 commandes, 5 minutes)**
+### **✨ Installation Automatique avec Script Intelligent** (Windows, Mac, Linux)
+
+**Le plus simple** : Script qui détecte ton système et installe tout automatiquement !
+
+```bash
+git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
+cd WLC-PLATFORM-ETS
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+python install_dependencies.py
+```
+
+✅ **Détecte automatiquement** Python + OS et installe la bonne version d'ifcopenshell !
+
+📖 **Guide complet** : Voir [`INSTALLATION_SIMPLE.md`](INSTALLATION_SIMPLE.md)
+
+---
+
+### **🐳 Avec Docker** (sans parsing IFC)
 
 ```bash
 git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
@@ -14,17 +32,15 @@ cd WLC-PLATFORM-ETS
 docker-compose up -d
 ```
 
-**Puis ouvrir** : http://localhost:8000
+⚠️ Docker lance l'interface web, mais pas le parsing IFC (ifcopenshell complexe à compiler).
 
-✅ **Tout est automatique** : GraphDB, ontologies, backend Flask !
-
-📖 **Guide complet** : Voir [`DOCKER_QUICKSTART.md`](DOCKER_QUICKSTART.md)
+📖 **Guide Docker** : Voir [`DOCKER_QUICKSTART.md`](DOCKER_QUICKSTART.md)
 
 ---
 
-### **⚙️ Installation Manuelle (si pas Docker)**
+### **⚙️ Installation Manuelle Détaillée**
 
-Continuer avec le guide détaillé ci-dessous ⬇️
+Continuer avec le guide ci-dessous ⬇️
 
 ---
 

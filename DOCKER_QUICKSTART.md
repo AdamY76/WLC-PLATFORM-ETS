@@ -1,5 +1,21 @@
 # 🐳 Démarrage Ultra-Rapide avec Docker
 
+## ℹ️ Important : Parsing IFC
+
+**Docker lance l'application web (backend + interface).**
+
+⚠️ **Le parsing de fichiers IFC** nécessite `ifcopenshell` qui est complexe à compiler.
+- **Solution** : Faites le parsing IFC **sur votre machine** (avec Python + ifcopenshell installé)
+- Une fois parsé, les données sont dans GraphDB
+- Docker sert alors l'interface web pour visualiser/gérer ces données
+
+**Pour qui ?**
+- ✅ **Windows/Mac sans Python** : Docker lance l'app, parsing IFC optionnel
+- ✅ **Développeurs** : Python local pour parsing, Docker pour l'app
+- ✅ **Démo/Présentation** : Docker seul suffit (utiliser données déjà parsées)
+
+---
+
 ## ⚡ 3 Commandes, C'est Tout !
 
 ### **Windows / macOS / Linux**
