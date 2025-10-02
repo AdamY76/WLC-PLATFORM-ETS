@@ -2,65 +2,35 @@ Installation des Composants
 
 ### GraphDB
 - [ ] GraphDB téléchargé depuis [ontotext.com](https://www.ontotext.com/products/graphdb/)
-- [ ] Repository `wlconto` créé avec ruleset **OWL-Horst**
+- [ ] Repository `wlconto` créé 
       
 ### Python
 - [ ] Python 3.8+ installé
-- [ ] Version vérifiée avec `python --version`
 
-### Fichiers du Projet
-- [ ] Dossier `Plateforme/` copié sur le nouvel ordinateur
-- [ ] Structure des dossiers intacte (Backend/, Frontend/, Ontology/)
 
 ---
 
-## 📚 Import des Ontologies dans GraphDB
+## Import des Ontologies dans GraphDB
 
-**Repository sélectionné** : `wlconto` ✓
+**Repository sélectionné** : `wlconto` 
 
-**⚠️ Ordre d'import recommandé** (du plus général au plus spécifique) :
+## Import des Ontologies dans GraphDB (dans le repository: wlconto)
 
-- [ ] **1. cgontologie1.ttl** (ontologie principale WLCONTO)
-  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
-  - ~202 statements
-  
-- [ ] **2. ontology.ttl** (ontologie étendue)
-  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
-  - ~34,156 statements (grosse ontologie)
-  
-- [ ] **3. Mapping.ttl** (mappings entre ontologies)
-  - ~66 statements
+- [ ] **cgontologie1.ttl** (ontologie du coût global wlconto)
+- [ ] **ontology.ttl**  (ontologie IFC)
+- [ ] **Mapping.ttl** (Alignement ifc-WLCONTO)
+      
+- [ ] **stakeholder_mapping_clean.ttl** (extension avec les parties prenantes)
 
-- [ ] **4. uniformat.ttl** (classification Uniformat)
-  - ~1,515 statements
-  
-- [ ] **5. uniformat_ifc_broad_alignment.ttl** (alignement IFC-Uniformat)
-  - ~307 statements
+- [ ] **6_EndOfLifeManagement_Module_Protege.ttl** (ontologie avec les scénarios de fin de vie)  
+- [ ] **WLCPODPP.ttl** (Alignement de WLCPO avec Digital Product Passport)
 
-- [ ] **6. stakeholder_mapping_clean.ttl** (parties prenantes)
-  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#`
-  - ~153 statements
-
-- [ ] **7. 6_EndOfLifeManagement_Module_Protege.ttl** (fin de vie)
-  - Base URI: `http://www.w3id.org/dpp/EoL#`
-  - ~512 statements
-  
-- [ ] **8. WLCPODPP.ttl** (module d'alignement DPP)
-  - Contenu :
-    ```turtle
-    @prefix wlcpo: <http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#> .
-    @prefix dpp: <http://www.semanticweb.org/adamy/ontologies/2025/DPP#> .
-    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-    
-    wlcpo:Asset rdfs:subClassOf dpp:Product .
-    ```
-  - ~3 statements
-
-**Total** : ~36,914 statements
+- [ ] **uniformat.ttl** (ontologie uniformat)
+- [ ] **uniformat_ifc_broad_alignment.ttl** (alignement uniformat - ifc)
 
 ---
 
-## 🐍 Configuration de l'Environnement Python
+## Configuration de l'Environnement Python
 
 ```bash
 cd Plateforme/Backend
@@ -80,19 +50,8 @@ pip install -r requirements.txt
 pip install --force-reinstall ifcopenshell==0.8.2
 ```
 
----
 
-## ⚙️ Configuration de l'Application
-
-- [ ] Fichier `Backend/config/config.py` vérifié :
-  - `GRAPHDB_URL = "http://localhost:7200"` ✓
-  - `GRAPHDB_REPO = "wlconto"` ✓
-
-- [ ] Dossier `Backend/uploads/` existe (ou sera créé automatiquement)
-
----
-
-## 🚀 Démarrage et Tests
+## Démarrage et Tests
 
 ### 1. Démarrer GraphDB
 - [ ] GraphDB accessible sur `http://localhost:7200`
@@ -105,30 +64,24 @@ cd Backend
 python app.py
 ```
 
-- [ ] Serveur démarre sans erreur
 - [ ] Message `Running on http://0.0.0.0:8000` visible
-- [ ] Aucun message d'erreur dans le terminal
 
 ### 3. Tester l'Interface Web
 
 **Ouvrir** : `http://localhost:8000`
 
-- [ ] Page s'affiche correctement
-- [ ] Badge **"Connecté"** (vert) visible en haut à droite
-- [ ] Onglets visibles : Analyse WLC, Gestion IFC, Durées de vie, etc.
 
 ### 4. Test Fonctionnel
 
 **Test IFC** :
 - [ ] Onglet "Gestion IFC" accessible
 - [ ] Possibilité d'uploader un fichier `.ifc`
-- [ ] Bouton "Parser vers ontologie" fonctionne
+- [ ] Bouton "Parser vers ontologie" 
 - [ ] Éléments s'affichent dans le tableau
 
 **Test Fin de Vie** :
 - [ ] Onglet "Gestion Fin de Vie" accessible
 - [ ] Éléments s'affichent avec descriptions Uniformat
-- [ ] Dropdowns stratégies (Refuse, Recycle, etc.) fonctionnent
 - [ ] Modification d'une stratégie enregistrée dans GraphDB
 
 **Test GraphDB** :
@@ -175,30 +128,6 @@ kill -9 [PID]
 
 ---
 
-## 📦 Export/Import de Données (Optionnel)
-
-### Pour transférer des données d'un GraphDB à un autre
-
-**Export** :
-- [ ] Dans GraphDB source : "Export" > Format "TriG"
-- [ ] Fichier téléchargé (ex: `wlconto_export.trig`)
-
-**Import** :
-- [ ] Repository `wlconto` créé sur nouveau GraphDB
-- [ ] "Import" > "RDF" > Upload `wlconto_export.trig`
-- [ ] Import terminé sans erreur
-
----
-
-## ✅ Installation Terminée !
-
-### Dernières vérifications
-
-- [ ] Application accessible sur `http://localhost:8000`
-- [ ] GraphDB accessible sur `http://localhost:7200`
-- [ ] Badge "Connecté" vert
-- [ ] Tous les onglets fonctionnels
-- [ ] Tests IFC et EOL passés
 
 ### Pour arrêter l'application
 
@@ -212,20 +141,7 @@ Ctrl + C (dans le terminal)
 
 ---
 
-## 📞 Support
-
-**Problèmes persistants ?**
-- Consulter le fichier `README.md` section "Troubleshooting"
-- Vérifier les logs Flask dans le terminal
-- Vérifier les logs GraphDB dans l'interface
-
-**Logs utiles** :
-- Backend Flask : visible dans le terminal
-- GraphDB : `Monitoring` > `Query log` et `System log`
-
----
-
-## 🎯 Résumé Rapide (TL;DR)
+##  Résumé Rapide (TL;DR)
 
 ```bash
 # 1. Installer GraphDB + créer repository "wlconto"
@@ -238,6 +154,4 @@ pip install -r requirements.txt
 python app.py
 # 4. Ouvrir http://localhost:8000
 ```
-
-**✅ C'est tout !**
 
