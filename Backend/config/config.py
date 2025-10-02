@@ -4,8 +4,9 @@ from pathlib import Path
 
 class Config:
     # Configuration de GraphDB
-    GRAPHDB_URL = "http://localhost:7200"
-    GRAPHDB_REPO = "wlconto"  # Nom du repository uniquement
+    # Supporte les variables d'environnement Docker
+    GRAPHDB_URL = os.environ.get('GRAPHDB_URL', "http://localhost:7200")
+    GRAPHDB_REPO = os.environ.get('GRAPHDB_REPO', "wlconto")  # Nom du repository uniquement
     
     # Configuration des dossiers
     BASE_DIR = Path(__file__).resolve().parent.parent

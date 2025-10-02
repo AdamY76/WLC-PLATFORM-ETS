@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # GraphDB - Base de données RDF
+  graphdb:
+    image: ontotext/graphdb:10.7.3-free
+    container_name: wlc-graphdb
+    ports:
+      - "7200:7200"
+    environment:
+      - GDB_HEAP_SIZE=2g
+    volumes:
+      - graphdb-data:/opt/graphdb/home
+      - ./Ontology:/ontologies:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7200/rest/repositories"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend Flask
+  backend:
+    build: .
+    container_name: wlc-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GRAPHDB_URL=http://graphdb:7200
+      - GRAPHDB_REPO=wlconto
+    depends_on:
+      graphdb:
+        condition: service_healthy
+    volumes:
+      - ./Backend/uploads:/app/uploads
+    restart: unless-stopped
+
+  # Initialisation GraphDB (création repository + import ontologies)
+  graphdb-init:
+    image: curlimages/curl:latest
+    container_name: wlc-graphdb-init
+    depends_on:
+      graphdb:
+        condition: service_healthy
+    volumes:
+      - ./init-graphdb.sh:/init-graphdb.sh:ro
+      - ./Ontology:/ontologies:ro
+    entrypoint: ["/bin/sh", "/init-graphdb.sh"]
+    restart: "no"
+
+volumes:
+  graphdb-data:
+    driver: local
+
