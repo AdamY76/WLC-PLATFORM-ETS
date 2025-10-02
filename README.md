@@ -4,43 +4,38 @@ Cette plateforme permet de visualiser et gérer le coût global (Whole Life Cost
 
 ---
 
-## 🚀 Démarrage Rapide (Recommandé)
+## 🚀 Installation Ultra-Rapide (5 Minutes)
 
-### **✨ Installation Automatique avec Script Intelligent** (Windows, Mac, Linux)
+### **🎯 Méthode Recommandée : Conda**
 
-**Le plus simple** : Script qui détecte ton système et installe tout automatiquement !
+La seule méthode **simple et fiable** sur Windows, Mac et Linux.
 
 ```bash
+# 1. Installer Miniconda (une fois) : https://docs.conda.io/en/latest/miniconda.html
+
+# 2. Dans Terminal/Anaconda Prompt :
 git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
 cd WLC-PLATFORM-ETS
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-python install_dependencies.py
+conda create -n wlc python=3.11 -y
+conda activate wlc
+conda install -c conda-forge ifcopenshell -y
+pip install -r Backend/requirements.txt
+
+# 3. Lancer l'app
+cd Backend
+python app.py
 ```
 
-✅ **Détecte automatiquement** Python + OS et installe la bonne version d'ifcopenshell !
+**Puis ouvrir** : http://localhost:8000
 
-📖 **Guide complet** : Voir [`INSTALLATION_SIMPLE.md`](INSTALLATION_SIMPLE.md)
+📖 **Guide rapide** : Voir [`INSTALLATION_RAPIDE.md`](INSTALLATION_RAPIDE.md)
 
 ---
 
-### **🐳 Avec Docker** (sans parsing IFC)
+### **📚 Autres Guides**
 
-```bash
-git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
-cd WLC-PLATFORM-ETS
-docker-compose up -d
-```
-
-⚠️ Docker lance l'interface web, mais pas le parsing IFC (ifcopenshell complexe à compiler).
-
-📖 **Guide Docker** : Voir [`DOCKER_QUICKSTART.md`](DOCKER_QUICKSTART.md)
-
----
-
-### **⚙️ Installation Manuelle Détaillée**
-
-Continuer avec le guide ci-dessous ⬇️
+- **Windows** : [`INSTALLATION_WINDOWS.md`](INSTALLATION_WINDOWS.md) - Détails pour Windows
+- **Détaillé** : Continuer avec le guide ci-dessous ⬇️
 
 ---
 
