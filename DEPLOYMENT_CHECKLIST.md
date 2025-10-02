@@ -18,23 +18,45 @@ Installation des Composants
 
 **Repository sélectionné** : `wlconto` ✓
 
-- [ ] **1. WLCONTO.ttl** importé
-  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
-  
-- [ ] **2. stakeholder_mapping_clean.ttl** importé
-  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#`
+**⚠️ Ordre d'import recommandé** (du plus général au plus spécifique) :
 
-- [ ] **3. Ontologie End-of-Life** importée (si disponible)
+- [ ] **1. cgontologie1.ttl** (ontologie principale WLCONTO)
+  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
+  - ~202 statements
+  
+- [ ] **2. ontology.ttl** (ontologie étendue)
+  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
+  - ~34,156 statements (grosse ontologie)
+  
+- [ ] **3. Mapping.ttl** (mappings entre ontologies)
+  - ~66 statements
+
+- [ ] **4. uniformat.ttl** (classification Uniformat)
+  - ~1,515 statements
+  
+- [ ] **5. uniformat_ifc_broad_alignment.ttl** (alignement IFC-Uniformat)
+  - ~307 statements
+
+- [ ] **6. stakeholder_mapping_clean.ttl** (parties prenantes)
+  - Base URI: `http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#`
+  - ~153 statements
+
+- [ ] **7. 6_EndOfLifeManagement_Module_Protege.ttl** (fin de vie)
   - Base URI: `http://www.w3id.org/dpp/EoL#`
+  - ~512 statements
   
-- [ ] **4. Module d'alignement DPP** créé et importé :
-  ```turtle
-  @prefix wlcpo: <http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#> .
-  @prefix dpp: <http://www.semanticweb.org/adamy/ontologies/2025/DPP#> .
-  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-  
-  wlcpo:Asset rdfs:subClassOf dpp:Product .
-  ```
+- [ ] **8. WLCPODPP.ttl** (module d'alignement DPP)
+  - Contenu :
+    ```turtle
+    @prefix wlcpo: <http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#> .
+    @prefix dpp: <http://www.semanticweb.org/adamy/ontologies/2025/DPP#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    
+    wlcpo:Asset rdfs:subClassOf dpp:Product .
+    ```
+  - ~3 statements
+
+**Total** : ~36,914 statements
 
 ---
 

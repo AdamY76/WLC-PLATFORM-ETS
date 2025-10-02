@@ -101,28 +101,48 @@ Pour un élément avec durée de vie de **30 ans** dans un projet de **100 ans**
 
 ### Étape 3 : Import des Ontologies dans GraphDB
 
-**IMPORTANT** : Importer les ontologies dans l'ordre suivant :
+**IMPORTANT** : Importer les ontologies dans l'ordre suivant (du plus général au plus spécifique) :
 
-1. **Ontologie principale WLCONTO** :
-   - Aller dans **"Import"** > **"RDF"**
-   - Cliquer sur **"Upload RDF files"**
-   - Sélectionner `Ontology/WLCONTO.ttl`
+**📍 Aller dans GraphDB → Import → RDF → Upload RDF files**
+
+1. **cgontologie1.ttl** (ontologie principale WLCONTO)
+   - Fichier : `Ontology/cgontologie1.ttl`
    - **Base URI** : `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
-   - **Named graph** : Laisser vide ou `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO`
    - Cliquer sur **"Import"**
+   - ✅ ~202 statements
 
-2. **Ontologie Stakeholder Mapping** :
-   - Importer `Ontology/stakeholder_mapping_clean.ttl`
+2. **ontology.ttl** (ontologie étendue - grosse)
+   - Fichier : `Ontology/ontology.ttl`
+   - **Base URI** : `http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#`
+   - Cliquer sur **"Import"**
+   - ⏱️ Import peut prendre 3-5 minutes
+   - ✅ ~34,156 statements
+
+3. **Mapping.ttl** (mappings entre ontologies)
+   - Si disponible dans votre configuration
+   - ✅ ~66 statements
+
+4. **uniformat.ttl** (classification Uniformat)
+   - Si disponible dans votre configuration
+   - ✅ ~1,515 statements
+
+5. **uniformat_ifc_broad_alignment.ttl** (alignement IFC-Uniformat)
+   - Si disponible dans votre configuration
+   - ✅ ~307 statements
+
+6. **stakeholder_mapping_clean.ttl** (parties prenantes)
+   - Fichier : `Ontology/stakeholder_mapping_clean.ttl`
    - **Base URI** : `http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#`
    - Cliquer sur **"Import"**
+   - ✅ ~153 statements
 
-3. **Ontologies supplémentaires** :
-   - Si vous avez d'autres fichiers `.ttl` dans GraphDB (comme `6_EndOfLifeManagement_Module_Protege.ttl`, `DPP`, etc.), les importer également
-   - Pour **End-of-Life Management** : importer l'ontologie EoL avec :
-     - **Base URI** : `http://www.w3id.org/dpp/EoL#`
+7. **6_EndOfLifeManagement_Module_Protege.ttl** (fin de vie)
+   - Si disponible dans votre configuration GraphDB
+   - **Base URI** : `http://www.w3id.org/dpp/EoL#`
+   - ✅ ~512 statements
 
-4. **Module d'alignement DPP** (si nécessaire) :
-   - Créer un fichier `alignment_dpp.ttl` avec :
+8. **WLCPODPP.ttl** (module d'alignement DPP)
+   - Créer un fichier `WLCPODPP.ttl` avec :
      ```turtle
      @prefix wlcpo: <http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#> .
      @prefix dpp: <http://www.semanticweb.org/adamy/ontologies/2025/DPP#> .
@@ -131,6 +151,9 @@ Pour un élément avec durée de vie de **30 ans** dans un projet de **100 ans**
      wlcpo:Asset rdfs:subClassOf dpp:Product .
      ```
    - Importer ce fichier dans GraphDB
+   - ✅ ~3 statements
+
+**Total attendu** : ~36,914 statements (peut varier selon les fichiers disponibles)
 
 ### Étape 4 : Copie des Fichiers du Projet
 
