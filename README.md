@@ -4,7 +4,7 @@ Cette plateforme permet de visualiser et gérer le coût global (Whole Life Cost
 
 ---
 
-## 🚀 Installation Ultra-Rapide (5 Minutes)
+## 🚀 Installation Ultra-Rapide (3 Minutes)
 
 ### **🎯 Méthode Recommandée : Conda**
 
@@ -16,15 +16,17 @@ La seule méthode **simple et fiable** sur Windows, Mac et Linux.
 # 2. Dans Terminal/Anaconda Prompt :
 git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
 cd WLC-PLATFORM-ETS
-conda create -n wlc python=3.11 -y
-conda activate wlc
-conda install -c conda-forge ifcopenshell -y
-pip install -r Backend/requirements.txt
 
-# 3. Lancer l'app
+# 3. Installation automatique (Python + ifcopenshell + toutes dépendances)
+conda env create -f environment.yml
+conda activate wlc
+
+# 4. Lancer l'app
 cd Backend
 python app.py
 ```
+
+✨ Le fichier `environment.yml` installe **automatiquement** tout ce qu'il faut !
 
 **Puis ouvrir** : http://localhost:8000
 

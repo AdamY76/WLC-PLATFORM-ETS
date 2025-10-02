@@ -19,27 +19,25 @@ Double-clic pour installer (5 minutes).
 
 ---
 
-### **Étape 3 : 5 Commandes Magiques**
+### **Étape 3 : 3 Commandes Magiques** ✨
 
 ```bash
 # 1. Clone le projet
 git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
 cd WLC-PLATFORM-ETS
 
-# 2. Crée environnement
-conda create -n wlc python=3.11 -y
+# 2. Installe TOUT automatiquement (Python + ifcopenshell + tout)
+conda env create -f environment.yml
 
-# 3. Active-le
+# 3. Active l'environnement
 conda activate wlc
 
-# 4. Installe tout
-conda install -c conda-forge ifcopenshell -y
-pip install -r Backend/requirements.txt
-
-# 5. Lance !
+# 4. Lance !
 cd Backend
 python app.py
 ```
+
+**La magie** : Le fichier `environment.yml` installe automatiquement Python 3.11, ifcopenshell, Flask, pandas et tout le reste en UNE commande ! 🎉
 
 **Ouvrir** : http://localhost:8000
 
