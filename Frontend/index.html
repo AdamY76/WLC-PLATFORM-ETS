@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏗️ Plateforme WLC - Gestion du Coût Global</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Mermaid.js for UML diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    
+    <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="fas fa-building me-2"></i>
+                Plateforme WLC
+            </span>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-light btn-sm me-2" onclick="checkHealth()">
+                    <i class="fas fa-heartbeat me-1"></i>
+                    État du système
+                </button>
+                <div id="connection-status" class="badge bg-success">Connecté</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-body p-3">
+                        <h6 class="card-title text-muted mb-3">NAVIGATION</h6>
+                        <div class="nav flex-column nav-pills" id="main-nav-tab" role="tablist">
+                            <button class="nav-link active mb-2" id="nav-ifc-tab" data-bs-toggle="pill" data-bs-target="#nav-ifc" type="button" role="tab">
+                                <i class="fas fa-cube me-2"></i>IFC
+                            </button>
+                            <button class="nav-link mb-2" id="nav-elements-tab" data-bs-toggle="pill" data-bs-target="#nav-elements" type="button" role="tab">
+                                <i class="fas fa-list me-2"></i>Éléments
+                            </button>
+                            <button class="nav-link mb-2" id="nav-eol-tab" data-bs-toggle="pill" data-bs-target="#nav-eol" type="button" role="tab">
+                                <i class="fas fa-recycle me-2"></i>Gestion Fin de Vie
+                            </button>
+                            <button class="nav-link mb-2" id="nav-costs-tab" data-bs-toggle="pill" data-bs-target="#nav-costs" type="button" role="tab">
+                                <i class="fas fa-coins me-2"></i>Coûts
+                            </button>
+                            <button class="nav-link mb-2" id="nav-lifespan-tab" data-bs-toggle="pill" data-bs-target="#nav-lifespan" type="button" role="tab">
+                                <i class="fas fa-clock me-2"></i>Durées de vie
+                            </button>
+                            <button class="nav-link mb-2" id="nav-summary-tab" data-bs-toggle="pill" data-bs-target="#nav-summary" type="button" role="tab">
+                                <i class="fas fa-chart-bar me-2"></i>Synthèse
+                            </button>
+                            <button class="nav-link mb-2" id="nav-analysis-tab" data-bs-toggle="pill" data-bs-target="#nav-analysis" type="button" role="tab">
+                                <i class="fas fa-search me-2"></i>Analyses WLC
+                            </button>
+                            <button class="nav-link mb-2" id="nav-stakeholders-tab" data-bs-toggle="pill" data-bs-target="#nav-stakeholders" type="button" role="tab">
+                                <i class="fas fa-users me-2"></i>Parties Prenantes
+                            </button>
+                            <button class="nav-link mb-2" id="nav-simulator-tab" data-bs-toggle="pill" data-bs-target="#simulator" type="button" role="tab">
+                                <i class="fas fa-balance-scale me-2"></i>Comparaison
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-10 col-md-9">
+                <div class="tab-content" id="main-nav-tabContent">
+                    
+                    <!-- IFC Tab -->
+                    <div class="tab-pane fade show active" id="nav-ifc" role="tabpanel">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fas fa-cube me-2"></i>
+                                            Gestion des fichiers IFC
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Upload Section -->
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="card border-primary">
+                                                    <div class="card-header bg-primary text-white">
+                                                        <h6 class="mb-0"> Upload du fichier IFC</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="upload-zone border-2 border-dashed border-primary rounded p-3 text-center">
+                                                            <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                                                            <p class="mb-2">Glisser-déposer ou sélectionner un fichier IFC</p>
+                                                            <input type="file" id="ifc-file" accept=".ifc" class="form-control mb-2">
+                                                            <button type="button" class="btn btn-primary" onclick="uploadIfc()">
+                                                                <i class="fas fa-upload me-2"></i>Uploader (stockage temporaire)
+                                                            </button>
+                                                        </div>
+                                                        <div class="form-text mt-2">
+                                                            Le fichier sera stocké temporairement en mémoire sans parsing automatique
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="card border-info">
+                                                    <div class="card-header bg-info text-white">
+                                                        <h6 class="mb-0"> Statut du fichier IFC</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="ifc-status">
+                                                            <div class="text-muted text-center py-3">
+                                                                <i class="fas fa-file-alt fa-2x mb-2"></i>
+                                                                <p>Aucun fichier IFC en mémoire</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Actions Section -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <div class="card border-warning">
+                                                    <div class="card-header bg-warning text-dark">
+                                                        <h6 class="mb-0">⚙️ Actions sur le fichier IFC</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button type="button" class="btn btn-success w-100 mb-2" onclick="parseIfc()" id="parse-btn" disabled>
+                                                                    <i class="fas fa-cogs me-2"></i>Parser vers ontologie
+                                                                </button>
+                                                                <small class="text-muted">Analyse le fichier et l'insère dans l'ontologie</small>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button type="button" class="btn btn-warning w-100 mb-2" onclick="enrichIfc()" id="enrich-btn" disabled>
+                                                                    <i class="fas fa-plus-circle me-2"></i>Enrichir avec WLC
+                                                                </button>
+                                                                <small class="text-muted"> EXPÉRIMENTAL : Ajoute les données WLC comme PropertySets IFC standards</small>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button type="button" class="btn btn-primary w-100 mb-2" onclick="downloadEnrichedIfc()" id="download-btn" disabled>
+                                                                    <i class="fas fa-download me-2"></i>Télécharger enrichi
+                                                                </button>
+                                                                <small class="text-muted">Télécharge le fichier IFC avec PropertySets WLC_CostData</small>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button type="button" class="btn btn-outline-danger w-100 mb-2" onclick="clearIfc()" id="clear-btn" disabled>
+                                                                    <i class="fas fa-trash me-2"></i>Vider mémoire
+                                                                </button>
+                                                                <small class="text-muted">Supprime le fichier du stockage temporaire</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Autres actions -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <button type="button" class="btn btn-outline-danger" onclick="resetProject()">
+                                                        <i class="fas fa-trash me-2"></i>Réinitialiser le projet
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-info" onclick="loadElements()">
+                                                        <i class="fas fa-sync me-2"></i>Rafraîchir les éléments
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-success" onclick="exportExcel()">
+                                                        <i class="fas fa-file-excel me-2"></i>Exporter Excel
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="downloadEnrichmentReport()">
+                                                        <i class="fas fa-file-download me-2"></i> Rapport d'enrichissement
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateIfcStatus()">
+                                                        <i class="fas fa-sync me-2"></i> Actualiser statut IFC
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-warning btn-sm" onclick="enableIfcButtons()">
+                                                        <i class="fas fa-unlock me-2"></i> Activer boutons (debug)
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Section Extraction des Groupes -->
+                                        <div class="row mt-4">
+                                            <div class="col-12">
+                                                <div class="card border-info">
+                                                    <div class="card-header bg-info text-white">
+                                                        <h6 class="mb-0">🎯 Extraction des Groupes (Analyse Coût/Bénéfice)</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p class="text-muted mb-3">
+                                                                    Extrait uniquement les groupes spécifiés pour l'analyse d'influence sur les coûts.
+                                                                </p>
+                                                                
+                                                                <!-- Sélection des groupes -->
+                                                                <div class="mb-3">
+                                                                    <label class="form-label fw-bold">Groupes à extraire</label>
+                                                                    <div style="max-height: 200px; overflow-y: auto;" class="border rounded p-2">
+                                                                        <!-- Groupes principaux -->
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="0_JYouFmz7oe6DE7pllGxF" id="group-heating" checked>
+                                                                            <label class="form-check-label" for="group-heating">
+                                                                                <strong>Groupe Équipements de Chauffage</strong>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="29muyn_nX0Y81AkQJIqwYJ" id="group-curtain" checked>
+                                                                            <label class="form-check-label" for="group-curtain">
+                                                                                <strong>Groupe Murs-Rideaux</strong>
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                        <!-- Sous-groupes spécialisés -->
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="1AW6RU_0zCmu06CVaw3Xdi" id="group-persiennes">
+                                                                            <label class="form-check-label" for="group-persiennes">
+                                                                                Groupe Persiennes
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="1vgIswIrL669X19UzAA8yF" id="group-climatisation">
+                                                                            <label class="form-check-label" for="group-climatisation">
+                                                                                Groupe Climatisation
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="0ia2$78p93SweXp$SxrUr7" id="group-radiateurs">
+                                                                            <label class="form-check-label" for="group-radiateurs">
+                                                                                Groupe Radiateurs
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                        <!-- Groupes Uniformat -->
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="3cq4cQl4b49BA6hrfe$1rH" id="group-d3040">
+                                                                            <label class="form-check-label" for="group-d3040">
+                                                                                D3040 - Distribution CVCA
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="2P3GD$odL2VPZCDmMENriz" id="group-d3030">
+                                                                            <label class="form-check-label" for="group-d3030">
+                                                                                D3030 - Système de Production de Froid
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="1mFskmamr0QwWTFJCO022A" id="group-d3050">
+                                                                            <label class="form-check-label" for="group-d3050">
+                                                                                D3050 - Unités Autonomes ou Monoblocs
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="3USZJi$Z90$8C0yy0$B12r" id="group-d3020">
+                                                                            <label class="form-check-label" for="group-d3020">
+                                                                                D3020 - Système de Production de Chaleur
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="mt-2">
+                                                                        <small class="text-muted">
+                                                                            <i class="fas fa-info-circle me-1"></i>
+                                                                            Sélectionnez les groupes établis dans le modèle IFC pour l'analyse
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <button type="button" class="btn btn-info" onclick="extractSelectedGroups()" id="extract-groups-btn" disabled>
+                                                                    <i class="fas fa-layer-group me-2"></i>Extraire les Groupes Sélectionnés
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div id="groups-status" class="border rounded p-3">
+                                                                    <div class="text-muted text-center">
+                                                                        <i class="fas fa-layer-group fa-2x mb-2"></i>
+                                                                        <p class="mb-0">Aucun groupe extrait</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Section Validation et Réparation IFC -->
+                                        <div class="row mt-4">
+                                            <div class="col-12">
+                                                <div class="card border-warning">
+                                                    <div class="card-header bg-warning bg-opacity-10">
+                                                        <h6 class="mb-0">
+                                                            <i class="fas fa-stethoscope me-2"></i> Diagnostic et Réparation IFC
+                                                        </h6>
+                                                        <small class="text-muted">Résout les problèmes de compatibilité avec Navisworks</small>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="d-flex flex-column gap-2">
+                                                                    <button type="button" class="btn btn-outline-info w-100" onclick="validateIfc()">
+                                                                        <i class="fas fa-search me-2"></i> Valider le fichier IFC
+                                                                    </button>
+                                                                    <small class="text-muted">Diagnostique les problèmes potentiels (structure, caractères, GUIDs)</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="d-flex flex-column gap-2">
+                                                                    <button type="button" class="btn btn-outline-warning w-100" onclick="repairIfc()">
+                                                                        <i class="fas fa-wrench me-2"></i> Réparer le fichier IFC
+                                                                    </button>
+                                                                    <small class="text-muted">Corrige automatiquement les erreurs détectées</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-12">
+                                                                <button type="button" class="btn btn-outline-success w-100" onclick="downloadRepairedIfc()">
+                                                                    <i class="fas fa-download me-2"></i> Télécharger le fichier réparé
+                                                                </button>
+                                                                <small class="text-muted">Télécharge la version corrigée compatible Navisworks</small>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Zone d'affichage des résultats de validation -->
+                                                        <div id="ifc-validation-results" class="mt-3">
+                                                            <!-- Résultats de validation affichés ici -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elements Tab -->
+                    <div class="tab-pane fade" id="nav-elements" role="tabpanel">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fas fa-list me-2"></i>
+                                            Gestion des éléments IFC
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Filtrage et Modification en lot des Matériaux -->
+                                        <div class="card mb-4 border-warning">
+                                            <div class="card-header bg-warning bg-opacity-10">
+                                                <h6 class="mb-0">
+                                                    <i class="fas fa-filter me-2"></i>
+                                                    Filtrage et Modification en Lot des Matériaux
+                                                </h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- Filtres -->
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label fw-bold">Filtre par Description</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" id="description-filter" class="form-control" 
+                                                                           placeholder="Rechercher dans les descriptions...">
+                                                                    <button class="btn btn-outline-secondary" onclick="clearDescriptionFilter()">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label fw-bold">Descriptions disponibles</label>
+                                                                <select id="description-selector" class="form-select" multiple size="4">
+                                                                    <!-- Options chargées dynamiquement -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex gap-2 flex-wrap">
+                                                            <button class="btn btn-outline-primary btn-sm" onclick="selectAllFiltered()">
+                                                                <i class="fas fa-check-square me-1"></i>Sélectionner tous filtrés
+                                                            </button>
+                                                            <button class="btn btn-outline-secondary btn-sm" onclick="deselectAll()">
+                                                                <i class="fas fa-square me-1"></i>Désélectionner tout
+                                                            </button>
+                                                            <span class="badge bg-info" id="selection-count">0 sélectionné(s)</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Modification en lot -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label fw-bold">Nouveau Matériau</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" id="bulk-material-input" class="form-control" 
+                                                                   placeholder="Entrer le nouveau matériau">
+                                                            <button class="btn btn-warning" onclick="applyBulkMaterial()" 
+                                                                    id="apply-bulk-btn" disabled>
+                                                                <i class="fas fa-magic me-1"></i>Appliquer
+                                                            </button>
+                                                        </div>
+                                                        <div class="d-grid">
+                                                            <button class="btn btn-outline-info btn-sm" onclick="showPreview()">
+                                                                <i class="fas fa-eye me-1"></i>Prévisualiser
+                                                            </button>
+                                                        </div>
+                                                        <div id="bulk-status" class="mt-2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Boutons d'actions -->
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-primary" onclick="addNewElementRow()">
+                                                        <i class="fas fa-plus me-2"></i>Ajouter une ligne
+                                                    </button>
+                                                    <button class="btn btn-success" onclick="exportElementsExcel()">
+                                                        <i class="fas fa-file-excel me-2"></i>Télécharger en Excel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Statistiques de recyclabilité -->
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <div class="card border-success">
+                                                    <div class="card-header bg-success text-white">
+                                                        <h6 class="mb-0">♻️ Statistiques de Fin de Vie</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row" id="end-of-life-stats">
+                                                            <div class="col-md-3">
+                                                                <div class="text-center">
+                                                                    <h4 class="text-success" id="recyclability-percent">-%</h4>
+                                                                    <small class="text-muted">Recyclabilité globale</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="text-center">
+                                                                    <h4 class="text-info" id="total-with-strategy">-</h4>
+                                                                    <small class="text-muted">Éléments avec stratégie</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="input-group">
+                                                                    <select class="form-select" id="bulk-strategy-select">
+                                                                        <option value="">Choisir une stratégie...</option>
+                                                                    </select>
+                                                                    <button class="btn btn-warning" onclick="applyBulkStrategy()" disabled id="apply-bulk-strategy-btn">
+                                                                        Appliquer aux sélectionnés
+                                                                    </button>
+                                                                </div>
+                                                                <small class="text-muted">Gestion en lot des stratégies</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2" id="strategy-breakdown">
+                                                            <!-- Répartition des stratégies chargée dynamiquement -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Elements Table -->
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="elements-table">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>
+                                                            <input type="checkbox" id="select-all-checkbox" title="Sélectionner tout">
+                                                        </th>
+                                                        <th>GlobalId</th>
+                                                        <th>IFC Class</th>
+                                                        <th>Uniformat</th>
+                                                        <th>Description</th>
+                                                        <th>Matériau</th>
+                                                        <th>Construction ($)</th>
+                                                        <th>Opération ($)</th>
+                                                        <th>Maintenance ($)</th>
+                                                        <th>Fin de vie ($)</th>
+                                                        <th>Stratégie fin de vie</th>
+                                                        <th>Durée (années)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Données chargées dynamiquement -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- End of Life Management Tab -->
+                    <div class="tab-pane fade" id="nav-eol" role="tabpanel">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="card-title mb-0">♻️ Gestion de Fin de Vie</h5>
+                                        <small>Définition des stratégies, destinations, responsables et coûts pour chaque élément</small>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        <!-- Statistiques globales -->
+                                        <div class="row mb-4">
+                                            <div class="col-md-3">
+                                                <div class="card border-success">
+                                                    <div class="card-body text-center">
+                                                        <h4 class="text-success" id="eol-recyclability-percent">-%</h4>
+                                                        <small class="text-muted">Recyclabilité</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card border-info">
+                                                    <div class="card-body text-center">
+                                                        <h4 class="text-info" id="eol-total-elements">-</h4>
+                                                        <small class="text-muted">Éléments gérés</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card border-warning">
+                                                    <div class="card-body text-center">
+                                                        <h4 class="text-warning" id="eol-total-cost">-</h4>
+                                                        <small class="text-muted">Coût total EOL</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card border-primary">
+                                                    <div class="card-body text-center">
+                                                        <h4 class="text-primary" id="eol-destinations-count">-</h4>
+                                                        <small class="text-muted">Destinations</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Actions en lot -->
+                                        <div class="card mb-4 border-warning">
+                                            <div class="card-header bg-warning bg-opacity-10">
+                                                <h6 class="mb-0">🔧 Actions en lot</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Stratégie</label>
+                                                        <select class="form-select" id="bulk-eol-strategy">
+                                                            <option value="">Choisir...</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Destination</label>
+                                                        <input type="text" class="form-control" id="bulk-eol-destination" placeholder="Centre de traitement">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Responsable</label>
+                                                        <select class="form-select" id="bulk-eol-responsible">
+                                                            <option value="">Choisir...</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Actions</label>
+                                                        <div class="d-grid">
+                                                            <button class="btn btn-warning" onclick="applyBulkEOL()" disabled id="apply-bulk-eol-btn">
+                                                                Appliquer aux sélectionnés
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <span class="badge bg-info" id="eol-selection-count">0 sélectionné(s)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tableau de gestion -->
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="eol-table">
+                                                <thead class="table-success">
+                                                    <tr>
+                                                        <th>
+                                                            <input type="checkbox" id="select-all-eol-checkbox" title="Sélectionner tout">
+                                                        </th>
+                                                        <th>Élément</th>
+                                                        <th>Stratégie</th>
+                                                        <th>Destination</th>
+                                                        <th>Responsable</th>
+                                                        <th>Coût (€)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Données chargées dynamiquement -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- Actions sur le tableau -->
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <button class="btn btn-success" onclick="refreshEOLData()">
+                                                    <i class="fas fa-sync me-2"></i>Actualiser
+                                                </button>
+                                                <button class="btn btn-info" onclick="exportEOLExcel()">
+                                                    <i class="fas fa-file-excel me-2"></i>Exporter Excel
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 text-end">
+                                                <button class="btn btn-outline-danger" onclick="clearAllEOLData()">
+                                                    <i class="fas fa-trash me-2"></i>Effacer tout
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Costs Tab -->
+                    <div class="tab-pane fade" id="nav-costs" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0">Construction</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="upload-area" data-phase="ConstructionCosts">
+                                            <input type="file" accept=".xlsx,.xls" class="form-control mb-2">
+                                            <button class="btn btn-success btn-sm w-100">
+                                                <i class="fas fa-upload me-1"></i>Importer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0">Opération</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="upload-area" data-phase="OperationCosts">
+                                            <input type="file" accept=".xlsx,.xls" class="form-control mb-2">
+                                            <button class="btn btn-warning btn-sm w-100">
+                                                <i class="fas fa-upload me-1"></i>Importer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">Maintenance</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="upload-area" data-phase="MaintenanceCosts">
+                                            <input type="file" accept=".xlsx,.xls" class="form-control mb-2">
+                                            <button class="btn btn-info btn-sm w-100">
+                                                <i class="fas fa-upload me-1"></i>Importer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0">Fin de vie</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="upload-area" data-phase="EndOfLifeCosts">
+                                            <input type="file" accept=".xlsx,.xls" class="form-control mb-2">
+                                            <button class="btn btn-danger btn-sm w-100">
+                                                <i class="fas fa-upload me-1"></i>Importer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lifespan Tab -->
+                    <div class="tab-pane fade" id="nav-lifespan" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-calendar-alt me-2"></i>
+                                            Durée de vie du projet
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <input type="number" id="project-lifespan" class="form-control" min="1" max="200" placeholder="Années">
+                                            <button class="btn btn-primary" onclick="setProjectLifespan()">
+                                                <i class="fas fa-save me-1"></i>Enregistrer
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">Durée de vie projetée en années</small>
+                                        <div id="project-lifespan-status" class="mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-database me-2"></i>
+                                            Base de données matériaux
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <input type="file" id="bdd-file" accept=".xlsx,.xls" class="form-control mb-2">
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-outline-primary btn-sm" onclick="loadMaterialsDB()">
+                                                <i class="fas fa-upload me-1"></i>Charger BDD
+                                            </button>
+                                            <button class="btn btn-outline-success btn-sm" onclick="autofillLifespan()">
+                                                <i class="fas fa-magic me-1"></i>Auto-remplir
+                                            </button>
+                                        </div>
+                                        <div id="bdd-status" class="mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-file-excel me-2"></i>
+                                            Import Excel des durées de vie
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input type="file" id="lifespan-file" accept=".xlsx,.xls" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-primary w-100" onclick="importLifespan()">
+                                                    <i class="fas fa-upload me-1"></i>Importer
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div id="lifespan-import-status" class="mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Tab -->
+                    <div class="tab-pane fade" id="nav-summary" role="tabpanel">
+                        <!-- Section Gestion des Taux d'Actualisation -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"> Gestion des Taux d'Actualisation</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!-- Définition du taux global -->
+                                            <div class="col-md-4">
+                                                <div class="card border-primary">
+                                                    <div class="card-header bg-primary text-white">
+                                                        <h6 class="mb-0">Taux Global</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="input-group mb-3">
+                                                            <input type="number" class="form-control" id="global-rate" 
+                                                                   value="3.0" min="0" max="20" step="0.1">
+                                                            <span class="input-group-text">%</span>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="setGlobalDiscountRate()">
+                                                            <i class="fas fa-globe"></i> Appliquer à toutes les années
+                                                        </button>
+                                                        <div class="form-text mt-2">Applique le même taux à toutes les années du projet</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Visualisation des taux par année -->
+                                            <div class="col-md-8">
+                                                <div class="card border-info">
+                                                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                                                        <h6 class="mb-0">Taux par Année</h6>
+                                                        <div>
+                                                            <button type="button" class="btn btn-light btn-sm" onclick="loadDiscountRates()">
+                                                                <i class="fas fa-sync"></i> Actualiser
+                                                            </button>
+                                                            <button type="button" class="btn btn-warning btn-sm" onclick="showDiscountRatesTable()">
+                                                                <i class="fas fa-table"></i> Tableau détaillé
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="discount-rates-summary" class="mb-3">
+                                                            <div class="row text-center">
+                                                                <div class="col-4">
+                                                                    <small class="text-muted">Années configurées</small><br>
+                                                                    <span class="h5 text-success" id="configured-years">0</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <small class="text-muted">Taux moyen</small><br>
+                                                                    <span class="h5 text-primary" id="average-rate">0%</span>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <small class="text-muted">Années manquantes</small><br>
+                                                                    <span class="h5 text-warning" id="missing-years">0</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Mini graphique des taux -->
+                                                        <div class="chart-container" style="height: 200px;">
+                                                            <canvas id="discount-rates-chart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section Tableau Détaillé des Taux d'Actualisation -->
+                        <div class="row mb-4" id="detailed-discount-rates-section" style="display: none;">
+                            <div class="col-12">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning bg-opacity-10 d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0"> Tableau Détaillé des Taux d'Actualisation</h5>
+                                        <div>
+                                            <button class="btn btn-outline-secondary btn-sm" onclick="hideDiscountRatesTable()">
+                                                <i class="fas fa-times"></i> Fermer
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Contrôles rapides -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Taux global (%)</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="global-rate-detailed" step="0.1" min="0" max="20" value="4.0" placeholder="4.0">
+                                                    <button class="btn btn-primary" onclick="setGlobalDiscountRate()">
+                                                        <i class="fas fa-globe me-2"></i>Appliquer à toutes les années
+                                                    </button>
+                                                </div>
+                                                <small class="text-muted">Applique le même taux à toute la durée de vie</small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Actions</label>
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn btn-outline-info" onclick="loadDiscountRates()">
+                                                        <i class="fas fa-refresh me-2"></i>Charger les taux actuels
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-sm" onclick="forceReloadDiscountTable()">
+                                                        <i class="fas fa-bug me-2"></i>Debug: Forcer rechargement
+                                                    </button>
+                                                    <button class="btn btn-outline-danger btn-sm" onclick="diagnosticTableauTaux()">
+                                                        <i class="fas fa-search me-2"></i> DIAGNOSTIC COMPLET
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Taux moyens courants</label>
+                                                <div class="alert alert-info mb-0" style="font-size: 0.85rem;">
+                                                    <strong>Inflation :</strong> 2-3%<br>
+                                                    <strong>Obligations :</strong> 3-5%<br>
+                                                    <strong>Projets publics :</strong> 4-6%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Table des taux par année -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Taux d'actualisation par année</h6>
+                                                <div class="table-responsive" style="max-height: 400px;">
+                                                    <table class="table table-sm table-hover">
+                                                        <thead class="table-dark sticky-top">
+                                                            <tr>
+                                                                <th>Année</th>
+                                                                <th>Taux (%)</th>
+                                                                <th>Facteur d'actualisation</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="discount-rates-table">
+                                                            <tr><td colspan="4" class="text-center text-muted">Cliquez sur "Charger les taux actuels" pour afficher les données</td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <button class="btn btn-success" onclick="saveAllDiscountRates()">
+                                                        <i class="fas fa-save me-2"></i>Sauvegarder tous les changements
+                                                    </button>
+                                                    <button class="btn btn-outline-info" onclick="exportDiscountRates()">
+                                                        <i class="fas fa-download me-2"></i>Exporter CSV
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0"> Évolution des coûts</h5>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="refreshChart()">
+                                            <i class="fas fa-sync-alt"></i> Actualiser
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container" style="height: 400px;">
+                                            <canvas id="cost-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section WLC (Whole Life Cost) -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"> Calcul du Whole Life Cost (WLC)</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="alert alert-info mb-0">
+                                                    <strong>Information :</strong> Le calcul WLC utilise l'approche sémantique avec les classes DiscountedXXXCosts de l'ontologie.
+                                                    Assurez-vous de configurer les taux d'actualisation avant de calculer le WLC.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-end justify-content-center">
+                                                <button type="button" class="btn btn-success" onclick="calculateWLC()">
+                                                    <i class="fas fa-brain me-2"></i>Calculer le WLC
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Loading Section -->
+                                        <div class="row" id="wlc-loading" style="display: none;">
+                                            <div class="col-12">
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                                                        <span class="visually-hidden">Calcul en cours...</span>
+                                                    </div>
+                                                    <span class="text-muted">Calcul en cours...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Résultats WLC -->
+                                        <div id="wlc-results" class="d-none">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="card bg-light">
+                                                        <div class="card-body text-center">
+                                                            <h3 class="card-title text-success mb-2" id="wlc-total">0 $</h3>
+                                                            <p class="card-text">
+                                                                <strong>Whole Life Cost</strong><br>
+                                                                <small class="text-muted">Valeur actualisée nette du projet</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">Détails du Calcul</h6>
+                                                            <div class="row text-center">
+                                                                <div class="col-6">
+                                                                    <div class="border-end">
+                                                                        <h5 class="text-primary mb-1" id="wlc-avg-rate">3.0%</h5>
+                                                                        <small class="text-muted">Taux moyen</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <h5 class="text-info mb-1" id="wlc-costs-count">0</h5>
+                                                                    <small class="text-muted">Coûts analysés</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row text-center mt-3">
+                                                                <div class="col-6">
+                                                                    <div class="border-end">
+                                                                        <h5 class="text-warning mb-1" id="wlc-years-count">0</h5>
+                                                                        <small class="text-muted">Années</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <h5 class="text-success mb-1" id="wlc-savings">0 $</h5>
+                                                                    <small class="text-muted">Économies</small>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Graphique de comparaison coûts nominaux vs actualisés -->
+                                            <div class="row mt-3">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h6 class="mb-0">Comparaison : Coûts nominaux vs Coûts actualisés</h6>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="chart-container" style="height: 300px;">
+                                                                <canvas id="wlc-comparison-chart"></canvas>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Messages d'erreur et avertissements -->
+                                        <div id="wlc-warnings" class="alert alert-warning d-none" role="alert">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span id="wlc-warnings-message">Avertissements</span>
+                                        </div>
+                                        
+                                        <div id="wlc-error" class="alert alert-danger d-none" role="alert">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span id="wlc-error-message">Erreur lors du calcul</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WLC Analysis Tab -->
+                    <div class="tab-pane fade" id="nav-analysis" role="tabpanel">
+                        <!-- Section Boutons d'Analyse -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"> Analyses Intelligentes WLC</h5>
+                                        <small class="text-muted">Interrogations automatisées de l'ontologie pour identifier les éléments critiques</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!-- Boutons d'analyse -->
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-danger w-100 h-100 analysis-button" onclick="analyzeCostImpact()">
+                                                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                                    <h6>Impact Coût Global</h6>
+                                                    <small class="text-muted">Éléments avec le plus gros impact financier</small>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-warning w-100 h-100 analysis-button" onclick="analyzeFrequentReplacements()">
+                                                    <i class="fas fa-redo-alt fa-2x mb-2"></i>
+                                                    <h6>Remplacements Fréquents</h6>
+                                                    <small class="text-muted">Éléments nécessitant des renouvellements fréquents</small>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-info w-100 h-100 analysis-button" onclick="analyzeHighMaintenance()">
+                                                    <i class="fas fa-tools fa-2x mb-2"></i>
+                                                    <h6>Maintenance Élevée</h6>
+                                                    <small class="text-muted">Coûts de maintenance les plus importants</small>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-primary w-100 h-100 analysis-button" onclick="analyzeHighOperation()">
+                                                    <i class="fas fa-cogs fa-2x mb-2"></i>
+                                                    <h6>Opération sur Durée de Vie</h6>
+                                                    <small class="text-muted">Coûts d'exploitation cumulés les plus élevés</small>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-success w-100 h-100 analysis-button" onclick="analyzeCostByPhase()">
+                                                    <i class="fas fa-chart-pie fa-2x mb-2"></i>
+                                                    <h6>Répartition par Phases</h6>
+                                                    <small class="text-muted">Distribution des coûts par phases du cycle de vie</small>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <button type="button" class="btn btn-outline-secondary w-100 h-100 analysis-button" onclick="clearAnalysisResults()">
+                                                    <i class="fas fa-eraser fa-2x mb-2"></i>
+                                                    <h6>Effacer les Résultats</h6>
+                                                    <small class="text-muted">Nettoyer l'affichage des analyses</small>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section Affichage des Résultats -->
+                        <div class="row d-none" id="analysis-results-section">
+                            <div class="col-12">
+                                <!-- Résumé de l'analyse -->
+                                <div id="analysis-summary" class="mb-4">
+                                    <!-- Contenu généré dynamiquement -->
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0" id="analysis-title">Résultats d'Analyse</h5>
+                                        <div>
+                                            <span class="badge bg-info" id="analysis-count">0 éléments</span>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm ms-2" onclick="exportAnalysisResults()">
+                                                <i class="fas fa-download"></i> Exporter Excel
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Zone de résultats détaillés -->
+                                        <div id="analysis-results">
+                                            <!-- Contenu généré dynamiquement par les fonctions d'analyse -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section d'aide et informations -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card border-light">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            Guide des Analyses WLC
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="text-primary">Analyses Disponibles</h6>
+                                                <ul class="list-unstyled small">
+                                                    <li><i class="fas fa-check text-success me-2"></i><strong>Impact Coût Global :</strong> Identifie les 20 éléments ayant le coût total le plus élevé</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i><strong>Remplacements Fréquents :</strong> Éléments avec durée de vie ≤25 ans ou maintenance élevée</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i><strong>Maintenance Élevée :</strong> Top 20 des coûts de maintenance absolus</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i><strong>Opération sur Durée :</strong> Coûts d'exploitation cumulés sur la durée de vie</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i><strong>Répartition par Phases :</strong> Distribution globale Construction/Opération/Maintenance/Fin de vie</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="text-primary">Informations Techniques</h6>
+                                                <ul class="list-unstyled small">
+                                                    <li><i class="fas fa-database text-info me-2"></i>Requêtes SPARQL optimisées sur l'ontologie WLCONTO</li>
+                                                    <li><i class="fas fa-filter text-info me-2"></i>Filtrage automatique des éléments sans données</li>
+                                                    <li><i class="fas fa-sort-amount-down text-info me-2"></i>Classement par ordre de criticité</li>
+                                                    <li><i class="fas fa-chart-bar text-info me-2"></i>Visualisations adaptées au type d'analyse</li>
+                                                    <li><i class="fas fa-file-export text-info me-2"></i>Export possible vers Excel/CSV</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stakeholders Tab -->
+                    <div class="tab-pane fade" id="nav-stakeholders" role="tabpanel">
+                        <h2>Gestion des Parties Prenantes</h2>
+                        <p class="text-muted">Analysez comment les décisions de coûts affectent les parties prenantes au fil du temps</p>
+                        
+                        <!-- Navigation sous-onglets -->
+                        <ul class="nav nav-pills mb-4" id="stakeholder-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="stakeholder-list-tab" data-bs-toggle="pill" data-bs-target="#stakeholder-list" type="button" role="tab">
+                                    Parties Prenantes
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="cost-attribution-tab" data-bs-toggle="pill" data-bs-target="#cost-attribution" type="button" role="tab">
+                                    Attribution des Coûts
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="stakeholder-analysis-tab" data-bs-toggle="pill" data-bs-target="#stakeholder-analysis" type="button" role="tab">
+                                    Impact des Répartitions
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Contenu des sous-onglets -->
+                        <div class="tab-content" id="stakeholder-tabContent">
+                            <!-- Liste des Parties Prenantes -->
+                            <div class="tab-pane fade show active" id="stakeholder-list" role="tabpanel">
+                        <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Créer une Partie Prenante</h5>
+                                    </div>
+                                            <div class="card-body">
+                                                <form id="create-stakeholder-form">
+                                                    <div class="mb-3">
+                                                        <label for="stakeholder-type" class="form-label">Type de Partie Prenante</label>
+                                                        <select class="form-select" id="stakeholder-type" required>
+                                                            <option value="">Sélectionner un type...</option>
+                                                            <option value="PropertyOwner">Propriétaire</option>
+                                                            <option value="EndUser">Utilisateur Final</option>
+                                                            <option value="MaintenanceProvider">Prestataire Maintenance</option>
+                                                            <option value="EnergyProvider">Fournisseur Énergie</option>
+                                                        </select>
+                                </div>
+                                                    <div class="mb-3">
+                                                        <label for="stakeholder-name" class="form-label">Nom</label>
+                                                        <input type="text" class="form-control" id="stakeholder-name" placeholder="Nom de la partie prenante" required>
+                                            </div>
+                                                    <button type="submit" class="btn btn-primary">Créer Partie Prenante</button>
+                                                </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Parties Prenantes Existantes</h5>
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="loadStakeholders()">Actualiser</button>
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteAllStakeholders()">Supprimer Tout</button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="stakeholders-list">
+                                                    <p class="text-muted">Chargement des parties prenantes...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <!-- Attribution des Coûts -->
+                            <div class="tab-pane fade" id="cost-attribution" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Attribution Manuelle des Coûts</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <form id="cost-attribution-form">
+                                                    <!-- Mode de sélection -->
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Mode de Sélection</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="selection-mode" id="mode-selected" value="selected">
+                                                            <label class="form-check-label" for="mode-selected">
+                                                                Éléments sélectionnés dans le tableau
+                                                            </label>
+                                                </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="selection-mode" id="mode-all" value="all">
+                                                            <label class="form-check-label" for="mode-all">
+                                                                Tous les éléments
+                                                            </label>
+                                            </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="selection-mode" id="mode-uniformat" value="uniformat" checked>
+                                                            <label class="form-check-label" for="mode-uniformat">
+                                                                Par code Uniformat
+                                                            </label>
+                                            </div>
+                                        </div>
+                                                    
+                                                    <!-- Sélecteur Uniformat (conditionnel) -->
+                                                    <div class="mb-3" id="uniformat-selector">
+                                                        <label for="attribution-uniformat" class="form-label">Code Uniformat</label>
+                                                        <select class="form-select" id="attribution-uniformat">
+                                                            <option value="">Sélectionner un code Uniformat...</option>
+                                                        </select>
+                                                        <div id="uniformat-preview"></div>
+                                    </div>
+                                                    
+                                                    <!-- Sélecteur d'élément individuel (conditionnel) -->
+                                                    <div class="mb-3 d-none" id="individual-selector">
+                                                        <label for="attribution-element" class="form-label">Élément Spécifique</label>
+                                                        <select class="form-select" id="attribution-element">
+                                                            <option value="">Sélectionner un élément...</option>
+                                                        </select>
+                                </div>
+
+                                                    <!-- Prévisualisation de sélection -->
+                                                    <div class="mb-3">
+                                                        <div id="selection-preview"></div>
+                                            </div>
+                                                    
+                                                    <!-- Partie prenante et pourcentage -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="attribution-stakeholder" class="form-label">Partie Prenante</label>
+                                                            <select class="form-select" id="attribution-stakeholder" required>
+                                                                <option value="">Sélectionner une partie prenante...</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="attribution-percentage" class="form-label">Pourcentage de Responsabilité (%)</label>
+                                                            <input type="number" class="form-control" id="attribution-percentage" min="0" max="100" value="100" required>
+                                        </div>
+                                    </div>
+
+                                                    <!-- Types de coûts -->
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Types de Coûts à Attribuer</label>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="attr-construction" checked>
+                                                                    <label class="form-check-label" for="attr-construction">Construction</label>
+                                                </div>
+                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="attr-operation">
+                                                                    <label class="form-check-label" for="attr-operation">Opération</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="attr-maintenance">
+                                                                    <label class="form-check-label" for="attr-maintenance">Maintenance</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="attr-endoflife">
+                                                                    <label class="form-check-label" for="attr-endoflife">Fin de vie</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <button type="submit" class="btn btn-success">Attribuer les Coûts</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Attributions existantes -->
+                                        <div class="card mt-4">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h5>Attributions Existantes</h5>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="loadExistingAttributions()">Actualiser</button>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="attributions-table">
+                                                    <div class="text-center text-muted py-4">
+                                                        <p>Chargement des attributions...</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Attribution Automatique</h5>
+                                                </div>
+                                            <div class="card-body">
+                                                <p class="text-muted">Applique les règles métier standard :</p>
+                                                <ul class="list-unstyled">
+                                                    <li><strong>Propriétaire :</strong> Construction + Fin de vie</li>
+                                                    <li><strong>Utilisateur :</strong> Opération</li>
+                                                    <li><strong>Maintenance :</strong> Maintenance</li>
+                                                            </ul>
+                                                <button class="btn btn-warning w-100" onclick="autoAssignCosts()">Attribution Automatique</button>
+                                                        </div>
+                                                    </div>
+                                        
+                                        <div class="card mt-3">
+                                            <div class="card-header">
+                                                <h5>Actions Globales</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <button class="btn btn-danger w-100 mb-2" onclick="deleteAllAttributions()">Supprimer Toutes les Attributions</button>
+                                                <button class="btn btn-info w-100" onclick="syncCostValues()">Synchroniser les Valeurs</button>
+                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                            <!-- Analyse d'Impact -->
+                            <div class="tab-pane fade" id="stakeholder-analysis" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Vue Multi-Parties Prenantes</h5>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="loadMultiStakeholderView()">Actualiser</button>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="multi-stakeholder-content">
+                                                    <div class="text-center text-muted py-4">
+                                                        <p>Cliquez sur "Actualiser" pour charger l'analyse d'impact</p>
+                                                </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Analyse Détaillée</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="stakeholder-analysis-details">
+                                                    <p class="text-muted">Sélectionnez une partie prenante pour voir l'analyse détaillée</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Répartition des Impacts par Type</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="stakeholder-breakdown-chart" width="400" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Comparaison d'Analyses WLC -->
+                    <div class="tab-pane fade" id="simulator" role="tabpanel">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fas fa-balance-scale me-2"></i>
+                                            Comparaison d'Analyses WLC
+                                                    </h5>
+                                        <p class="text-muted mb-0">Comparez votre analyse actuelle avec une analyse précédente</p>
+                                                </div>
+                                    <div class="card-body">
+                                        
+                                        <!-- Section Export -->
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="card border-success">
+                                                    <div class="card-header bg-success text-white">
+                                                        <h6 class="mb-0">
+                                                            <i class="fas fa-download me-2"></i>
+                                                            Sauvegarder l'Analyse Actuelle
+                                                        </h6>
+                                            </div>
+                                            <div class="card-body">
+                                                        <p class="card-text">
+                                                            Téléchargez votre analyse complète (knowledge graph) au format RDF/Turtle.
+                                                        </p>
+                                                        <button onclick="exportCompleteAnalysis()" class="btn btn-success w-100">
+                                                            <i class="fas fa-file-export me-2"></i>
+                                                            Télécharger l'Analyse Complète (.ttl)
+                                                        </button>
+                                                        <small class="text-muted d-block mt-2">
+                                                            Inclut : éléments, coûts, parties prenantes, taux d'actualisation, résultats WLC
+                                                        </small>
+                                                        
+                                                        <!-- Statut de l'export -->
+                                                        <div id="export-status" class="mt-3"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="card border-primary">
+                                                    <div class="card-header bg-primary text-white">
+                                                        <h6 class="mb-0">
+                                                            <i class="fas fa-upload me-2"></i>
+                                                            Importer une Analyse Précédente
+                                                        </h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text">
+                                                            Uploadez un fichier d'analyse précédente pour comparaison.
+                                                        </p>
+                                                        <div class="mb-3">
+                                                            <input type="file" id="previous-analysis-file" accept=".ttl,.rdf" class="form-control">
+                                                            <div class="form-text">Formats acceptés : .ttl, .rdf</div>
+                                                        </div>
+                                                        <button onclick="importPreviousAnalysis()" class="btn btn-primary w-100">
+                                                            <i class="fas fa-file-import me-2"></i>
+                                                            Importer et Préparer la Comparaison
+                                                        </button>
+                                                        
+                                                        <!-- Statut de l'import -->
+                                                        <div id="import-status" class="mt-3"></div>
+                                                </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+
+                                        <!-- Section Comparaison -->
+                                        <div class="row mb-4">
+                                            <div class="col-12">
+                                                <div class="card border-warning">
+                                                    <div class="card-header bg-warning text-dark">
+                                                        <h6 class="mb-0">
+                                                            <i class="fas fa-balance-scale me-2"></i>
+                                                            Lancer la Comparaison
+                                                        </h6>
+                                                        </div>
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-md-8">
+                                                                <p class="mb-2">
+                                                                    <strong>Analyse Actuelle :</strong> 
+                                                                    <span id="current-analysis-info" class="text-muted">Prête pour comparaison</span>
+                                                                </p>
+                                                                <p class="mb-0">
+                                                                    <strong>Analyse Précédente :</strong> 
+                                                                    <span id="previous-analysis-info" class="text-muted">Aucune analyse importée</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button onclick="compareAnalyses()" class="btn btn-warning w-100" id="compare-btn" disabled>
+                                                                    <i class="fas fa-chart-line me-2"></i>
+                                                                    Comparer les Analyses
+                                                                </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                        <!-- Section Résultats de Comparaison -->
+                                        <div class="row" id="comparison-results-section" style="display: none;">
+                                            <div class="col-12">
+                                                <div class="card border-info">
+                                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">
+                                                            <i class="fas fa-chart-bar me-2"></i>
+                                                            Résultats de la Comparaison
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                                        
+                                                        <!-- Résumé Exécutif -->
+                                                        <div class="row mb-4">
+                                                            <div class="col-12">
+                                                                <div class="alert alert-info">
+                                                                    <h6><i class="fas fa-info-circle me-2"></i>Résumé Exécutif</h6>
+                                                                    <div id="executive-summary">
+                                                                        <!-- Contenu généré dynamiquement -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Métriques Clés -->
+                                                        <div class="row mb-4">
+                                            <div class="col-md-3">
+                                                                <div class="card text-center">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-primary" id="wlc-evolution">-</h5>
+                                                                        <p class="card-text">Évolution WLC Total</p>
+                                                                    </div>
+                                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                                <div class="card text-center">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-success" id="elements-changed">-</h5>
+                                                                        <p class="card-text">Éléments Modifiés</p>
+                                                                    </div>
+                                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                                <div class="card text-center">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-warning" id="stakeholders-impact">-</h5>
+                                                                        <p class="card-text">Impact Parties Prenantes</p>
+                                                                    </div>
+                                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                                <div class="card text-center">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title text-info" id="parameters-changed">-</h5>
+                                                                        <p class="card-text">Paramètres Modifiés</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                                        <!-- Graphiques de Comparaison -->
+                                                        <div class="row mb-4">
+                                                            <div class="col-md-6">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <h6>Évolution par Phase</h6>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <canvas id="phases-comparison-chart" width="400" height="300"></canvas>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <h6>Impact Parties Prenantes</h6>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <canvas id="stakeholders-comparison-chart" width="400" height="300"></canvas>
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                                                        <!-- Tableau Détaillé -->
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <h6>Détail des Changements</h6>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div id="detailed-changes-table">
+                                                                            <!-- Tableau généré dynamiquement -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Actions -->
+                                                        <div class="row mt-4">
+                                                            <div class="col-12">
+                                                                <div class="d-flex gap-2">
+                                                                    <button onclick="exportComparisonReport()" class="btn btn-outline-primary">
+                                                                        <i class="fas fa-file-pdf me-2"></i>
+                                                                        Exporter le Rapport
+                                                                    </button>
+                                                                    <button onclick="clearComparison()" class="btn btn-outline-secondary">
+                                                                        <i class="fas fa-times me-2"></i>
+                                                                        Effacer la Comparaison
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notification-toast" class="toast" role="alert">
+            <div class="toast-header">
+                <i id="toast-icon" class="fas fa-info-circle me-2"></i>
+                <strong class="me-auto" id="toast-title">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toast-body"></div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay d-none">
+        <div class="d-flex align-items-center">
+            <div class="spinner-border text-primary me-3" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+            <span class="loading-text">Chargement...</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS - Ordre important: notifications d'abord, puis main.js -->
+    <script src="assets/js/components/notifications.js"></script>
+    <script src="assets/js/components/fileUpload.js"></script>
+    <script src="assets/js/components/dataTable.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Modal Filtre Analyse par Phase -->
+    <div class="modal fade" id="phaseFilterModal" tabindex="-1" aria-labelledby="phaseFilterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phaseFilterModalLabel">
+                        <i class="fas fa-filter me-2"></i>
+                        Filtrer l'Analyse par Phase
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6><i class="fas fa-list me-2"></i>Type de Filtre</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="phaseFilterType" id="phaseFilterAll" value="all" checked>
+                                        <label class="form-check-label" for="phaseFilterAll">
+                                            <strong>Tous les éléments</strong>
+                                            <small class="text-muted d-block">Analyser tous les éléments du projet</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="phaseFilterType" id="phaseFilterSelected" value="selected">
+                                        <label class="form-check-label" for="phaseFilterSelected">
+                                            <strong>Éléments sélectionnés</strong>
+                                            <small class="text-muted d-block">
+                                                Utiliser la sélection du tableau principal
+                                                <span id="selectedElementsCount" class="badge bg-secondary">0 sélectionnés</span>
+                                            </small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="phaseFilterType" id="phaseFilterUniformatCode" value="uniformat">
+                                        <label class="form-check-label" for="phaseFilterUniformatCode">
+                                            <strong>Par code Uniformat</strong>
+                                            <small class="text-muted d-block">Filtrer par code de classification</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="phaseFilterType" id="phaseFilterCustom" value="custom">
+                                        <label class="form-check-label" for="phaseFilterCustom">
+                                            <strong>Sélection personnalisée</strong>
+                                            <small class="text-muted d-block">Choisir des éléments individuels</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6><i class="fas fa-cog me-2"></i>Options de Filtre</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Filtre Uniformat -->
+                                    <div id="uniformatFilterOptions" class="d-none">
+                                        <label for="uniformatCodeFilter" class="form-label">Code Uniformat</label>
+                                        <input type="text" class="form-control mb-2" id="uniformatCodeFilter" placeholder="Ex: D3020, B1010...">
+                                        <small class="text-muted">Saisissez une partie du code Uniformat à rechercher</small>
+                                    </div>
+                                    
+                                    <!-- Sélection personnalisée -->
+                                    <div id="customFilterOptions" class="d-none">
+                                        <label class="form-label">Rechercher des éléments</label>
+                                        <input type="text" class="form-control mb-2" id="elementSearchInput" placeholder="Rechercher par description ou matériau...">
+                                        <div id="elementSearchResults" class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                                            <p class="text-muted mb-0">Tapez pour rechercher des éléments...</p>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="text-muted">Éléments sélectionnés: </span>
+                                            <span id="customSelectedCount" class="badge bg-primary">0</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Aperçu général -->
+                                    <div id="generalPreview">
+                                        <div class="alert alert-info mb-0">
+                                            <h6><i class="fas fa-info-circle me-2"></i>Aperçu</h6>
+                                            <p id="filterPreviewText" class="mb-0">Tous les éléments seront analysés</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-success" onclick="executePhaseAnalysisWithFilter()">
+                        <i class="fas fa-chart-pie me-2"></i>
+                        Lancer l'Analyse
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ajout d'Élément -->
+    <div class="modal fade" id="addElementModal" tabindex="-1" aria-labelledby="addElementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addElementModalLabel">
+                        <i class="fas fa-plus me-2"></i>
+                        Ajouter un Nouvel Élément
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addElementForm">
+                        <div class="row">
+                            <!-- Informations de base -->
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6><i class="fas fa-info-circle me-2"></i>Informations de Base</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="newElementGuid" class="form-label">GlobalId *</label>
+                                            <input type="text" class="form-control" id="newElementGuid" required 
+                                                   placeholder="Ex: 3xKpF2_5X1wB8hGvR4mN7q">
+                                            <div class="form-text">Identifiant unique de l'élément (sera généré automatiquement si vide)</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newElementIfcClass" class="form-label">Classe IFC *</label>
+                                            <select class="form-select" id="newElementIfcClass" required>
+                                                <option value="">Sélectionner une classe IFC</option>
+                                                <option value="IfcWall">IfcWall (Mur)</option>
+                                                <option value="IfcSlab">IfcSlab (Dalle)</option>
+                                                <option value="IfcBeam">IfcBeam (Poutre)</option>
+                                                <option value="IfcColumn">IfcColumn (Poteau)</option>
+                                                <option value="IfcDoor">IfcDoor (Porte)</option>
+                                                <option value="IfcWindow">IfcWindow (Fenêtre)</option>
+                                                <option value="IfcRoof">IfcRoof (Toiture)</option>
+                                                <option value="IfcStair">IfcStair (Escalier)</option>
+                                                <option value="IfcRailing">IfcRailing (Garde-corps)</option>
+                                                <option value="IfcCovering">IfcCovering (Revêtement)</option>
+                                                <option value="IfcFurnishingElement">IfcFurnishingElement (Mobilier)</option>
+                                                <option value="IfcBuildingElementProxy">IfcBuildingElementProxy (Élément générique)</option>
+                                                <option value="IfcFlowTerminal">IfcFlowTerminal (Terminal de flux)</option>
+                                                <option value="IfcFlowSegment">IfcFlowSegment (Segment de flux)</option>
+                                                <option value="IfcFlowFitting">IfcFlowFitting (Raccord de flux)</option>
+                                                <option value="IfcEnergyConversionDevice">IfcEnergyConversionDevice (Équipement énergétique)</option>
+                                                <option value="IfcFlowMovingDevice">IfcFlowMovingDevice (Équipement de circulation)</option>
+                                                <option value="IfcFlowStorageDevice">IfcFlowStorageDevice (Équipement de stockage)</option>
+                                                <option value="IfcFlowTreatmentDevice">IfcFlowTreatmentDevice (Équipement de traitement)</option>
+                                                <option value="IfcDistributionControlElement">IfcDistributionControlElement (Élément de contrôle)</option>
+                                                <option value="IfcElectricalElement">IfcElectricalElement (Élément électrique)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newElementMaterial" class="form-label">Matériau *</label>
+                                            <input type="text" class="form-control" id="newElementMaterial" required 
+                                                   placeholder="Ex: Béton armé, Acier, Bois...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Classification Uniformat -->
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6><i class="fas fa-tags me-2"></i>Classification Uniformat</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="newElementUniformat" class="form-label">Code Uniformat</label>
+                                            <input type="text" class="form-control" id="newElementUniformat" 
+                                                   placeholder="Ex: B1010, D3020...">
+                                            <div class="form-text">Code de classification selon le système Uniformat</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newElementDescription" class="form-label">Description Uniformat *</label>
+                                            <input type="text" class="form-control" id="newElementDescription" required 
+                                                   placeholder="Ex: Fondations superficielles, Système CVCA...">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newElementLifespan" class="form-label">Durée de vie (années)</label>
+                                            <input type="number" class="form-control" id="newElementLifespan" 
+                                                   min="1" max="200" placeholder="50">
+                                            <div class="form-text">Durée de vie estimée de l'élément</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coûts WLC -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6><i class="fas fa-dollar-sign me-2"></i>Coûts du Cycle de Vie (WLC)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="newElementConstructionCost" class="form-label">Construction ($)</label>
+                                                    <input type="number" class="form-control" id="newElementConstructionCost" 
+                                                           min="0" step="0.01" placeholder="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="newElementOperationCost" class="form-label">Opération ($)</label>
+                                                    <input type="number" class="form-control" id="newElementOperationCost" 
+                                                           min="0" step="0.01" placeholder="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="newElementMaintenanceCost" class="form-label">Maintenance ($)</label>
+                                                    <input type="number" class="form-control" id="newElementMaintenanceCost" 
+                                                           min="0" step="0.01" placeholder="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="newElementEndOfLifeCost" class="form-label">Fin de vie ($)</label>
+                                                    <input type="number" class="form-control" id="newElementEndOfLifeCost" 
+                                                           min="0" step="0.01" placeholder="0.00">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-info mb-0">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            <strong>Note :</strong> Les coûts d'opération et de maintenance sont des coûts annuels qui seront multipliés par la durée de vie du projet.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="createElement()">
+                        <i class="fas fa-save me-2"></i>
+                        Créer l'Élément
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

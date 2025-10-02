@@ -1,0 +1,515 @@
+@prefix : <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrla: <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix WLCONTO: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTOLOGY#> .
+@base <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
+
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> rdf:type owl:Ontology ;
+                                                            rdfs:comment """Ontology describing the ISO 15686-5 standard
+Adam Yousfi
+École de Technologie Supérieure (ÉTS)
+Montréal"""@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+swrla:isRuleEnabled rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2002/07/owl#$
+<http://www.w3.org/2002/07/owl#$> rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate
+:ForDate rdf:type owl:ObjectProperty ;
+         rdfs:domain :Costs ;
+         rdfs:range :Time .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasConstructionCosts
+:hasConstructionCosts rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :hasCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts
+:hasCosts rdf:type owl:ObjectProperty ;
+          rdfs:domain :Project ;
+          rdfs:range :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate
+:hasDiscountRate rdf:type owl:ObjectProperty ,
+                          owl:SymmetricProperty ;
+                 rdfs:domain :Time ;
+                 rdfs:range :DiscountRate .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration
+:hasDuration rdf:type owl:ObjectProperty ;
+             rdfs:domain :PeriodOfAnalysis ,
+                         :Project ;
+             rdfs:range :LifeSpan .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEnd
+:hasEnd rdf:type owl:ObjectProperty ;
+        rdfs:domain :Project ;
+        rdfs:range :Time .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEndOfLifeCosts
+:hasEndOfLifeCosts rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasMaintenanceCosts
+:hasMaintenanceCosts rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :hasCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasOperationCosts
+:hasOperationCosts rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart
+:hasStart rdf:type owl:ObjectProperty ;
+          rdfs:domain :Project ;
+          rdfs:range :Time .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC
+:hasWLC rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:domain :Project ;
+        rdfs:range :WholeLifeCost .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf
+:isDiscountedValueOf rdf:type owl:ObjectProperty ;
+                     rdfs:domain :DiscountedCosts ;
+                     rdfs:range :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf
+:isSumOf rdf:type owl:ObjectProperty ;
+         rdfs:domain :WholeLifeCost ;
+         rdfs:range :DiscountedCosts .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue
+:hasCostValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Costs ;
+              rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate
+:hasDate rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Time ;
+         rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination
+:hasDenomination rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Project ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue
+:hasDiscountedCostValue rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :DiscountedCosts ;
+                        rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue
+:hasRateValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain :DiscountRate ;
+              rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue
+:hasTotalValue rdf:type owl:DatatypeProperty ;
+               rdfs:domain :WholeLifeCost ;
+               rdfs:range xsd:decimal .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset
+:Asset rdf:type owl:Class ;
+       rdfs:subClassOf :Project .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ConstructionCosts
+:ConstructionCosts rdf:type owl:Class ;
+                   rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs
+:Costs rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DateOfInstallation
+:DateOfInstallation rdf:type owl:Class ;
+                    rdfs:subClassOf :Time .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate
+:DiscountRate rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedConstructionCosts
+:DiscountedConstructionCosts rdf:type owl:Class ;
+                             rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts
+:DiscountedCosts rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEndOfLifeCosts
+:DiscountedEndOfLifeCosts rdf:type owl:Class ;
+                          rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts
+:DiscountedEnvironmentalCosts rdf:type owl:Class ;
+                              rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts
+:DiscountedExternalitiesCosts rdf:type owl:Class ;
+                              rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome
+:DiscountedIncome rdf:type owl:Class ;
+                  rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts
+:DiscountedMaintenanceCosts rdf:type owl:Class ;
+                            rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts
+:DiscountedNonConstructionCosts rdf:type owl:Class ;
+                                rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts
+:DiscountedOperationCosts rdf:type owl:Class ;
+                          rdfs:subClassOf :DiscountedCosts .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Element
+:Element rdf:type owl:Class ;
+         rdfs:subClassOf :Asset .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts
+:EndOfLifeCosts rdf:type owl:Class ;
+                rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeDate
+:EndOfLifeDate rdf:type owl:Class ;
+               rdfs:subClassOf :Time .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts
+:EnvironmentalCosts rdf:type owl:Class ;
+                    rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts
+:ExternalitiesCosts rdf:type owl:Class ;
+                    rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income
+:Income rdf:type owl:Class ;
+        rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost
+:LifeCycleCost rdf:type owl:Class ;
+               rdfs:subClassOf :WholeLifeCost .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan
+:LifeSpan rdf:type owl:Class ;
+          rdfs:subClassOf :PeriodOfAnalysis .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts
+:MaintenanceCosts rdf:type owl:Class ;
+                  rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts
+:NonConstructionCosts rdf:type owl:Class ;
+                      rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts
+:OperationCosts rdf:type owl:Class ;
+                rdfs:subClassOf :Costs .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#PeriodOfAnalysis
+:PeriodOfAnalysis rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project
+:Project rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time
+:Time rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost
+:WholeLifeCost rdf:type owl:Class .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ExternalitiesCosts
+                :Income
+                :LifeCycleCost
+                :NonConstructionCosts
+              )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+:c rdf:type swrl:Variable .
+
+:value rdf:type swrl:Variable .
+
+:year rdf:type swrl:Variable .
+
+:r rdf:type swrl:Variable .
+
+:R rdf:type swrl:Variable .
+
+:Y rdf:type swrl:Variable .
+
+:dc rdf:type swrl:Variable .
+
+:base rdf:type swrl:Variable .
+
+:denominator rdf:type swrl:Variable .
+
+:DC rdf:type swrl:Variable .
+
+[ swrla:isRuleEnabled "true"^^xsd:boolean ;
+   rdfs:comment "" ;
+   rdfs:label "S1" ;
+   rdf:type swrl:Imp ;
+   swrl:body [ rdf:type swrl:AtomList ;
+               rdf:first [ rdf:type swrl:ClassAtom ;
+                           swrl:classPredicate :Costs ;
+                           swrl:argument1 :c
+                         ] ;
+               rdf:rest [ rdf:type swrl:AtomList ;
+                          rdf:first [ rdf:type swrl:ClassAtom ;
+                                      swrl:classPredicate :Time ;
+                                      swrl:argument1 :year
+                                    ] ;
+                          rdf:rest [ rdf:type swrl:AtomList ;
+                                     rdf:first [ rdf:type swrl:IndividualPropertyAtom ;
+                                                 swrl:propertyPredicate :ForDate ;
+                                                 swrl:argument1 :c ;
+                                                 swrl:argument2 :year
+                                               ] ;
+                                     rdf:rest [ rdf:type swrl:AtomList ;
+                                                rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                                            swrl:propertyPredicate :hasCostValue ;
+                                                            swrl:argument1 :c ;
+                                                            swrl:argument2 :value
+                                                          ] ;
+                                                rdf:rest [ rdf:type swrl:AtomList ;
+                                                           rdf:first [ rdf:type swrl:ClassAtom ;
+                                                                       swrl:classPredicate :DiscountRate ;
+                                                                       swrl:argument1 :r
+                                                                     ] ;
+                                                           rdf:rest [ rdf:type swrl:AtomList ;
+                                                                      rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                                                                  swrl:propertyPredicate :hasRateValue ;
+                                                                                  swrl:argument1 :r ;
+                                                                                  swrl:argument2 :R
+                                                                                ] ;
+                                                                      rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                 rdf:first [ rdf:type swrl:IndividualPropertyAtom ;
+                                                                                             swrl:propertyPredicate :ForDate ;
+                                                                                             swrl:argument1 :r ;
+                                                                                             swrl:argument2 :year
+                                                                                           ] ;
+                                                                                 rdf:rest rdf:nil
+                                                                               ]
+                                                                    ]
+                                                         ]
+                                              ]
+                                   ]
+                        ]
+             ] ;
+   swrl:head [ rdf:type swrl:AtomList ;
+               rdf:first [ rdf:type swrl:BuiltinAtom ;
+                           swrl:builtin <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> ;
+                           swrl:arguments ( :c
+                                            :value
+                                            :year
+                                            :R
+                                          )
+                         ] ;
+               rdf:rest rdf:nil
+             ]
+ ] .
+
+[ swrla:isRuleEnabled "true"^^xsd:boolean ;
+   rdfs:comment "" ;
+   rdfs:label "S2" ;
+   rdf:type swrl:Imp ;
+   swrl:body [ rdf:type swrl:AtomList ;
+               rdf:first [ rdf:type swrl:ClassAtom ;
+                           swrl:classPredicate :Costs ;
+                           swrl:argument1 :c
+                         ] ;
+               rdf:rest [ rdf:type swrl:AtomList ;
+                          rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                      swrl:propertyPredicate :hasCostValue ;
+                                      swrl:argument1 :c ;
+                                      swrl:argument2 :value
+                                    ] ;
+                          rdf:rest [ rdf:type swrl:AtomList ;
+                                     rdf:first [ rdf:type swrl:IndividualPropertyAtom ;
+                                                 swrl:propertyPredicate :ForDate ;
+                                                 swrl:argument1 :c ;
+                                                 swrl:argument2 :year
+                                               ] ;
+                                     rdf:rest [ rdf:type swrl:AtomList ;
+                                                rdf:first [ rdf:type swrl:ClassAtom ;
+                                                            swrl:classPredicate :DiscountRate ;
+                                                            swrl:argument1 :r
+                                                          ] ;
+                                                rdf:rest [ rdf:type swrl:AtomList ;
+                                                           rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                                                       swrl:propertyPredicate :hasRateValue ;
+                                                                       swrl:argument1 :r ;
+                                                                       swrl:argument2 :R
+                                                                     ] ;
+                                                           rdf:rest [ rdf:type swrl:AtomList ;
+                                                                      rdf:first [ rdf:type swrl:IndividualPropertyAtom ;
+                                                                                  swrl:propertyPredicate :ForDate ;
+                                                                                  swrl:argument1 :r ;
+                                                                                  swrl:argument2 :year
+                                                                                ] ;
+                                                                      rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                 rdf:first [ rdf:type swrl:ClassAtom ;
+                                                                                             swrl:classPredicate :Time ;
+                                                                                             swrl:argument1 :year
+                                                                                           ] ;
+                                                                                 rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                            rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                                                                                        swrl:propertyPredicate :hasDate ;
+                                                                                                        swrl:argument1 :year ;
+                                                                                                        swrl:argument2 :Y
+                                                                                                      ] ;
+                                                                                            rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                                       rdf:first [ rdf:type swrl:ClassAtom ;
+                                                                                                                   swrl:classPredicate :DiscountedCosts ;
+                                                                                                                   swrl:argument1 :dc
+                                                                                                                 ] ;
+                                                                                                       rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                                                  rdf:first [ rdf:type swrl:BuiltinAtom ;
+                                                                                                                              swrl:builtin swrlb:add ;
+                                                                                                                              swrl:arguments [ rdf:type rdf:List ;
+                                                                                                                                               rdf:first :base ;
+                                                                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                          rdf:first 1 ;
+                                                                                                                                                          rdf:rest ( :R
+                                                                                                                                                                   )
+                                                                                                                                                        ]
+                                                                                                                                             ]
+                                                                                                                            ] ;
+                                                                                                                  rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                                                             rdf:first [ rdf:type swrl:BuiltinAtom ;
+                                                                                                                                         swrl:builtin swrlb:pow ;
+                                                                                                                                         swrl:arguments ( :denominator
+                                                                                                                                                          :base
+                                                                                                                                                          :Y
+                                                                                                                                                        )
+                                                                                                                                       ] ;
+                                                                                                                             rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                                                                        rdf:first [ rdf:type swrl:BuiltinAtom ;
+                                                                                                                                                    swrl:builtin swrlb:divide ;
+                                                                                                                                                    swrl:arguments ( :DC
+                                                                                                                                                                     :value
+                                                                                                                                                                     :denominator
+                                                                                                                                                                   )
+                                                                                                                                                  ] ;
+                                                                                                                                        rdf:rest [ rdf:type swrl:AtomList ;
+                                                                                                                                                   rdf:first [ rdf:type swrl:DatavaluedPropertyAtom ;
+                                                                                                                                                               swrl:propertyPredicate :hasDiscountedCostValue ;
+                                                                                                                                                               swrl:argument1 :dc ;
+                                                                                                                                                               swrl:argument2 :DC
+                                                                                                                                                             ] ;
+                                                                                                                                                   rdf:rest rdf:nil
+                                                                                                                                                 ]
+                                                                                                                                      ]
+                                                                                                                           ]
+                                                                                                                ]
+                                                                                                     ]
+                                                                                          ]
+                                                                               ]
+                                                                    ]
+                                                         ]
+                                              ]
+                                   ]
+                        ]
+             ] ;
+   swrl:head [ rdf:type swrl:AtomList ;
+               rdf:first [ rdf:type swrl:BuiltinAtom ;
+                           swrl:builtin <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> ;
+                           swrl:arguments ( :c
+                                            :value
+                                            :DC
+                                            :R
+                                            :Y
+                                          )
+                         ] ;
+               rdf:rest rdf:nil
+             ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

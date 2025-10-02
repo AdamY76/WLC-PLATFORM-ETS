@@ -1,0 +1,263 @@
+@prefix : <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#> .
+@base <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
+
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> rdf:type owl:Ontology ;
+    rdfs:comment """WLCONTO Stakeholder Mapping Extension
+    Mapping des parties prenantes avec ifcOWL
+    Adam Yousfi - ÉTS Montréal"""@en ;
+    owl:imports <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL> .
+
+#################################################################
+#    Object Properties - Stakeholder Relations
+#################################################################
+
+###  Propriétés pour lier les parties prenantes aux coûts et phases
+:hasStakeholder rdf:type owl:ObjectProperty ;
+    rdfs:domain :Project ;
+    rdfs:range :Stakeholder ;
+    rdfs:comment "Relie un projet à ses parties prenantes"@fr .
+
+:affectedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range :Costs ;
+    rdfs:comment "Indique qu'une partie prenante est affectée par certains coûts"@fr .
+
+:responsibleFor rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range :Costs ;
+    rdfs:comment "Indique qu'une partie prenante est responsable de certains coûts"@fr .
+
+:occursDuringPeriod rdf:type owl:ObjectProperty ;
+    rdfs:domain :StakeholderImpact ;
+    rdfs:range :Time ;
+    rdfs:comment "Indique la période pendant laquelle un impact sur les parties prenantes se produit"@fr .
+
+:hasImpactOn rdf:type owl:ObjectProperty ;
+    rdfs:domain :Costs ;
+    rdfs:range :StakeholderImpact ;
+    rdfs:comment "Relie un coût à son impact sur les parties prenantes"@fr .
+
+:experiencesImpact rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range :StakeholderImpact ;
+    rdfs:comment "Indique qu'une partie prenante subit un impact"@fr .
+
+###  Propriétés spécifiques aux rôles
+:hasFinancialResponsibility rdf:type owl:ObjectProperty ;
+    rdfs:domain :PropertyOwner ;
+    rdfs:range :FinancialResponsibilityType ;
+    rdfs:comment "Type de responsabilité financière du propriétaire"@fr .
+
+:operatesAsset rdf:type owl:ObjectProperty ;
+    rdfs:domain :AssetOperator ;
+    rdfs:range :Asset ;
+    rdfs:comment "Indique qu'un opérateur gère un actif"@fr .
+
+:usesAsset rdf:type owl:ObjectProperty ;
+    rdfs:domain :EndUser ;
+    rdfs:range :Asset ;
+    rdfs:comment "Indique qu'un utilisateur final utilise un actif"@fr .
+
+#################################################################
+#    Data Properties - Stakeholder Attributes
+#################################################################
+
+:hasImpactValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain :StakeholderImpact ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Valeur quantitative de l'impact sur une partie prenante"@fr .
+
+:hasImpactType rdf:type owl:DatatypeProperty ;
+    rdfs:domain :StakeholderImpact ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Type d'impact (financier, opérationnel, qualité de service, etc.)"@fr .
+
+:hasPriority rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Niveau de priorité de la partie prenante (1=haute, 2=moyenne, 3=basse)"@fr .
+
+:hasInfluenceLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Niveau d'influence de la partie prenante sur les décisions (0-1)"@fr .
+
+#################################################################
+#    Classes - Stakeholder Hierarchy
+#################################################################
+
+###  Classe principale des parties prenantes
+:Stakeholder rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcPersonAndOrganization ;
+    rdfs:comment "Partie prenante d'un projet WLC, basée sur IfcPersonAndOrganization"@fr .
+
+###  Types spécifiques de parties prenantes
+:PropertyOwner rdf:type owl:Class ;
+    rdfs:subClassOf :Stakeholder ;
+    rdfs:comment "Propriétaire de l'actif, responsable des décisions d'investissement"@fr .
+
+:AssetOperator rdf:type owl:Class ;
+    rdfs:subClassOf :Stakeholder ;
+    rdfs:comment "Opérateur de l'actif, responsable de l'exploitation et maintenance"@fr .
+
+:EndUser rdf:type owl:Class ;
+    rdfs:subClassOf :Stakeholder ;
+    rdfs:comment "Utilisateur final de l'actif"@fr .
+
+:MaintenanceProvider rdf:type owl:Class ;
+    rdfs:subClassOf :Stakeholder ;
+    rdfs:comment "Prestataire de services de maintenance"@fr .
+
+:EnergyProvider rdf:type owl:Class ;
+    rdfs:subClassOf :Stakeholder ;
+    rdfs:comment "Fournisseur d'énergie"@fr .
+
+###  Classes pour les impacts
+:StakeholderImpact rdf:type owl:Class ;
+    rdfs:comment "Impact d'une décision de coût sur une partie prenante"@fr .
+
+:FinancialImpact rdf:type owl:Class ;
+    rdfs:subClassOf :StakeholderImpact ;
+    rdfs:comment "Impact financier sur une partie prenante"@fr .
+
+:OperationalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :StakeholderImpact ;
+    rdfs:comment "Impact opérationnel sur une partie prenante"@fr .
+
+:ServiceQualityImpact rdf:type owl:Class ;
+    rdfs:subClassOf :StakeholderImpact ;
+    rdfs:comment "Impact sur la qualité de service pour une partie prenante"@fr .
+
+###  Types de responsabilités financières
+:FinancialResponsibilityType rdf:type owl:Class ;
+    rdfs:comment "Type de responsabilité financière"@fr .
+
+:CapexResponsibility rdf:type owl:Class ;
+    rdfs:subClassOf :FinancialResponsibilityType ;
+    rdfs:comment "Responsabilité des dépenses d'investissement (CAPEX)"@fr .
+
+:OpexResponsibility rdf:type owl:Class ;
+    rdfs:subClassOf :FinancialResponsibilityType ;
+    rdfs:comment "Responsabilité des dépenses opérationnelles (OPEX)"@fr .
+
+###  Phases du cycle de vie pour les impacts
+:LifeCyclePhase rdf:type owl:Class ;
+    rdfs:comment "Phase du cycle de vie où un impact se produit"@fr .
+
+:ConstructionPhase rdf:type owl:Class ;
+    rdfs:subClassOf :LifeCyclePhase ;
+    rdfs:comment "Phase de construction"@fr .
+
+:OperationPhase rdf:type owl:Class ;
+    rdfs:subClassOf :LifeCyclePhase ;
+    rdfs:comment "Phase d'exploitation"@fr .
+
+:MaintenancePhase rdf:type owl:Class ;
+    rdfs:subClassOf :LifeCyclePhase ;
+    rdfs:comment "Phase de maintenance"@fr .
+
+:EndOfLifePhase rdf:type owl:Class ;
+    rdfs:subClassOf :LifeCyclePhase ;
+    rdfs:comment "Phase de fin de vie"@fr .
+
+#################################################################
+#    Mapping avec les rôles IFC existants
+#################################################################
+
+###  Alignement avec les rôles IFC
+:PropertyOwnerRole rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcActorRole ;
+    rdfs:comment "Rôle de propriétaire aligné avec IfcActorRole"@fr .
+
+:AssetOperatorRole rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcActorRole ;
+    rdfs:comment "Rôle d'opérateur d'actif aligné avec IfcActorRole"@fr .
+
+:EndUserRole rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcActorRole ;
+    rdfs:comment "Rôle d'utilisateur final aligné avec IfcActorRole"@fr .
+
+:MaintenanceProviderRole rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcActorRole ;
+    rdfs:comment "Rôle de prestataire de maintenance aligné avec IfcActorRole"@fr .
+
+:EnergyProviderRole rdf:type owl:Class ;
+    rdfs:subClassOf ifc:IfcActorRole ;
+    rdfs:comment "Rôle de fournisseur d'énergie aligné avec IfcActorRole"@fr .
+
+#################################################################
+#    Propriétés de mapping avec IFC
+#################################################################
+
+###  Propriétés pour lier les parties prenantes aux entités IFC
+:hasIfcPerson rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range ifc:IfcPerson ;
+    rdfs:comment "Lie une partie prenante à une personne IFC"@fr .
+
+:hasIfcOrganization rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range ifc:IfcOrganization ;
+    rdfs:comment "Lie une partie prenante à une organisation IFC"@fr .
+
+:hasIfcActorRole rdf:type owl:ObjectProperty ;
+    rdfs:domain :Stakeholder ;
+    rdfs:range ifc:IfcActorRole ;
+    rdfs:comment "Lie une partie prenante à un rôle d'acteur IFC"@fr .
+
+#################################################################
+#    Instances d'exemple (optionnel)
+#################################################################
+
+###  Exemples de parties prenantes types
+:DefaultPropertyOwner rdf:type :PropertyOwner ;
+    rdfs:label "Propriétaire par défaut"@fr ;
+    :hasPriority 1 ;
+    :hasInfluenceLevel 0.9 .
+
+:DefaultAssetOperator rdf:type :AssetOperator ;
+    rdfs:label "Opérateur par défaut"@fr ;
+    :hasPriority 1 ;
+    :hasInfluenceLevel 0.8 .
+
+:DefaultEndUser rdf:type :EndUser ;
+    rdfs:label "Utilisateur final par défaut"@fr ;
+    :hasPriority 2 ;
+    :hasInfluenceLevel 0.3 .
+
+:DefaultMaintenanceProvider rdf:type :MaintenanceProvider ;
+    rdfs:label "Prestataire maintenance par défaut"@fr ;
+    :hasPriority 2 ;
+    :hasInfluenceLevel 0.6 .
+
+:DefaultEnergyProvider rdf:type :EnergyProvider ;
+    rdfs:label "Fournisseur énergie par défaut"@fr ;
+    :hasPriority 3 ;
+    :hasInfluenceLevel 0.4 .
+
+#################################################################
+#    Règles d'inférence (commentées pour éviter les erreurs SWRL)
+#################################################################
+
+# Règle 1: Si un stakeholder est responsable d'un coût, il est aussi affecté par ce coût
+# PropertyOwner(?s) ∧ responsibleFor(?s, ?c) → affectedBy(?s, ?c)
+
+# Règle 2: Les coûts de construction affectent principalement le propriétaire
+# ConstructionCosts(?c) ∧ Project(?p) ∧ hasStakeholder(?p, ?s) ∧ PropertyOwner(?s) → affectedBy(?s, ?c)
+
+# Règle 3: Les coûts d'opération affectent l'opérateur et les utilisateurs finaux
+# OperationCosts(?c) ∧ Project(?p) ∧ hasStakeholder(?p, ?s) ∧ (AssetOperator(?s) ∨ EndUser(?s)) → affectedBy(?s, ?c)
+
+# Règle 4: Les coûts de maintenance affectent le prestataire de maintenance
+# MaintenanceCosts(?c) ∧ Project(?p) ∧ hasStakeholder(?p, ?s) ∧ MaintenanceProvider(?s) → affectedBy(?s, ?c)
+
+#################################################################
+#    Fin du fichier
+#################################################################
+

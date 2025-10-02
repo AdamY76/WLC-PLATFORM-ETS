@@ -1,0 +1,116 @@
+# Environnements virtuels Python
+venv/
+venv_py312/
+Backend/venv/
+env/
+ENV/
+*.virtualenv
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs et bases de données
+*.log
+*.sql
+*.sqlite
+*.db
+app.log
+
+# Fichiers temporaires et backups
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+Backend_backup_*/
+*_backup/
+
+# Configuration locale
+.env
+*.env.local
+config.local.py
+
+# Uploads et fichiers volumineux
+Backend/uploads/*.ifc
+Backend/uploads/*.xlsx
+Backend/uploads/*.csv
+*.ifc
+*.rfa
+*.rvt
+
+# Fichiers de développement
+dev-tools/
+test_*.py
+debug_*.py
+explore_*.py
+verif_*.py
+migration_*.py
+refactor_*.py
+validation_*.py
+analyse_*.py
+
+# Documentation historique
+docs/historical/
+
+# IDE et éditeurs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Données de test (optionnel, décommenter si nécessaire)
+# *.csv
+# *.xlsx
+# equipements_*.csv
+# heating_*.json
+
+# Fichiers GraphDB (ne pas versionner les données)
+# Les ontologies (.ttl) SONT versionnées
+# Ontology/*.ttl
