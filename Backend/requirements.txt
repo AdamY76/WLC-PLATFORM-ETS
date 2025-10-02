@@ -1,7 +1,13 @@
+# Requirements pour Python 3.8+
+
 Flask==3.0.2
 Flask-CORS==4.0.0
 ifcopenshell==0.8.2
-pandas==2.2.1
+
+# pandas 1.5.3 pour compatibilité Python 3.8+
+# Si Python 3.9+, vous pouvez utiliser pandas>=2.0
+pandas==1.5.3
+
 requests==2.31.0
 Werkzeug==3.0.1
 openpyxl==3.1.2

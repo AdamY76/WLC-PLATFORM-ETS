@@ -1,0 +1,36 @@
+Groupe,Type_Equipement,Modele_Marque_IFC,Specification_Technique,Code_Uniformat,Quantite_Estimee,Unite,Prix_Unitaire_CSV,Cout_Total_CSV,Marque_Fabricant,Notes_Specifiques
+
+"Murs-Rideaux","Mur-rideau","MR_V3_ENV","Système mur-rideau V3 avec enveloppe","B202003","2868.2","m²","1108.46","3179296","","Standard avec verres thermos - 355 éléments dans IFC"
+"Murs-Rideaux","Mur-rideau","MR1","Incluant verres thermos - Type 1","B202003","413.9","m²","1022.00","423006","","Performance thermique standard"
+"Murs-Rideaux","Mur-rideau","MR2","Incluant verres thermos - Type 2","B202003","423.06","m²","1058.00","447678","","Performance thermique améliorée"
+"Murs-Rideaux","Meneau","MEN_64_133_V3_CAP_22","Meneau rectangulaire 64x133mm avec capuchon 22mm","B202003","","unité","","","","Système V3 - Capuchon 22mm"
+"Murs-Rideaux","Meneau","MEN_64_50_V3_CAP_22","Meneau rectangulaire 64x50mm avec capuchon 22mm","B202003","","unité","","","","Système V3 - Capuchon 22mm"
+"Murs-Rideaux","Meneau","MEN_64_133_SIL","Meneau rectangulaire 64x133mm standard","B202003","","unité","","","","Système standard SIL"
+"Murs-Rideaux","Meneau","MEN_64_191_V3_CAP_203","Meneau rectangulaire 64x191mm avec capuchon 203mm","B202003","","unité","","","","Système V3 - Grand capuchon"
+"Murs-Rideaux","Meneau","MEN_64_191_V3_CAP_22","Meneau rectangulaire 64x191mm avec capuchon 22mm","B202003","","unité","","","","Système V3 - Capuchon standard"
+"Murs-Rideaux","Meneau","MEN_64_65_SIL","Meneau rectangulaire 64x65mm standard","B202003","","unité","","","DELIGNE","Marque DELIGNE - Système SIL"
+"Murs-Rideaux","Meneau","MEN_64_65_V2_CAP_22","Meneau rectangulaire 64x65mm avec capuchon 22mm","B202003","","unité","","","DELIGNE","Marque DELIGNE - Système V2"
+"Murs-Rideaux","Système d'encadrement","SYS_ENC_45_114_V6","Système encadrement 45x114mm version 6","B202003","","unité","","","","Système d'encadrement V6"
+"Murs-Rideaux","Porte","PSMR01_Aluminium_Intérieur","Porte mur-rideau aluminium intérieur","B202003","8","unité","3500.00","28000","","Porte aluminium pour mur-rideau"
+"Murs-Rideaux","Porte","PSMR01_Aluminium_Extérieur","Porte mur-rideau aluminium extérieur","B202003","6","unité","4200.00","25200","","Porte aluminium extérieure"
+
+"Production Chaleur (D3020)","Chaudière","Non spécifiée dans IFC","Chaudière standard","D302003","1","unité","25000.00","25000","","Équipement de production de chaleur"
+"Production Chaleur (D3020)","Équipement auxiliaire","Non spécifiée dans IFC","Équipements auxiliaires chauffage","D302005","","lot","5000.00","5000","","Équipements de support"
+
+"Production Froid (D3030)","Système refroidissement","Non spécifiée dans IFC","Système de production de froid","D303001","1","unité","35000.00","35000","","Équipement de climatisation"
+"Production Froid (D3030)","Unité de refroidissement","Non spécifiée dans IFC","Unité de refroidissement","D303002","","unité","","","","Équipement CVCA"
+
+"Distribution CVCA (D3040)","Conduit de distribution","Non spécifiée dans IFC","Système de distribution CVCA","D304001","","m","150.00","","","Conduits et accessoires"
+"Distribution CVCA (D3040)","Terminal de distribution","Non spécifiée dans IFC","Terminaux de diffusion","D304002","","unité","","","","Diffuseurs et grilles"
+
+"Unités Autonomes (D3050)","Unité autonome","UV-1","Unité de ventilation autonome type 1","D305001","","unité","8000.00","","","Unité de ventilation"
+"Unités Autonomes (D3050)","Unité autonome","UV-2","Unité de ventilation autonome type 2","D305001","","unité","8500.00","","","Unité de ventilation avancée"
+
+"Persiennes","Persienne extérieure","PERS_EXT_ALU","Persienne extérieure aluminium","D305003","","m²","250.00","","","Protection solaire extérieure"
+"Persiennes","Grille de ventilation","GRILLE_VENT","Grille de ventilation standard","D304003","","unité","150.00","","","Grille de ventilation"
+
+"Radiateurs","Radiateur standard","RAD_STD","Radiateur standard chauffage","D302004","","unité","400.00","","","Radiateur mural"
+"Radiateurs","Radiateur haute performance","RAD_HP","Radiateur haute performance","D302004","","unité","600.00","","","Radiateur haute efficacité"
+
+"Climatisation","Unité de climatisation","CLIM_UNIT","Unité de climatisation standard","D303003","","unité","2500.00","","","Unité de climatisation"
+"Climatisation","Terminal climatisation","TERM_CLIM","Terminal de climatisation","D303004","","unité","800.00","","","Terminal CVCA" 

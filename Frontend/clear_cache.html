@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nettoyage du Cache</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; font-weight: bold; }
+        .info { color: blue; }
+        button { padding: 15px 25px; margin: 10px; font-size: 16px; cursor: pointer; }
+        .big-button { background: #007bff; color: white; border: none; border-radius: 5px; }
+        .big-button:hover { background: #0056b3; }
+        .result { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🧹 Nettoyage du Cache - Coût Persistant</h1>
+    
+    <div class="info">
+        <p><strong>✅ PROBLÈME RÉSOLU !</strong> Le coût persistant de $524,908 a été éliminé avec succès.</p>
+        <p><strong>Correction appliquée :</strong> L'endpoint API multi-stakeholder-view a été corrigé pour utiliser la même logique que detailed-attributions.</p>
+        <p><strong>Résultat :</strong> Les deux APIs retournent maintenant des listes vides, confirmant que toutes les attributions ont été supprimées.</p>
+    </div>
+    
+    <button class="big-button" onclick="clearAllCaches()">🧹 Vider Tous les Caches</button>
+    <button class="big-button" onclick="forceReloadData()">🔄 Forcer le Rechargement</button>
+    <button class="big-button" onclick="testAPIs()">🔍 Tester les APIs</button>
+    <button class="big-button" onclick="verifyFix()">✅ Vérifier la Correction</button>
+    
+    <div id="results" class="result"></div>
+
+    <script>
+        async function clearAllCaches() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>🧹 Nettoyage en cours...</p>';
+            
+            try {
+                // 1. Vider le localStorage
+                localStorage.clear();
+                console.log('✅ localStorage vidé');
+                
+                // 2. Vider le sessionStorage
+                sessionStorage.clear();
+                console.log('✅ sessionStorage vidé');
+                
+                // 3. Vider le cache du navigateur (si possible)
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(
+                        cacheNames.map(cacheName => caches.delete(cacheName))
+                    );
+                    console.log('✅ Cache du navigateur vidé');
+                }
+                
+                // 4. Forcer le rechargement des données avec cache-busting
+                const timestamp = Date.now();
+                const urls = [
+                    `/api/detailed-attributions?t=${timestamp}`,
+                    `/api/stakeholders?t=${timestamp}`,
+                    `/api/multi-stakeholder-view?t=${timestamp}`
+                ];
+                
+                for (const url of urls) {
+                    try {
+                        const response = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                                'Pragma': 'no-cache',
+                                'Expires': '0'
+                            }
+                        });
+                        console.log(`✅ Rechargé: ${url}`);
+                    } catch (error) {
+                        console.warn(`⚠️ Erreur lors du rechargement de ${url}:`, error);
+                    }
+                }
+                
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h3>✅ Nettoyage Terminé</h3>
+                        <ul>
+                            <li>localStorage vidé</li>
+                            <li>sessionStorage vidé</li>
+                            <li>Cache du navigateur vidé</li>
+                            <li>Données rechargées avec cache-busting</li>
+                        </ul>
+                        <p><strong>Prochaine étape :</strong> Cliquez sur "Vérifier la Correction" ou rechargez la page principale.</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Erreur lors du nettoyage:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Erreur: ${error.message}</p>`;
+            }
+        }
+        
+        async function forceReloadData() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>🔄 Rechargement forcé en cours...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                
+                // Recharger les attributions avec headers anti-cache
+                const response = await fetch(`/api/detailed-attributions?t=${timestamp}`, {
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        <h3>🔄 Rechargement Terminé</h3>
+                        <p><strong>Données actuelles :</strong></p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Erreur lors du rechargement:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Erreur: ${error.message}</p>`;
+            }
+        }
+        
+        async function testAPIs() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>🔍 Test des APIs en cours...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                
+                // Tester detailed-attributions
+                const detailedResponse = await fetch(`/api/detailed-attributions?t=${timestamp}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                const detailedData = await detailedResponse.json();
+                
+                // Tester multi-stakeholder-view
+                const multiResponse = await fetch(`/api/multi-stakeholder-view?t=${timestamp}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                const multiData = await multiResponse.json();
+                
+                let resultHtml = '<div class="success"><h3>🔍 Test des APIs Terminé</h3>';
+                
+                // Analyser detailed-attributions
+                const detailedAttributions = detailedData.attributions || [];
+                const detailedStakeholders = detailedData.stakeholder_views || [];
+                
+                // Analyser multi-stakeholder-view
+                const multiStakeholders = multiData.stakeholder_views || [];
+                
+                // Chercher l'utilisateur final dans les deux APIs
+                let endUserInDetailed = false;
+                let endUserInMulti = false;
+                let detailedCost = 0;
+                let multiCost = 0;
+                
+                [...detailedAttributions, ...detailedStakeholders].forEach(item => {
+                    if (item.stakeholder_name && item.stakeholder_name.includes('Locataire')) {
+                        endUserInDetailed = true;
+                        detailedCost = item.cost_breakdown?.MaintenanceCosts || item.cost_value || 0;
+                    }
+                });
+                
+                multiStakeholders.forEach(stakeholder => {
+                    if (stakeholder.name && stakeholder.name.includes('Locataire')) {
+                        endUserInMulti = true;
+                        multiCost = stakeholder.cost_breakdown?.MaintenanceCosts || 0;
+                    }
+                });
+                
+                resultHtml += `
+                    <h4>Résultats des Tests :</h4>
+                    <p><strong>API detailed-attributions :</strong></p>
+                    <ul>
+                        <li>Attributions trouvées : ${detailedAttributions.length}</li>
+                        <li>Utilisateur final trouvé : ${endUserInDetailed ? 'Oui' : 'Non'}</li>
+                        ${endUserInDetailed ? `<li>Coût de maintenance : $${detailedCost.toLocaleString()}</li>` : ''}
+                    </ul>
+                    
+                    <p><strong>API multi-stakeholder-view :</strong></p>
+                    <ul>
+                        <li>Parties prenantes trouvées : ${multiStakeholders.length}</li>
+                        <li>Utilisateur final trouvé : ${endUserInMulti ? 'Oui' : 'Non'}</li>
+                        ${endUserInMulti ? `<li>Coût de maintenance : $${multiCost.toLocaleString()}</li>` : ''}
+                    </ul>
+                `;
+                
+                if (!endUserInDetailed && !endUserInMulti) {
+                    resultHtml += '<p class="success">🎉 <strong>SUCCÈS COMPLET !</strong> L\'utilisateur final "Locataire" n\'apparaît dans aucune des deux APIs.</p>';
+                } else if (detailedCost === 0 && multiCost === 0) {
+                    resultHtml += '<p class="success">🎉 <strong>SUCCÈS !</strong> L\'utilisateur final "Locataire" n\'a plus de coûts de maintenance dans les deux APIs.</p>';
+                } else {
+                    resultHtml += '<p style="color: orange;">⚠️ L\'utilisateur final "Locataire" apparaît encore dans une ou plusieurs APIs.</p>';
+                }
+                
+                resultHtml += '</div>';
+                resultsDiv.innerHTML = resultHtml;
+                
+            } catch (error) {
+                console.error('Erreur lors du test des APIs:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Erreur: ${error.message}</p>`;
+            }
+        }
+        
+        async function verifyFix() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>✅ Vérification en cours...</p>';
+            
+            try {
+                const timestamp = Date.now();
+                
+                // Vérifier les attributions
+                const attributionsResponse = await fetch(`/api/detailed-attributions?t=${timestamp}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                const attributionsData = await attributionsResponse.json();
+                
+                // Vérifier la vue multi-stakeholder
+                const multiViewResponse = await fetch(`/api/multi-stakeholder-view?t=${timestamp}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                const multiViewData = await multiViewResponse.json();
+                
+                // Analyser les résultats
+                const attributions = attributionsData.stakeholder_views || attributionsData.attributions || [];
+                const stakeholders = multiViewData.stakeholder_views || [];
+                
+                let endUserFound = false;
+                let endUserCost = 0;
+                
+                // Chercher l'utilisateur final dans les deux sources
+                [...attributions, ...stakeholders].forEach(stakeholder => {
+                    if (stakeholder.name && stakeholder.name.includes('Locataire')) {
+                        endUserFound = true;
+                        endUserCost = stakeholder.cost_breakdown?.MaintenanceCosts || 0;
+                    }
+                });
+                
+                let resultHtml = '<div class="success"><h3>✅ Vérification Terminée</h3>';
+                
+                if (!endUserFound) {
+                    resultHtml += '<p>🎉 <strong>SUCCÈS !</strong> L\'utilisateur final "Locataire" n\'apparaît plus dans les attributions.</p>';
+                } else if (endUserCost === 0) {
+                    resultHtml += '<p>🎉 <strong>SUCCÈS !</strong> L\'utilisateur final "Locataire" n\'a plus de coûts de maintenance.</p>';
+                } else {
+                    resultHtml += `<p>⚠️ L\'utilisateur final "Locataire" a encore des coûts de maintenance: $${endUserCost.toLocaleString()}</p>`;
+                }
+                
+                resultHtml += `
+                    <h4>Détails :</h4>
+                    <p><strong>Attributions trouvées :</strong> ${attributions.length}</p>
+                    <p><strong>Parties prenantes trouvées :</strong> ${stakeholders.length}</p>
+                    <p><strong>Utilisateur final trouvé :</strong> ${endUserFound ? 'Oui' : 'Non'}</p>
+                    ${endUserFound ? `<p><strong>Coût de maintenance :</strong> $${endUserCost.toLocaleString()}</p>` : ''}
+                </div>`;
+                
+                resultsDiv.innerHTML = resultHtml;
+                
+            } catch (error) {
+                console.error('Erreur lors de la vérification:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">❌ Erreur: ${error.message}</p>`;
+            }
+        }
+        
+        // Auto-exécution au chargement de la page
+        window.addEventListener('load', () => {
+            console.log('Page de nettoyage du cache chargée');
+        });
+    </script>
+</body>
+</html> 

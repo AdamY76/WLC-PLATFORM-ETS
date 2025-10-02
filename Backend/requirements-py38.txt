@@ -1,0 +1,20 @@
+# Requirements pour Python 3.8+
+# Compatible avec Python 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
+
+Flask==3.0.2
+Flask-CORS==4.0.0
+ifcopenshell==0.8.2
+
+# pandas 2.2.1 nécessite Python 3.9+
+# Dernière version compatible Python 3.8:
+pandas==1.5.3
+
+requests==2.31.0
+
+# Werkzeug 3.0+ fonctionne avec Python 3.8 mais peut avoir des warnings
+Werkzeug==3.0.1
+
+openpyxl==3.1.2
+python-dotenv==1.0.1
+gunicorn==21.2.0
+
