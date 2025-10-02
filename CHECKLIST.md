@@ -112,7 +112,7 @@ kill -9 [PID]
 ### ❌ Erreur `ifcopenshell` au démarrage
 **Solutions** :
 - [ ] Réinstaller : `pip install --force-reinstall ifcopenshell==0.8.2`
-- [ ] Sur Windows, télécharger depuis [GitHub releases](https://github.com/IfcOpenShell/IfcOpenShell/releases)
+
 
 ### ❌ Onglet "Fin de Vie" vide
 **Solutions** :
