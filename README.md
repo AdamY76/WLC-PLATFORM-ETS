@@ -2,6 +2,32 @@
 
 Cette plateforme permet de visualiser et gérer le coût global (Whole Life Cost) des projets de construction, en s'appuyant sur une ontologie RDF (WLCONTO) hébergée dans GraphDB.
 
+---
+
+## 🚀 Démarrage Rapide (Recommandé)
+
+### **🐳 Avec Docker (3 commandes, 5 minutes)**
+
+```bash
+git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
+cd WLC-PLATFORM-ETS
+docker-compose up -d
+```
+
+**Puis ouvrir** : http://localhost:8000
+
+✅ **Tout est automatique** : GraphDB, ontologies, backend Flask !
+
+📖 **Guide complet** : Voir [`DOCKER_QUICKSTART.md`](DOCKER_QUICKSTART.md)
+
+---
+
+### **⚙️ Installation Manuelle (si pas Docker)**
+
+Continuer avec le guide détaillé ci-dessous ⬇️
+
+---
+
 ## 🚀 Fonctionnalités
 
 ### 📊 Analyse de Cycle de Vie (WLC)
