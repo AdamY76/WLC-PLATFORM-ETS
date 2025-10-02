@@ -1,21 +1,9 @@
-# ✅ Checklist de Déploiement - Plateforme WLC
-
-## 📋 Avant de commencer
-
-- [ ] Ordinateur avec au minimum 4 GB RAM
-- [ ] Connexion Internet (pour télécharger GraphDB et dépendances)
-- [ ] Droits administrateur sur l'ordinateur
-
----
-
-## 🔧 Installation des Composants
+Installation des Composants
 
 ### GraphDB
 - [ ] GraphDB téléchargé depuis [ontotext.com](https://www.ontotext.com/products/graphdb/)
-- [ ] GraphDB installé
-- [ ] GraphDB démarré (accessible sur `http://localhost:7200`)
 - [ ] Repository `wlconto` créé avec ruleset **OWL-Horst**
-
+      
 ### Python
 - [ ] Python 3.8+ installé
 - [ ] Version vérifiée avec `python --version`
