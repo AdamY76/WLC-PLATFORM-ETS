@@ -15,11 +15,42 @@ def get_system_info():
     system = platform.system()
     machine = platform.machine()
     
+    # Sur Windows, détection plus précise
+    if system == 'Windows':
+        import struct
+        is_64bits = struct.calcsize("P") * 8 == 64
+        machine = 'AMD64' if is_64bits else 'x86'
+    
     return {
         'python': py_version,
         'system': system,
-        'machine': machine
+        'machine': machine,
+        'is_64bits': machine in ['AMD64', 'x86_64', 'arm64', 'aarch64']
     }
+
+def print_conda_instructions():
+    """Affiche les instructions pour installer avec conda"""
+    print("\n" + "="*60)
+    print("💡 SOLUTION RECOMMANDÉE : Installer avec Conda")
+    print("="*60)
+    print("\n1️⃣ Télécharger Miniconda (gratuit, 5 min) :")
+    print("   👉 https://docs.conda.io/en/latest/miniconda.html")
+    print("   - Windows : Télécharger Miniconda3-latest-Windows-x86_64.exe")
+    print("   - Installer avec les options par défaut")
+    print()
+    print("2️⃣ Ouvrir 'Anaconda Prompt' (chercher dans menu démarrer)")
+    print()
+    print("3️⃣ Dans Anaconda Prompt, taper ces commandes :")
+    print("   cd chemin\\vers\\WLC-PLATFORM-ETS")
+    print("   conda create -n wlc python=3.11 -y")
+    print("   conda activate wlc")
+    print("   conda install -c conda-forge ifcopenshell -y")
+    print("   pip install -r Backend/requirements.txt")
+    print()
+    print("4️⃣ Lancer l'app :")
+    print("   cd Backend")
+    print("   python app.py")
+    print("="*60)
 
 def get_ifcopenshell_wheel(info):
     """Retourne l'URL du wheel ifcopenshell approprié"""
@@ -92,9 +123,7 @@ def install_dependencies():
     
     if not wheel_url:
         print(f"❌ Pas de wheel ifcopenshell disponible pour Python {info['python']} sur {info['system']}")
-        print(f"\n💡 Solutions alternatives:")
-        print(f"   1. Installer via conda: conda install -c conda-forge ifcopenshell")
-        print(f"   2. Changer de version Python (3.9-3.12 recommandé)")
+        print_conda_instructions()
         return False
     
     print(f"   Téléchargement depuis GitHub...")
@@ -108,8 +137,8 @@ def install_dependencies():
         return True
     else:
         print(f"   ❌ Erreur lors de l'installation d'ifcopenshell")
-        print(f"   {result.stderr}")
-        print(f"\n💡 Essayez avec conda: conda install -c conda-forge ifcopenshell")
+        print(f"   Détails: {result.stderr[:200]}")
+        print_conda_instructions()
         return False
 
 def main():
