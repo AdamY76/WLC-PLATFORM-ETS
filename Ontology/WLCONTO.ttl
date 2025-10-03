@@ -296,6 +296,435 @@ swrla:isRuleEnabled rdf:type owl:AnnotationProperty .
 
 
 #################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetLifeSpan
+:AssetLifeSpan rdf:type owl:NamedIndividual ,
+                        :LifeSpan .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest
+:AssetTest rdf:type owl:NamedIndividual ,
+                    :Asset ;
+           :hasWLC :WLC ;
+           :hasDenomination "Building" .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction
+:Asset_Construction rdf:type owl:NamedIndividual ,
+                             :ConstructionCosts ;
+                    :ForDate :Year0 ;
+                    :hasCostValue 5000.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC
+:DCC rdf:type owl:NamedIndividual ,
+              :DiscountedConstructionCosts ;
+     :isDiscountedValueOf :Asset_Construction .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0
+:DR0 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year0 ;
+     :hasRateValue 0.05 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1
+:DR1 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year1 ;
+     :hasRateValue 0.03 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2
+:DR2 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year2 ;
+     :hasRateValue 0.04 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3
+:DR3 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year3 ;
+     :hasRateValue 0.05 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4
+:DR4 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year4 ;
+     :hasRateValue 0.04 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5
+:DR5 rdf:type owl:NamedIndividual ,
+              :DiscountRate ;
+     :ForDate :Year5 ;
+     :hasRateValue 0.04 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition
+:Ddemolition rdf:type owl:NamedIndividual ,
+                      :DiscountedEndOfLifeCosts ;
+             :isDiscountedValueOf :Demolition .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1
+:De1 rdf:type owl:NamedIndividual ,
+              :DiscountedEnvironmentalCosts ;
+     :isDiscountedValueOf :Electricity1 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2
+:De2 rdf:type owl:NamedIndividual ,
+              :DiscountedEnvironmentalCosts ;
+     :isDiscountedValueOf :Electricity2 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3
+:De3 rdf:type owl:NamedIndividual ,
+              :DiscountedEnvironmentalCosts ;
+     :isDiscountedValueOf :Electricity3 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4
+:De4 rdf:type owl:NamedIndividual ,
+              :DiscountedEnvironmentalCosts ;
+     :isDiscountedValueOf :Electricity4 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5
+:De5 rdf:type owl:NamedIndividual ,
+              :DiscountedEnvironmentalCosts ;
+     :isDiscountedValueOf :Electricity5 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition
+:Demolition rdf:type owl:NamedIndividual ,
+                     :EndOfLifeCosts ;
+            :ForDate :Year5 ;
+            :hasCostValue 3000.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1
+:Dghg1 rdf:type owl:NamedIndividual ,
+                :DiscountedExternalitiesCosts ;
+       :isDiscountedValueOf :ghg1 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2
+:Dghg2 rdf:type owl:NamedIndividual ,
+                :DiscountedExternalitiesCosts ;
+       :isDiscountedValueOf :ghg2 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3
+:Dghg3 rdf:type owl:NamedIndividual ,
+                :DiscountedExternalitiesCosts ;
+       :isDiscountedValueOf :ghg3 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4
+:Dghg4 rdf:type owl:NamedIndividual ,
+                :DiscountedExternalitiesCosts ;
+       :isDiscountedValueOf :ghg4 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5
+:Dghg5 rdf:type owl:NamedIndividual ,
+                :DiscountedExternalitiesCosts ;
+       :isDiscountedValueOf :ghg5 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3
+:Dincome3 rdf:type owl:NamedIndividual ,
+                   :DiscountedIncome ;
+          :isDiscountedValueOf :Income3 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4
+:Dincome4 rdf:type owl:NamedIndividual ,
+                   :DiscountedIncome ;
+          :isDiscountedValueOf :Income4 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1
+:Dm1 rdf:type owl:NamedIndividual ,
+              :DiscountedMaintenanceCosts ;
+     :isDiscountedValueOf :Maintenance1 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2
+:Dm2 rdf:type owl:NamedIndividual ,
+              :DiscountedMaintenanceCosts ;
+     :isDiscountedValueOf :Maintenance2 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3
+:Dm3 rdf:type owl:NamedIndividual ,
+              :DiscountedMaintenanceCosts ;
+     :isDiscountedValueOf :Maintenance3 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4
+:Dm4 rdf:type owl:NamedIndividual ,
+              :DiscountedMaintenanceCosts ;
+     :isDiscountedValueOf :Maintenance4 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1
+:Dnc1 rdf:type owl:NamedIndividual ,
+               :DiscountedNonConstructionCosts ;
+      :isDiscountedValueOf :NC1 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition
+:Dncdemolition rdf:type owl:NamedIndividual ,
+                        :DiscountedNonConstructionCosts ;
+               :isDiscountedValueOf :NCdemolition .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1
+:Dop1 rdf:type owl:NamedIndividual ,
+               :DiscountedOperationCosts ;
+      :isDiscountedValueOf :Op1 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2
+:Dop2 rdf:type owl:NamedIndividual ,
+               :DiscountedOperationCosts ;
+      :isDiscountedValueOf :Op2 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3
+:Dop3 rdf:type owl:NamedIndividual ,
+               :DiscountedOperationCosts ;
+      :isDiscountedValueOf :Op3 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4
+:Dop4 rdf:type owl:NamedIndividual ,
+               :DiscountedOperationCosts ;
+      :isDiscountedValueOf :Op4 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5
+:Dop5 rdf:type owl:NamedIndividual ,
+               :DiscountedOperationCosts ;
+      :isDiscountedValueOf :Op5 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1
+:Electricity1 rdf:type owl:NamedIndividual ,
+                       :EnvironmentalCosts ;
+              :ForDate :Year1 ;
+              :hasCostValue 1000.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2
+:Electricity2 rdf:type owl:NamedIndividual ,
+                       :EnvironmentalCosts ;
+              :ForDate :Year2 ;
+              :hasCostValue 900.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3
+:Electricity3 rdf:type owl:NamedIndividual ,
+                       :EnvironmentalCosts ;
+              :ForDate :Year3 ;
+              :hasCostValue 950.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4
+:Electricity4 rdf:type owl:NamedIndividual ,
+                       :EnvironmentalCosts ;
+              :ForDate :Year4 ;
+              :hasCostValue 1100.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5
+:Electricity5 rdf:type owl:NamedIndividual ,
+                       :EnvironmentalCosts ;
+              :ForDate :Year5 ;
+              :hasCostValue 1400.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3
+:Income3 rdf:type owl:NamedIndividual ,
+                  :Income ;
+         :ForDate :Year3 ;
+         :hasCostValue -7000.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4
+:Income4 rdf:type owl:NamedIndividual ,
+                  :Income ;
+         :ForDate :Year4 ;
+         :hasCostValue -7000.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LCC
+:LCC rdf:type owl:NamedIndividual ,
+              :LifeCycleCost .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1
+:Maintenance1 rdf:type owl:NamedIndividual ,
+                       :MaintenanceCosts ;
+              :ForDate :Year1 ;
+              :hasCostValue 800.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2
+:Maintenance2 rdf:type owl:NamedIndividual ,
+                       :MaintenanceCosts ;
+              :ForDate :Year2 ;
+              :hasCostValue 800.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3
+:Maintenance3 rdf:type owl:NamedIndividual ,
+                       :MaintenanceCosts ;
+              :ForDate :Year3 ;
+              :hasCostValue 800.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4
+:Maintenance4 rdf:type owl:NamedIndividual ,
+                       :MaintenanceCosts ;
+              :ForDate :Year4 ;
+              :hasCostValue 800.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1
+:NC1 rdf:type owl:NamedIndividual ,
+              :NonConstructionCosts ;
+     :ForDate :Year1 ;
+     :hasCostValue 1500.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition
+:NCdemolition rdf:type owl:NamedIndividual ,
+                       :NonConstructionCosts ;
+              :ForDate :Year5 ;
+              :hasCostValue 500.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1
+:Op1 rdf:type owl:NamedIndividual ,
+              :OperationCosts ;
+     :ForDate :Year1 ;
+     :hasCostValue 200.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2
+:Op2 rdf:type owl:NamedIndividual ,
+              :OperationCosts ;
+     :ForDate :Year2 ;
+     :hasCostValue 200.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3
+:Op3 rdf:type owl:NamedIndividual ,
+              :OperationCosts ;
+     :ForDate :Year3 ;
+     :hasCostValue 200.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4
+:Op4 rdf:type owl:NamedIndividual ,
+              :OperationCosts ;
+     :ForDate :Year4 ;
+     :hasCostValue 500.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5
+:Op5 rdf:type owl:NamedIndividual ,
+              :OperationCosts ;
+     :ForDate :Year5 ;
+     :hasCostValue 100.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC
+:WLC rdf:type owl:NamedIndividual ,
+              :WholeLifeCost .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0
+:Year0 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 0.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1
+:Year1 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 1.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2
+:Year2 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 2.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3
+:Year3 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 3.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4
+:Year4 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 4.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5
+:Year5 rdf:type owl:NamedIndividual ,
+                :Time ;
+       :hasDate 5.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1
+:ghg1 rdf:type owl:NamedIndividual ,
+               :ExternalitiesCosts ;
+      :ForDate :Year1 ;
+      :hasCostValue 125.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2
+:ghg2 rdf:type owl:NamedIndividual ,
+               :ExternalitiesCosts ;
+      :ForDate :Year2 ;
+      :hasCostValue 200.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3
+:ghg3 rdf:type owl:NamedIndividual ,
+               :ExternalitiesCosts ;
+      :ForDate :Year3 ;
+      :hasCostValue 225.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4
+:ghg4 rdf:type owl:NamedIndividual ,
+               :ExternalitiesCosts ;
+      :ForDate :Year4 ;
+      :hasCostValue 225.0 .
+
+
+###  http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5
+:ghg5 rdf:type owl:NamedIndividual ,
+               :ExternalitiesCosts ;
+      :ForDate :Year5 ;
+      :hasCostValue 300.0 .
+
+
+#################################################################
 #    General axioms
 #################################################################
 

@@ -87,10 +87,10 @@ Plateforme/
 │   │       └── components/     # Composants réutilisables
 │   └── index.html              # Interface principale
 ├── Ontology/
-│   ├── cgontologie1.ttl        # Ontologie WLCONTO principale
-│   ├── ontology.ttl            # Ontologie étendue (instances)
-│   ├── stakeholder_mapping_clean.ttl
-│   └── WLCONTO.ttl
+│   ├── WLCONTO.ttl             # Ontologie WLCONTO principale
+│   ├── ifcowl.ttl              # Ontologie IFC-OWL (instances)
+│   ├── MappingWLCONTO-IFCOWL.ttl  # Mapping entre WLCONTO et IFC-OWL
+│   └── stakeholder_mapping_clean.ttl
 └── README.md
 ```
 

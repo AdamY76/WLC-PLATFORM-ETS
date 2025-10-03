@@ -98,8 +98,9 @@ Attendre 5-10 minutes que tout se télécharge.
    - Cliquer sur **"Upload RDF files"**
    - Naviguer vers `C:\Users\VotreNom\Desktop\WLC-PLATFORM-ETS\Ontology\`
    - Sélectionner les fichiers suivants (un par un) :
-     - `cgontologie1.ttl`
-     - `ontology.ttl` (fichier volumineux, prend 3-5 minutes)
+     - `WLCONTO.ttl` (ontologie principale)
+     - `ifcowl.ttl` (fichier volumineux, prend 3-5 minutes)
+     - `MappingWLCONTO-IFCOWL.ttl` (mapping entre ontologies)
      - `stakeholder_mapping_clean.ttl`
    - Pour chaque fichier, avant de cliquer "Import", définir la **Base URI** :
      ```

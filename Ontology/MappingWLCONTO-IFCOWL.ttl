@@ -1,0 +1,89 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix wlconto: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
+@prefix ifcowl: <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#> .
+
+# Classes générales
+ifcowl:IfcElement rdfs:subClassOf wlconto:Element .
+ifcowl:IfcCostValue rdfs:subClassOf wlconto:Costs .
+ifcowl:IfcCostItem rdfs:subClassOf wlconto:Costs .
+
+# Sous-classes spécifiques
+wlconto:ConstructionCosts rdfs:subClassOf wlconto:Costs .
+wlconto:MaintenanceCosts rdfs:subClassOf wlconto:Costs .
+wlconto:OperationCosts rdfs:subClassOf wlconto:Costs .
+wlconto:EndOfLifeCosts rdfs:subClassOf wlconto:Costs .
+wlconto:ExternalitiesCosts rdfs:subClassOf wlconto:Costs .
+
+# Mappings explicites avec owl:equivalentClass
+
+# ConstructionCosts
+wlconto:ConstructionCosts owl:equivalentClass _:ConstructionCostsClass .
+_:ConstructionCostsClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:ConstructionRestriction
+    ) .
+_:ConstructionRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:CONSTRUCTION .
+
+# MaintenanceCosts
+wlconto:MaintenanceCosts owl:equivalentClass _:MaintenanceCostsClass .
+_:MaintenanceCostsClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:MaintenanceRestriction
+    ) .
+_:MaintenanceRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:MAINTENANCE .
+
+# OperationCosts
+wlconto:OperationCosts owl:equivalentClass _:OperationCostsClass .
+_:OperationCostsClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:OperationRestriction
+    ) .
+_:OperationRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:OPERATION .
+
+# EndOfLifeCosts (DEMOLITION ou DISPOSAL)
+wlconto:EndOfLifeCosts owl:equivalentClass _:EndOfLifeCostsClass .
+_:EndOfLifeCostsClass a owl:Class ;
+    owl:unionOf (
+        _:DemolitionClass
+        _:DisposalClass
+    ) .
+
+_:DemolitionClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:DemolitionRestriction
+    ) .
+_:DemolitionRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:DEMOLITION .
+
+_:DisposalClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:DisposalRestriction
+    ) .
+_:DisposalRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:DISPOSAL .
+
+# ExternalitiesCosts (OTHER)
+wlconto:ExternalitiesCosts owl:equivalentClass _:ExternalitiesCostsClass .
+_:ExternalitiesCostsClass a owl:Class ;
+    owl:intersectionOf (
+        ifcowl:IfcCostItem
+        _:ExternalitiesRestriction
+    ) .
+_:ExternalitiesRestriction a owl:Restriction ;
+    owl:onProperty ifcowl:predefinedType_IfcCostItem ;
+    owl:hasValue ifcowl:OTHER .
