@@ -158,16 +158,6 @@ Plus de solutions dans [INSTALLATION.md](INSTALLATION.md)
 
 ---
 
-## Contribution
-
-1. Fork le projet
-2. Créer une branche : `git checkout -b feature/nouvelle-fonctionnalite`
-3. Commit les changements : `git commit -m 'Ajout nouvelle fonctionnalité'`
-4. Push vers la branche : `git push origin feature/nouvelle-fonctionnalite`
-5. Ouvrir une Pull Request
-
----
-
 ## Licence
 
 Ce projet est sous licence MIT.

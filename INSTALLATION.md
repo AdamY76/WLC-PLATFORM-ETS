@@ -1,36 +1,27 @@
 # Guide d'Installation - Plateforme WLC
 
-Ce guide explique comment installer la plateforme sur Windows ou Mac. L'installation prend environ 30 minutes.
+Ce guide explique comment installer la plateforme sur Windows ou Mac.
 
----
-
-## Vue d'Ensemble
-
-**Ce dont vous avez besoin :**
+**Prérequis :**
 - Miniconda (gestionnaire de packages Python)
 - GraphDB Desktop (base de données RDF)
-- Le code source de la plateforme
-- Une connexion internet pour télécharger les dépendances
-
-**Pourquoi Miniconda ?**
-Sur Windows, certaines bibliothèques Python (notamment `ifcopenshell`) sont difficiles à installer avec `pip` standard. Miniconda installe automatiquement les versions pré-compilées compatibles, ce qui évite 90% des problèmes d'installation.
 
 ---
 
 ## Installation sur Windows
 
-### Étape 1 : Installer Miniconda (5 minutes)
+### Étape 1 : Installer Miniconda
 
 1. Aller sur : https://docs.conda.io/en/latest/miniconda.html
 2. Télécharger **"Miniconda3 Windows 64-bit"** (fichier `.exe`)
 3. Double-cliquer sur le fichier pour lancer l'installation
 4. **Important** : Ne PAS cocher "Add Miniconda to my PATH" (méthode recommandée par l'installeur)
-5. Cliquer sur "Install" et attendre 2-3 minutes
+5. Cliquer sur "Install"
 6. Cliquer sur "Finish"
 
-### Étape 2 : Télécharger le Projet (2 minutes)
+### Étape 2 : Télécharger le Projet
 
-Ouvrir **"Anaconda Prompt"** (le chercher dans le menu Démarrer Windows) :
+**Ouvrir `Anaconda Prompt`** (le chercher dans le menu Démarrer Windows) :
 
 ```bash
 # Aller sur le Bureau
@@ -47,9 +38,9 @@ Si Git n'est pas installé, télécharger depuis : https://git-scm.com/download/
 
 Alternativement, télécharger le ZIP depuis GitHub et le décompresser sur le Bureau.
 
-### Étape 3 : Créer l'Environnement Python (10 minutes)
+### Étape 3 : Créer l'Environnement Python
 
-**Dans Anaconda Prompt** :
+**Dans `Anaconda Prompt`** :
 
 ```bash
 # Créer un environnement virtuel avec Python 3.11
@@ -71,18 +62,15 @@ conda install -c conda-forge ifcopenshell pandas flask flask-cors requests openp
 pip install Werkzeug==3.0.1 gunicorn==21.2.0
 ```
 
-Attendre 5-10 minutes que tout se télécharge.
-
-### Étape 4 : Installer GraphDB (5 minutes)
+### Étape 4 : Installer GraphDB
 
 1. Aller sur : https://www.ontotext.com/products/graphdb/
-2. Choisir **"GraphDB Free"** (version gratuite)
+2. Choisir **"GraphDB Free"** (version gratuite - une licence gratuite peut être demandée sur le site)
 3. Télécharger la version Windows
 4. Installer en double-cliquant sur le fichier `.exe`
 5. Lancer **"GraphDB Desktop"** depuis le menu Démarrer
-6. Attendre 30 secondes que l'application démarre
 
-### Étape 5 : Configurer GraphDB (5 minutes)
+### Étape 5 : Configurer GraphDB
 
 **Dans l'interface GraphDB qui s'est ouverte** :
 
@@ -90,29 +78,25 @@ Attendre 5-10 minutes que tout se télécharge.
    - Cliquer sur **"Setup"** (en haut) puis **"Repositories"**
    - Cliquer sur **"Create new repository"**
    - **Repository ID** : taper exactement `wlconto`
-   - **Ruleset** : choisir **"OWL-Horst (optimized)"**
+   - **Ruleset** : choisir **"OWL2-RL (Optimized)"**
    - Cliquer sur **"Create"**
 
 2. **Importer les ontologies** :
    - Cliquer sur **"Import"** (menu du haut) puis **"RDF"**
    - Cliquer sur **"Upload RDF files"**
    - Naviguer vers `C:\Users\VotreNom\Desktop\WLC-PLATFORM-ETS\Ontology\`
-   - Sélectionner les fichiers suivants (un par un) :
+   - Sélectionner et importer les fichiers suivants (un par un) :
      - `WLCONTO.ttl` (ontologie principale)
-     - `ifcowl.ttl` (fichier volumineux, prend 3-5 minutes)
+     - `ifcowl.ttl` (fichier volumineux)
      - `MappingWLCONTO-IFCOWL.ttl` (mapping entre ontologies)
      - `stakeholder_mapping_clean.ttl`
-   - Pour chaque fichier, avant de cliquer "Import", définir la **Base URI** :
-     ```
-     http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#
-     ```
-   - Cliquer sur **"Import"** et attendre
+   - Cliquer sur **"Import"** pour chaque fichier
 
 **Vérification** : En haut à droite de GraphDB, vous devez voir `wlconto` sélectionné dans le menu déroulant.
 
-### Étape 6 : Lancer l'Application (1 minute)
+### Étape 6 : Lancer l'Application
 
-**Retourner dans Anaconda Prompt** (avec `(wlc)` visible) :
+**Retourner dans `Anaconda Prompt`** (avec `(wlc)` visible) :
 
 ```bash
 cd Backend
@@ -133,9 +117,9 @@ Vérifier qu'un badge vert "Connecté" apparaît en haut à droite de l'interfac
 
 ## Installation sur Mac
 
-### Étape 1 : Installer Miniconda (3 minutes)
+### Étape 1 : Installer Miniconda
 
-**Méthode A : Via Terminal (recommandée)** :
+**Méthode A : Via Terminal** :
 
 ```bash
 # Télécharger Miniconda pour Mac
@@ -163,7 +147,7 @@ bash Miniconda3-latest-MacOSX-arm64.sh
 3. Double-cliquer et suivre l'assistant d'installation
 4. Fermer et rouvrir le Terminal
 
-### Étape 2 : Télécharger le Projet (2 minutes)
+### Étape 2 : Télécharger le Projet
 
 **Dans le Terminal** :
 
@@ -178,7 +162,7 @@ git clone https://github.com/AdamY76/WLC-PLATFORM-ETS.git
 cd WLC-PLATFORM-ETS
 ```
 
-### Étape 3 : Créer l'Environnement Python (10 minutes)
+### Étape 3 : Créer l'Environnement Python
 
 **Dans le Terminal** :
 
@@ -202,21 +186,21 @@ conda install -c conda-forge ifcopenshell pandas flask flask-cors requests openp
 pip install Werkzeug==3.0.1 gunicorn==21.2.0
 ```
 
-### Étape 4 : Installer GraphDB (5 minutes)
+### Étape 4 : Installer GraphDB
 
 1. Aller sur : https://www.ontotext.com/products/graphdb/
-2. Choisir **"GraphDB Free"**
+2. Choisir **"GraphDB Free"** (version gratuite - une licence gratuite peut être demandée sur le site)
 3. Télécharger la version Mac
 4. Ouvrir le fichier `.dmg` téléchargé
 5. Glisser l'application GraphDB dans le dossier Applications
 6. Lancer GraphDB depuis le dossier Applications
 7. Si macOS bloque l'ouverture : Préférences Système → Confidentialité et sécurité → Autoriser
 
-### Étape 5 : Configurer GraphDB (5 minutes)
+### Étape 5 : Configurer GraphDB
 
 Suivre exactement les mêmes étapes que pour Windows (voir section Windows, Étape 5).
 
-### Étape 6 : Lancer l'Application (1 minute)
+### Étape 6 : Lancer l'Application
 
 **Dans le Terminal** (avec `(wlc)` visible) :
 
