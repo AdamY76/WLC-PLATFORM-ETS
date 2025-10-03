@@ -44,8 +44,12 @@ app.log
 *~
 .DS_Store
 Thumbs.db
-Backend_backup_*/
+Backend_backup*/
 *_backup/
+*_backup.py
+*_original.py
+*_old.py
+*.backup
 
 # Configuration locale
 .env
@@ -53,14 +57,21 @@ Backend_backup_*/
 config.local.py
 
 # Uploads et fichiers volumineux
-Backend/uploads/*.ifc
-Backend/uploads/*.xlsx
-Backend/uploads/*.csv
+Backend/uploads/
+uploads/
 *.ifc
 *.rfa
 *.rvt
 
-# Fichiers de développement
+# Fichiers de données temporaires
+*.csv
+*.xlsx
+*.xls
+*.json
+!package.json
+!package-lock.json
+
+# Fichiers de développement et scripts de test
 dev-tools/
 test_*.py
 debug_*.py
@@ -70,9 +81,19 @@ migration_*.py
 refactor_*.py
 validation_*.py
 analyse_*.py
+analyze_*.py
+extract_*.py
+apply_*.py
+diagnostic_*.py
 
 # Documentation historique
 docs/historical/
+CHECKLIST.md
+Architecture*.md
+
+# Scripts shell temporaires
+start_app*.sh
+*.sh
 
 # IDE et éditeurs
 .vscode/
@@ -105,12 +126,12 @@ ehthumbs_vista.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# Données de test (optionnel, décommenter si nécessaire)
-# *.csv
-# *.xlsx
-# equipements_*.csv
-# heating_*.json
+# Fichiers RDF en dehors du dossier Ontology
+/*.rdf
+/*.ttl
 
-# Fichiers GraphDB (ne pas versionner les données)
-# Les ontologies (.ttl) SONT versionnées
-# Ontology/*.ttl
+# Fichiers environment conda
+environment.yml
+
+# Fichiers setup inutilisés
+setup.py
