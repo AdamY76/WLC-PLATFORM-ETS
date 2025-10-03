@@ -2378,7 +2378,9 @@ def analyze_cost_by_phase():
             # Convertir la chaîne de GUIDs en liste
             guid_list = [guid.strip() for guid in selected_guids.split(',') if guid.strip()]
             if guid_list:
-                guid_filter = f"FILTER(?guid IN ({', '.join([f'"{guid}"' for guid in guid_list])}))"
+                # Séparer la construction pour compatibilité Python 3.11
+                guid_values = ', '.join([f'"{guid}"' for guid in guid_list])
+                guid_filter = f"FILTER(?guid IN ({guid_values}))"
                 additional_description = f" - Filtré sur {len(guid_list)} éléments sélectionnés"
         
         elif filter_type == 'uniformat' and uniformat_filter:
