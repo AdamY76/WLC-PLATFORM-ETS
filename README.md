@@ -6,11 +6,17 @@ Plateforme web permettant d'analyser et gérer le coût global (Whole Life Cost)
 
 ## Fonctionnalités Principales
 
-**Analyse de Cycle de Vie**
-- Import et analyse de fichiers IFC (modèles BIM)
+**Parsing IFC**
+- Lecture et extraction des données des fichiers IFC (modèles BIM)
+- Identification automatique des éléments de construction (murs, dalles, équipements, etc.)
+- Extraction des propriétés techniques (matériaux, dimensions, classifications)
+- Transformation des données IFC en instances RDF dans l'ontologie
+
+**Analyse en Coût Global**
 - Calcul des coûts par phase : Construction, Opération, Maintenance, Fin de vie
 - Gestion des durées de vie des éléments de construction
 - Visualisation des coûts répartis dans le temps
+- Projection des coûts sur toute la durée de vie du projet
 
 **Édition Interactive**
 - Modification directe des coûts par phase dans le tableau
@@ -29,8 +35,6 @@ Plateforme web permettant d'analyser et gérer le coût global (Whole Life Cost)
 
 - **Python 3.11 ou supérieur** (via Miniconda recommandé)
 - **GraphDB 10.0+** (version Free suffit)
-- **Navigateur web moderne** (Chrome, Firefox, Safari, Edge)
-- **4 GB RAM minimum** (8 GB recommandé)
 
 ---
 
@@ -98,10 +102,12 @@ Plateforme/
 
 ## API Backend Principale
 
-### Gestion IFC
-- `POST /ifc/upload` - Upload d'un fichier IFC
-- `GET /ifc/elements` - Liste des éléments IFC
-- `POST /ifc/reset` - Réinitialisation
+### Parsing IFC
+- `POST /ifc/upload` - Upload et parsing d'un fichier IFC vers l'ontologie
+- `POST /ifc/parse` - Parser un fichier IFC uploadé et créer les instances RDF
+- `GET /ifc/elements` - Liste des éléments extraits du fichier IFC
+- `GET /ifc/element/<guid>` - Détails d'un élément spécifique
+- `POST /ifc/reset` - Réinitialisation et suppression des données IFC
 
 ### Gestion des Coûts
 - `POST /cost/update` - Mise à jour d'un coût
