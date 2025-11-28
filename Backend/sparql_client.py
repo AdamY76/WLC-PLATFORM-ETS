@@ -163,11 +163,21 @@ INSERT DATA {{
     r.raise_for_status()
 
 def insert_ifc_class(uri, ifc_class):
-    safe_class = json.dumps(ifc_class)
+    """
+    Insère la classe IFC comme lien vers l'ontologie IFC4 de buildingSMART
+    Ex: ifc_class="IfcWall" -> lien vers ifc:IfcWall
+    """
+    # Créer l'URI IFC4 buildingSMART (déjà chargé dans GraphDB)
+    ifc_class_uri = f"https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#{ifc_class}"
+    
     update = f"""
 PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+PREFIX ifc: <https://standards.buildingsmart.org/IFC/DEV/IFC4/ADD2_TC1/OWL#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
 INSERT DATA {{
-  <{uri}> wlc:hasIfcClass {safe_class} .
+  <{uri}> wlc:hasIfcClass <{ifc_class_uri}> ;
+          rdf:type <{ifc_class_uri}> .
 }}
 """
     r = requests.post(UPDATE_ENDPOINT, data={"update": update})
@@ -196,6 +206,7 @@ WHERE {{
     cost_uri = f"{uri}/cost/{category.lower()}_{uuid.uuid4().hex}"
     insert_new = f"""
 PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 INSERT DATA {{
   <{cost_uri}> a wlc:{category}, wlc:Costs ;
       wlc:hasCostValue "{cost}"^^xsd:double ;

@@ -37,46 +37,43 @@
     <!-- Main Container -->
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-lg-2 col-md-3">
+            <!-- Sidebar - Réduite pour plus d'espace au tableau -->
+            <div class="col-lg-1 col-md-2">
                 <div class="card shadow-sm">
-                    <div class="card-body p-3">
-                        <h6 class="card-title text-muted mb-3">NAVIGATION</h6>
+                    <div class="card-body p-2">
+                        <h6 class="card-title text-muted mb-3 small">NAV</h6>
                         <div class="nav flex-column nav-pills" id="main-nav-tab" role="tablist">
-                            <button class="nav-link active mb-2" id="nav-ifc-tab" data-bs-toggle="pill" data-bs-target="#nav-ifc" type="button" role="tab">
-                                <i class="fas fa-cube me-2"></i>IFC
+                            <button class="nav-link active mb-2 btn-sm" id="nav-ifc-tab" data-bs-toggle="pill" data-bs-target="#nav-ifc" type="button" role="tab" title="IFC">
+                                <i class="fas fa-cube"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-elements-tab" data-bs-toggle="pill" data-bs-target="#nav-elements" type="button" role="tab">
-                                <i class="fas fa-list me-2"></i>Éléments
+                            <button class="nav-link mb-2 btn-sm" id="nav-elements-tab" data-bs-toggle="pill" data-bs-target="#nav-elements" type="button" role="tab" title="Éléments">
+                                <i class="fas fa-list"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-eol-tab" data-bs-toggle="pill" data-bs-target="#nav-eol" type="button" role="tab">
-                                <i class="fas fa-recycle me-2"></i>Gestion Fin de Vie
+                            <button class="nav-link mb-2 btn-sm" id="nav-costs-tab" data-bs-toggle="pill" data-bs-target="#nav-costs" type="button" role="tab" title="Coûts">
+                                <i class="fas fa-coins"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-costs-tab" data-bs-toggle="pill" data-bs-target="#nav-costs" type="button" role="tab">
-                                <i class="fas fa-coins me-2"></i>Coûts
+                            <button class="nav-link mb-2 btn-sm" id="nav-lifespan-tab" data-bs-toggle="pill" data-bs-target="#nav-lifespan" type="button" role="tab" title="Durées de vie">
+                                <i class="fas fa-clock"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-lifespan-tab" data-bs-toggle="pill" data-bs-target="#nav-lifespan" type="button" role="tab">
-                                <i class="fas fa-clock me-2"></i>Durées de vie
+                            <button class="nav-link mb-2 btn-sm" id="nav-summary-tab" data-bs-toggle="pill" data-bs-target="#nav-summary" type="button" role="tab" title="Synthèse">
+                                <i class="fas fa-chart-bar"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-summary-tab" data-bs-toggle="pill" data-bs-target="#nav-summary" type="button" role="tab">
-                                <i class="fas fa-chart-bar me-2"></i>Synthèse
+                            <button class="nav-link mb-2 btn-sm" id="nav-analysis-tab" data-bs-toggle="pill" data-bs-target="#nav-analysis" type="button" role="tab" title="Analyses WLC">
+                                <i class="fas fa-search"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-analysis-tab" data-bs-toggle="pill" data-bs-target="#nav-analysis" type="button" role="tab">
-                                <i class="fas fa-search me-2"></i>Analyses WLC
+                            <button class="nav-link mb-2 btn-sm" id="nav-stakeholders-tab" data-bs-toggle="pill" data-bs-target="#nav-stakeholders" type="button" role="tab" title="Parties Prenantes">
+                                <i class="fas fa-users"></i>
                             </button>
-                            <button class="nav-link mb-2" id="nav-stakeholders-tab" data-bs-toggle="pill" data-bs-target="#nav-stakeholders" type="button" role="tab">
-                                <i class="fas fa-users me-2"></i>Parties Prenantes
-                            </button>
-                            <button class="nav-link mb-2" id="nav-simulator-tab" data-bs-toggle="pill" data-bs-target="#simulator" type="button" role="tab">
-                                <i class="fas fa-balance-scale me-2"></i>Comparaison
+                            <button class="nav-link mb-2 btn-sm" id="nav-simulator-tab" data-bs-toggle="pill" data-bs-target="#simulator" type="button" role="tab" title="Comparaison">
+                                <i class="fas fa-balance-scale"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="col-lg-10 col-md-9">
+            <!-- Main Content - Plus large -->
+            <div class="col-lg-11 col-md-10">
                 <div class="tab-content" id="main-nav-tabContent">
                     
                     <!-- IFC Tab -->
@@ -504,7 +501,6 @@
                                                         <th>Opération ($)</th>
                                                         <th>Maintenance ($)</th>
                                                         <th>Fin de vie ($)</th>
-                                                        <th>Stratégie fin de vie</th>
                                                         <th>Durée (années)</th>
                                                     </tr>
                                                 </thead>
@@ -512,134 +508,6 @@
                                                     <!-- Données chargées dynamiquement -->
                                                 </tbody>
                                             </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- End of Life Management Tab -->
-                    <div class="tab-pane fade" id="nav-eol" role="tabpanel">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card shadow-sm mb-4">
-                                    <div class="card-header bg-success text-white">
-                                        <h5 class="card-title mb-0">♻️ Gestion de Fin de Vie</h5>
-                                        <small>Définition des stratégies, destinations, responsables et coûts pour chaque élément</small>
-                                    </div>
-                                    <div class="card-body">
-                                        
-                                        <!-- Statistiques globales -->
-                                        <div class="row mb-4">
-                                            <div class="col-md-3">
-                                                <div class="card border-success">
-                                                    <div class="card-body text-center">
-                                                        <h4 class="text-success" id="eol-recyclability-percent">-%</h4>
-                                                        <small class="text-muted">Recyclabilité</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card border-info">
-                                                    <div class="card-body text-center">
-                                                        <h4 class="text-info" id="eol-total-elements">-</h4>
-                                                        <small class="text-muted">Éléments gérés</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card border-warning">
-                                                    <div class="card-body text-center">
-                                                        <h4 class="text-warning" id="eol-total-cost">-</h4>
-                                                        <small class="text-muted">Coût total EOL</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card border-primary">
-                                                    <div class="card-body text-center">
-                                                        <h4 class="text-primary" id="eol-destinations-count">-</h4>
-                                                        <small class="text-muted">Destinations</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Actions en lot -->
-                                        <div class="card mb-4 border-warning">
-                                            <div class="card-header bg-warning bg-opacity-10">
-                                                <h6 class="mb-0">🔧 Actions en lot</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Stratégie</label>
-                                                        <select class="form-select" id="bulk-eol-strategy">
-                                                            <option value="">Choisir...</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Destination</label>
-                                                        <input type="text" class="form-control" id="bulk-eol-destination" placeholder="Centre de traitement">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Responsable</label>
-                                                        <select class="form-select" id="bulk-eol-responsible">
-                                                            <option value="">Choisir...</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label">Actions</label>
-                                                        <div class="d-grid">
-                                                            <button class="btn btn-warning" onclick="applyBulkEOL()" disabled id="apply-bulk-eol-btn">
-                                                                Appliquer aux sélectionnés
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mt-2">
-                                                    <span class="badge bg-info" id="eol-selection-count">0 sélectionné(s)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Tableau de gestion -->
-                                        <div class="table-responsive">
-                                            <table class="table table-hover" id="eol-table">
-                                                <thead class="table-success">
-                                                    <tr>
-                                                        <th>
-                                                            <input type="checkbox" id="select-all-eol-checkbox" title="Sélectionner tout">
-                                                        </th>
-                                                        <th>Élément</th>
-                                                        <th>Stratégie</th>
-                                                        <th>Destination</th>
-                                                        <th>Responsable</th>
-                                                        <th>Coût (€)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- Données chargées dynamiquement -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <!-- Actions sur le tableau -->
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
-                                                <button class="btn btn-success" onclick="refreshEOLData()">
-                                                    <i class="fas fa-sync me-2"></i>Actualiser
-                                                </button>
-                                                <button class="btn btn-info" onclick="exportEOLExcel()">
-                                                    <i class="fas fa-file-excel me-2"></i>Exporter Excel
-                                                </button>
-                                            </div>
-                                            <div class="col-md-6 text-end">
-                                                <button class="btn btn-outline-danger" onclick="clearAllEOLData()">
-                                                    <i class="fas fa-trash me-2"></i>Effacer tout
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1087,7 +955,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="mb-0"> Analyses Intelligentes WLC</h5>
+                                        <h5 class="mb-0"> Analyses WLC</h5>
                                         <small class="text-muted">Interrogations automatisées de l'ontologie pour identifier les éléments critiques</small>
                                     </div>
                                     <div class="card-body">
@@ -1745,10 +1613,10 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS - Ordre important: notifications d'abord, puis main.js -->
-    <script src="assets/js/components/notifications.js"></script>
-    <script src="assets/js/components/fileUpload.js"></script>
-    <script src="assets/js/components/dataTable.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/components/notifications.js?v=20241124-wider"></script>
+    <script src="assets/js/components/fileUpload.js?v=20241124-wider"></script>
+    <script src="assets/js/components/dataTable.js?v=20241124-wider"></script>
+    <script src="assets/js/main.js?v=20241124-stakeholders"></script>
 
     <!-- Modal Filtre Analyse par Phase -->
     <div class="modal fade" id="phaseFilterModal" tabindex="-1" aria-labelledby="phaseFilterModalLabel" aria-hidden="true">

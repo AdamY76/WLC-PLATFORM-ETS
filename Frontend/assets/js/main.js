@@ -202,7 +202,7 @@ function createElementRow(element) {
     
     row.innerHTML = `
         <td>
-            <input type="checkbox" class="element-checkbox" data-guid="${element.UniformatDesc || element.GlobalId}" 
+            <input type="checkbox" class="element-checkbox" data-guid="${element.GlobalId}" 
                    onchange="updateSelectionCount()">
         </td>
         <td class="text-truncate" style="max-width: 200px;" title="${element.GlobalId || ''}">${element.GlobalId || ''}</td>
@@ -212,48 +212,41 @@ function createElementRow(element) {
         <td>
             <input type="text" class="form-control form-control-sm material-input" 
                    value="${element.Material || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}"
+                   data-guid="${element.GlobalId}"
                    placeholder="Matériau">
         </td>
         <td>
             <input type="number" class="form-control form-control-sm cost-input" 
                    value="${element.ConstructionCost || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}" 
+                   data-guid="${element.GlobalId}" 
                    data-phase="ConstructionCosts"
                    min="0" step="0.01">
         </td>
         <td>
             <input type="number" class="form-control form-control-sm cost-input" 
                    value="${element.OperationCost || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}" 
+                   data-guid="${element.GlobalId}" 
                    data-phase="OperationCosts"
                    min="0" step="0.01">
         </td>
         <td>
             <input type="number" class="form-control form-control-sm cost-input" 
                    value="${element.MaintenanceCost || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}" 
+                   data-guid="${element.GlobalId}" 
                    data-phase="MaintenanceCosts"
                    min="0" step="0.01">
         </td>
         <td>
             <input type="number" class="form-control form-control-sm cost-input" 
                    value="${element.EndOfLifeCost || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}" 
+                   data-guid="${element.GlobalId}" 
                    data-phase="EndOfLifeCosts"
                    min="0" step="0.01">
         </td>
         <td>
-            <select class="form-control form-control-sm strategy-select" 
-                    data-guid="${element.UniformatDesc || element.GlobalId}">
-                <option value="">Choisir...</option>
-                <!-- Options chargées dynamiquement -->
-            </select>
-        </td>
-        <td>
             <input type="number" class="form-control form-control-sm lifespan-input" 
                    value="${element.Lifespan || ''}" 
-                   data-guid="${element.UniformatDesc || element.GlobalId}"
+                   data-guid="${element.GlobalId}"
                    min="1" max="200">
         </td>
     `;
@@ -293,32 +286,45 @@ async function handleCostChange(event) {
     const phase = input.dataset.phase;
     const cost = input.value;
     
-    if (!guid || !phase) return;
+    console.log('handleCostChange - Debug:', { guid, phase, cost });
+    
+    if (!guid || !phase) {
+        console.warn('handleCostChange - Données manquantes:', { guid, phase });
+        return;
+    }
     
     // Feedback visuel - input loading
     input.disabled = true;
     input.classList.add('is-loading');
     
     try {
+        const payload = [{ guid, category: phase, cost: parseFloat(cost) || 0 }];
+        console.log('handleCostChange - Envoi:', payload);
+        
         const response = await fetch(`${API_BASE_URL}/update-costs`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify([{ guid, category: phase, cost: parseFloat(cost) || 0 }])
+            body: JSON.stringify(payload)
         });
         
+        console.log('handleCostChange - Status:', response.status);
+        
         if (response.ok) {
+            const result = await response.json();
+            console.log('handleCostChange - Succès:', result);
             // Feedback visuel - succès
             input.classList.add('is-valid');
             setTimeout(() => input.classList.remove('is-valid'), 2000);
             notifications.success('Coût mis à jour');
         } else {
             const error = await response.json();
+            console.error('handleCostChange - Erreur:', error);
             input.classList.add('is-invalid');
             setTimeout(() => input.classList.remove('is-invalid'), 3000);
-            notifications.error(error.error || 'Erreur lors de la mise à jour');
+            notifications.error(error.error || error.details || 'Erreur lors de la mise à jour');
         }
     } catch (error) {
-        console.error('Erreur:', error);
+        console.error('handleCostChange - Exception:', error);
         input.classList.add('is-invalid');
         setTimeout(() => input.classList.remove('is-invalid'), 3000);
         notifications.error('Erreur réseau');
@@ -4893,16 +4899,24 @@ async function deleteStakeholder(stakeholderUri) {
     try {
         setLoading(true, 'Suppression en cours...');
         
-        // Pour l'instant, on supprime juste de l'interface
-        // Dans la version complète, on appellerait une route DELETE spécifique
-        appState.stakeholders = appState.stakeholders.filter(s => s.uri !== stakeholderUri);
-        displayStakeholders(appState.stakeholders);
-        populateStakeholderSelector(appState.stakeholders);
+        // Appeler l'API backend pour supprimer de GraphDB
+        const encodedUri = encodeURIComponent(stakeholderUri);
+        const response = await fetch(`/api/stakeholders/${encodedUri}`, {
+            method: 'DELETE'
+        });
         
-        showNotification('Partie prenante supprimée', 'success');
+        const data = await response.json();
+        
+        if (data.success) {
+            // Recharger la liste des parties prenantes
+            await loadStakeholders();
+            showNotification('Partie prenante supprimée avec succès', 'success');
+        } else {
+            throw new Error(data.error || 'Erreur lors de la suppression');
+        }
     } catch (error) {
         console.error('Erreur deleteStakeholder:', error);
-        showNotification('Erreur lors de la suppression', 'error');
+        showNotification(`Erreur lors de la suppression: ${error.message}`, 'error');
     } finally {
         setLoading(false);
     }
@@ -6349,915 +6363,7 @@ function generateGUID() {
 }
 
 // ================================
-// GESTION DES STRATÉGIES DE FIN DE VIE
+// FONCTIONS EOL ET STRATÉGIES SUPPRIMÉES
 // ================================
+// Les fonctions de gestion de fin de vie et stratégies ont été supprimées du frontend
 
-/**
- * Variable globale pour stocker les stratégies disponibles
- */
-let availableStrategies = [];
-
-/**
- * Charge les stratégies de fin de vie disponibles
- */
-async function loadEndOfLifeStrategies() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/get-end-of-life-strategies`);
-        const data = await response.json();
-        
-        if (data.strategies) {
-            availableStrategies = data.strategies;
-            populateStrategySelects();
-            populateBulkStrategySelect();
-        }
-    } catch (error) {
-        console.error('Erreur lors du chargement des stratégies:', error);
-    }
-}
-
-/**
- * Remplit tous les selects de stratégie avec les options disponibles
- */
-function populateStrategySelects() {
-    const strategySelects = document.querySelectorAll('.strategy-select');
-    
-    strategySelects.forEach(select => {
-        const currentValue = select.value;
-        const currentElement = allElements.find(el => el.GlobalId === select.dataset.guid);
-        
-        // Vider le select
-        select.innerHTML = '<option value="">Choisir...</option>';
-        
-        // Ajouter les options
-        availableStrategies.forEach(strategy => {
-            const option = document.createElement('option');
-            option.value = strategy.value;
-            option.textContent = strategy.label;
-            select.appendChild(option);
-        });
-        
-        // Restaurer la valeur actuelle ou celle de l'élément
-        if (currentElement && currentElement.EndOfLifeStrategy) {
-            select.value = currentElement.EndOfLifeStrategy;
-        } else if (currentValue) {
-            select.value = currentValue;
-        }
-        
-        // Ajouter l'event listener s'il n'existe pas déjà
-        if (!select.hasAttribute('data-listener-added')) {
-            select.addEventListener('change', handleStrategyChange);
-            select.setAttribute('data-listener-added', 'true');
-        }
-    });
-}
-
-/**
- * Remplit le select de gestion en lot
- */
-function populateBulkStrategySelect() {
-    const bulkSelect = document.getElementById('bulk-strategy-select');
-    if (bulkSelect) {
-        bulkSelect.innerHTML = '<option value="">Choisir une stratégie...</option>';
-        
-        availableStrategies.forEach(strategy => {
-            const option = document.createElement('option');
-            option.value = strategy.value;
-            option.textContent = strategy.label;
-            bulkSelect.appendChild(option);
-        });
-        
-        // Event listener pour activer/désactiver le bouton
-        bulkSelect.addEventListener('change', function() {
-            const applyBtn = document.getElementById('apply-bulk-strategy-btn');
-            if (applyBtn) {
-                applyBtn.disabled = !this.value || selectedGuids.size === 0;
-            }
-        });
-    }
-}
-
-/**
- * Gère le changement de stratégie d'un élément
- */
-async function handleStrategyChange(event) {
-    const select = event.target;
-    const guid = select.dataset.guid;
-    const strategy = select.value;
-    
-    if (!guid) return;
-    
-    try {
-        // Afficher un indicateur de chargement
-        const originalBg = select.style.backgroundColor;
-        select.style.backgroundColor = '#fff3cd';
-        select.disabled = true;
-        
-        const response = await fetch(`${API_BASE_URL}/update-end-of-life-strategy`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                guid: guid,
-                strategy: strategy
-            })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            // Mettre à jour l'élément dans allElements
-            const elementIndex = allElements.findIndex(el => el.GlobalId === guid);
-            if (elementIndex !== -1) {
-                allElements[elementIndex].EndOfLifeStrategy = strategy;
-            }
-            
-            // Succès visual feedback
-            select.style.backgroundColor = '#d1edff';
-            setTimeout(() => {
-                select.style.backgroundColor = originalBg;
-            }, 1000);
-            
-            // Mettre à jour les statistiques
-            await updateEndOfLifeStatistics();
-            
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-            // Remettre l'ancienne valeur
-            const element = allElements.find(el => el.GlobalId === guid);
-            select.value = element ? element.EndOfLifeStrategy || '' : '';
-        }
-        
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour de la stratégie:', error);
-        notifications.error('Erreur lors de la mise à jour de la stratégie');
-        
-        // Remettre l'ancienne valeur
-        const element = allElements.find(el => el.GlobalId === guid);
-        select.value = element ? element.EndOfLifeStrategy || '' : '';
-        
-    } finally {
-        select.style.backgroundColor = originalBg;
-        select.disabled = false;
-    }
-}
-
-/**
- * Applique une stratégie en lot aux éléments sélectionnés
- */
-async function applyBulkStrategy() {
-    const strategy = document.getElementById('bulk-strategy-select').value;
-    
-    if (!strategy) {
-        notifications.warning('Veuillez sélectionner une stratégie');
-        return;
-    }
-    
-    if (selectedGuids.size === 0) {
-        notifications.warning('Veuillez sélectionner des éléments');
-        return;
-    }
-    
-    const guids = Array.from(selectedGuids);
-    const strategyLabel = availableStrategies.find(s => s.value === strategy)?.label || strategy;
-    
-    if (!confirm(`Appliquer la stratégie "${strategyLabel}" à ${guids.length} éléments sélectionnés ?`)) {
-        return;
-    }
-    
-    try {
-        // Désactiver le bouton
-        const applyBtn = document.getElementById('apply-bulk-strategy-btn');
-        const originalText = applyBtn.textContent;
-        applyBtn.disabled = true;
-        applyBtn.textContent = 'Application...';
-        
-        const response = await fetch(`${API_BASE_URL}/update-group-end-of-life-strategy`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                guids: guids,
-                strategy: strategy
-            })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            // Mettre à jour les éléments dans allElements
-            guids.forEach(guid => {
-                const elementIndex = allElements.findIndex(el => el.GlobalId === guid);
-                if (elementIndex !== -1) {
-                    allElements[elementIndex].EndOfLifeStrategy = strategy;
-                }
-                
-                // Mettre à jour le select dans l'interface
-                const select = document.querySelector(`.strategy-select[data-guid="${guid}"]`);
-                if (select) {
-                    select.value = strategy;
-                }
-            });
-            
-            notifications.success(`Stratégie "${strategyLabel}" appliquée à ${guids.length} éléments`);
-            
-            // Mettre à jour les statistiques
-            await updateEndOfLifeStatistics();
-            
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-        
-    } catch (error) {
-        console.error('Erreur lors de l\'application en lot:', error);
-        notifications.error('Erreur lors de l\'application en lot');
-        
-    } finally {
-        // Réactiver le bouton
-        const applyBtn = document.getElementById('apply-bulk-strategy-btn');
-        applyBtn.disabled = false;
-        applyBtn.textContent = originalText;
-    }
-}
-
-/**
- * Met à jour les statistiques de fin de vie
- */
-async function updateEndOfLifeStatistics() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/get-end-of-life-statistics`);
-        const data = await response.json();
-        
-        if (data.error) {
-            console.error('Erreur statistiques:', data.error);
-            return;
-        }
-        
-        // Mettre à jour les indicateurs principaux
-        document.getElementById('recyclability-percent').textContent = `${data.recyclability_percent}%`;
-        document.getElementById('total-with-strategy').textContent = `${data.total_with_strategy}/${data.total_elements}`;
-        
-        // Mettre à jour la répartition des stratégies
-        const breakdownDiv = document.getElementById('strategy-breakdown');
-        if (breakdownDiv) {
-            breakdownDiv.innerHTML = '';
-            
-            if (data.statistics && data.statistics.length > 0) {
-                data.statistics.forEach(stat => {
-                    const col = document.createElement('div');
-                    col.className = 'col-md-2 col-sm-4 col-6 mb-2';
-                    col.innerHTML = `
-                        <div class="text-center">
-                            <span class="badge bg-light text-dark">${stat.strategy}</span>
-                            <div class="small">${stat.count} (${stat.percentage.toFixed(1)}%)</div>
-                        </div>
-                    `;
-                    breakdownDiv.appendChild(col);
-                });
-            } else {
-                breakdownDiv.innerHTML = '<div class="col-12 text-center text-muted">Aucune stratégie assignée</div>';
-            }
-        }
-        
-        // Activer/désactiver le bouton de gestion en lot
-        const applyBtn = document.getElementById('apply-bulk-strategy-btn');
-        const bulkSelect = document.getElementById('bulk-strategy-select');
-        if (applyBtn && bulkSelect) {
-            applyBtn.disabled = !bulkSelect.value || selectedGuids.size === 0;
-        }
-        
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour des statistiques:', error);
-    }
-}
-
-/**
- * Initialise les fonctionnalités de fin de vie
- */
-async function initializeEndOfLifeFeatures() {
-    console.log('🔄 Initialisation des fonctionnalités de fin de vie...');
-    
-    // Charger les stratégies
-    await loadEndOfLifeStrategies();
-    
-    // Mettre à jour les statistiques
-    await updateEndOfLifeStatistics();
-    
-    console.log('✅ Fonctionnalités de fin de vie initialisées');
-}
-
-// Initialiser les fonctionnalités au chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-    // Attendre un peu que les autres éléments soient chargés
-    setTimeout(initializeEndOfLifeFeatures, 1000);
-});
-
-// Mettre à jour les statistiques quand la sélection change
-function updateSelectionCount() {
-    const checkboxes = document.querySelectorAll('.element-checkbox:checked');
-    selectedGuids.clear();
-    
-    checkboxes.forEach(checkbox => {
-        if (checkbox.dataset.guid) {
-            selectedGuids.add(checkbox.dataset.guid);
-        }
-    });
-    
-    document.getElementById('selection-count').textContent = `${selectedGuids.size} sélectionné(s)`;
-    
-    // Mettre à jour les boutons qui dépendent de la sélection
-    const applyBtn = document.getElementById('apply-bulk-strategy-btn');
-    const bulkSelect = document.getElementById('bulk-strategy-select');
-    if (applyBtn && bulkSelect) {
-        applyBtn.disabled = !bulkSelect.value || selectedGuids.size === 0;
-    }
-    
-    updateBulkApplyButton();
-}
-
-// ================================
-// ONGLET GESTION FIN DE VIE
-// ================================
-
-/**
- * Variables globales pour l'onglet EOL
- */
-let eolElements = [];
-let selectedEOLGuids = new Set();
-let availableResponsibles = [];
-
-/**
- * Charge les données pour l'onglet Gestion Fin de Vie
- */
-async function loadEOLManagementData() {
-    try {
-        console.log('🔄 Chargement des données EOL...');
-        
-        // Charger les données des éléments
-        const response = await fetch(`${API_BASE_URL}/get-eol-management-data`);
-        const data = await response.json();
-        
-        if (data.error) {
-            console.error('Erreur lors du chargement EOL:', data.error);
-            return;
-        }
-        
-        eolElements = data.elements || [];
-        console.log(`✅ ${eolElements.length} éléments EOL chargés`);
-        
-        // Afficher les données
-        displayEOLTable(eolElements);
-        updateEOLStatistics();
-        
-    } catch (error) {
-        console.error('Erreur lors du chargement EOL:', error);
-        notifications.error('Erreur lors du chargement des données EOL');
-    }
-}
-
-/**
- * Affiche le tableau des données EOL
- */
-function displayEOLTable(elements) {
-    const tableBody = document.querySelector('#eol-table tbody');
-    if (!tableBody) return;
-    
-    tableBody.innerHTML = '';
-    
-    elements.forEach(element => {
-        const row = document.createElement('tr');
-        row.dataset.guid = element.GlobalId;
-        
-        row.innerHTML = `
-            <td>
-                <input type="checkbox" class="eol-checkbox" data-guid="${element.UniformatDesc || element.GlobalId}" 
-                       onchange="updateEOLSelectionCount()">
-            </td>
-            <td>
-                <div class="fw-bold">${element.UniformatDesc || element.GlobalId}</div>
-                <small class="text-muted">${element.GlobalId}</small>
-            </td>
-            <td>
-                <select class="form-select form-select-sm eol-strategy-select" 
-                        data-guid="${element.UniformatDesc || element.GlobalId}">
-                    <option value="">Choisir...</option>
-                    <!-- Options chargées dynamiquement -->
-                </select>
-            </td>
-            <td>
-                <input type="text" class="form-control form-control-sm eol-destination-input" 
-                       value="${element.Destination || ''}" 
-                       data-guid="${element.UniformatDesc || element.GlobalId}"
-                       placeholder="Centre de traitement">
-            </td>
-            <td>
-                <select class="form-select form-select-sm eol-responsible-select" 
-                        data-guid="${element.UniformatDesc || element.GlobalId}">
-                    <option value="">Choisir...</option>
-                    <!-- Options chargées dynamiquement -->
-                </select>
-            </td>
-            <td>
-                <div class="input-group input-group-sm">
-                    <input type="number" class="form-control eol-cost-input" 
-                           value="${element.Cost || ''}" 
-                           data-guid="${element.UniformatDesc || element.GlobalId}"
-                           min="0" step="0.01" placeholder="0.00">
-                    <span class="input-group-text">€</span>
-                </div>
-            </td>
-        `;
-        
-        tableBody.appendChild(row);
-    });
-    
-    // Ajouter les event listeners
-    setupEOLEventListeners();
-    
-    // Peupler les selects
-    populateEOLStrategies();
-    loadEOLResponsibles();
-}
-
-/**
- * Configure les event listeners pour l'onglet EOL
- */
-function setupEOLEventListeners() {
-    // Strategy selects
-    document.querySelectorAll('.eol-strategy-select').forEach(select => {
-        select.addEventListener('change', handleEOLStrategyChange);
-    });
-    
-    // Destination inputs
-    document.querySelectorAll('.eol-destination-input').forEach(input => {
-        input.addEventListener('blur', handleEOLDestinationChange);
-    });
-    
-    // Responsible selects
-    document.querySelectorAll('.eol-responsible-select').forEach(select => {
-        select.addEventListener('change', handleEOLResponsibleChange);
-    });
-    
-    // Cost inputs
-    document.querySelectorAll('.eol-cost-input').forEach(input => {
-        input.addEventListener('blur', handleEOLCostChange);
-    });
-    
-    // Select all checkbox
-    const selectAllCheckbox = document.getElementById('select-all-eol-checkbox');
-    if (selectAllCheckbox) {
-        selectAllCheckbox.addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.eol-checkbox');
-            checkboxes.forEach(cb => {
-                cb.checked = this.checked;
-            });
-            updateEOLSelectionCount();
-        });
-    }
-}
-
-/**
- * Gère le changement de stratégie EOL
- */
-async function handleEOLStrategyChange(event) {
-    const select = event.target;
-    const guid = select.dataset.guid;
-    const strategy = select.value;
-    
-    try {
-        const response = await fetch(`${API_BASE_URL}/update-end-of-life-strategy`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ guid, strategy })
-        });
-        
-        const result = await response.json();
-        if (result.success) {
-            // Mettre à jour l'élément local
-            const elementIndex = eolElements.findIndex(el => el.GlobalId === guid);
-            if (elementIndex !== -1) {
-                eolElements[elementIndex].Strategy = strategy;
-            }
-            
-            select.style.backgroundColor = '#d1edff';
-            setTimeout(() => {
-                select.style.backgroundColor = '';
-            }, 1000);
-            
-            updateEOLStatistics();
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-    } catch (error) {
-        console.error('Erreur stratégie EOL:', error);
-        notifications.error('Erreur lors de la mise à jour de la stratégie');
-    }
-}
-
-/**
- * Gère le changement de destination EOL
- */
-async function handleEOLDestinationChange(event) {
-    const input = event.target;
-    const guid = input.dataset.guid;
-    const destination = input.value.trim();
-    
-    try {
-        const response = await fetch(`${API_BASE_URL}/update-eol-destination`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ guid, destination })
-        });
-        
-        const result = await response.json();
-        if (result.success) {
-            // Mettre à jour l'élément local
-            const elementIndex = eolElements.findIndex(el => el.GlobalId === guid);
-            if (elementIndex !== -1) {
-                eolElements[elementIndex].Destination = destination;
-            }
-            
-            input.style.backgroundColor = '#d1edff';
-            setTimeout(() => {
-                input.style.backgroundColor = '';
-            }, 1000);
-            
-            updateEOLStatistics();
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-    } catch (error) {
-        console.error('Erreur destination EOL:', error);
-        notifications.error('Erreur lors de la mise à jour de la destination');
-    }
-}
-
-/**
- * Gère le changement de responsable EOL
- */
-async function handleEOLResponsibleChange(event) {
-    const select = event.target;
-    const guid = select.dataset.guid;
-    const responsible = select.value;
-    
-    try {
-        const response = await fetch(`${API_BASE_URL}/update-eol-responsible`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ guid, responsible })
-        });
-        
-        const result = await response.json();
-        if (result.success) {
-            // Mettre à jour l'élément local
-            const elementIndex = eolElements.findIndex(el => el.GlobalId === guid);
-            if (elementIndex !== -1) {
-                eolElements[elementIndex].Responsible = responsible;
-            }
-            
-            select.style.backgroundColor = '#d1edff';
-            setTimeout(() => {
-                select.style.backgroundColor = '';
-            }, 1000);
-            
-            updateEOLStatistics();
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-    } catch (error) {
-        console.error('Erreur responsable EOL:', error);
-        notifications.error('Erreur lors de la mise à jour du responsable');
-    }
-}
-
-/**
- * Gère le changement de coût EOL
- */
-async function handleEOLCostChange(event) {
-    const input = event.target;
-    const guid = input.dataset.guid;
-    const cost = parseFloat(input.value) || 0;
-    
-    try {
-        // Utiliser la route existante de mise à jour des coûts
-        const response = await fetch(`${API_BASE_URL}/update-costs`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                guid,
-                phase: 'EndOfLifeCosts',
-                cost: cost
-            })
-        });
-        
-        const result = await response.json();
-        if (result.success) {
-            // Mettre à jour l'élément local
-            const elementIndex = eolElements.findIndex(el => el.GlobalId === guid);
-            if (elementIndex !== -1) {
-                eolElements[elementIndex].Cost = cost;
-            }
-            
-            input.style.backgroundColor = '#d1edff';
-            setTimeout(() => {
-                input.style.backgroundColor = '';
-            }, 1000);
-            
-            updateEOLStatistics();
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-    } catch (error) {
-        console.error('Erreur coût EOL:', error);
-        notifications.error('Erreur lors de la mise à jour du coût');
-    }
-}
-
-/**
- * Peuple les selects de stratégies EOL
- */
-function populateEOLStrategies() {
-    const strategySelects = document.querySelectorAll('.eol-strategy-select, #bulk-eol-strategy');
-    
-    strategySelects.forEach(select => {
-        const currentValue = select.value;
-        const currentGuid = select.dataset.guid;
-        
-        // Vider et repeupler
-        select.innerHTML = '<option value="">Choisir...</option>';
-        
-        availableStrategies.forEach(strategy => {
-            const option = document.createElement('option');
-            option.value = strategy.value;
-            option.textContent = strategy.label;
-            select.appendChild(option);
-        });
-        
-        // Restaurer la valeur si c'est un select d'élément
-        if (currentGuid) {
-            const element = eolElements.find(el => el.GlobalId === currentGuid);
-            if (element && element.Strategy) {
-                select.value = element.Strategy;
-            }
-        } else if (currentValue) {
-            select.value = currentValue;
-        }
-    });
-}
-
-/**
- * Charge la liste des responsables disponibles
- */
-async function loadEOLResponsibles() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/get-eol-responsibles`);
-        const data = await response.json();
-        
-        if (data.responsibles) {
-            availableResponsibles = data.responsibles;
-            populateEOLResponsibles();
-        }
-    } catch (error) {
-        console.error('Erreur lors du chargement des responsables:', error);
-    }
-}
-
-/**
- * Peuple les selects de responsables
- */
-function populateEOLResponsibles() {
-    const responsibleSelects = document.querySelectorAll('.eol-responsible-select, #bulk-eol-responsible');
-    
-    responsibleSelects.forEach(select => {
-        const currentValue = select.value;
-        const currentGuid = select.dataset.guid;
-        
-        // Vider et repeupler
-        select.innerHTML = '<option value="">Choisir...</option>';
-        
-        availableResponsibles.forEach(responsible => {
-            const option = document.createElement('option');
-            option.value = responsible;
-            option.textContent = responsible;
-            select.appendChild(option);
-        });
-        
-        // Restaurer la valeur si c'est un select d'élément
-        if (currentGuid) {
-            const element = eolElements.find(el => el.GlobalId === currentGuid);
-            if (element && element.Responsible) {
-                select.value = element.Responsible;
-            }
-        } else if (currentValue) {
-            select.value = currentValue;
-        }
-    });
-}
-
-/**
- * Met à jour le compteur de sélection EOL
- */
-function updateEOLSelectionCount() {
-    const checkboxes = document.querySelectorAll('.eol-checkbox:checked');
-    selectedEOLGuids.clear();
-    
-    checkboxes.forEach(checkbox => {
-        if (checkbox.dataset.guid) {
-            selectedEOLGuids.add(checkbox.dataset.guid);
-        }
-    });
-    
-    const countElement = document.getElementById('eol-selection-count');
-    if (countElement) {
-        countElement.textContent = `${selectedEOLGuids.size} sélectionné(s)`;
-    }
-    
-    // Activer/désactiver le bouton d'application en lot
-    const applyBtn = document.getElementById('apply-bulk-eol-btn');
-    if (applyBtn) {
-        applyBtn.disabled = selectedEOLGuids.size === 0;
-    }
-}
-
-/**
- * Applique les données EOL en lot
- */
-async function applyBulkEOL() {
-    const strategy = document.getElementById('bulk-eol-strategy').value;
-    const destination = document.getElementById('bulk-eol-destination').value.trim();
-    const responsible = document.getElementById('bulk-eol-responsible').value;
-    
-    if (!strategy && !destination && !responsible) {
-        notifications.warning('Veuillez renseigner au moins un champ');
-        return;
-    }
-    
-    if (selectedEOLGuids.size === 0) {
-        notifications.warning('Veuillez sélectionner des éléments');
-        return;
-    }
-    
-    const guids = Array.from(selectedEOLGuids);
-    
-    if (!confirm(`Appliquer ces modifications à ${guids.length} éléments sélectionnés ?`)) {
-        return;
-    }
-    
-    try {
-        const applyBtn = document.getElementById('apply-bulk-eol-btn');
-        const originalText = applyBtn.textContent;
-        applyBtn.disabled = true;
-        applyBtn.textContent = 'Application...';
-        
-        const response = await fetch(`${API_BASE_URL}/update-bulk-eol-data`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                guids,
-                strategy,
-                destination,
-                responsible
-            })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            notifications.success(`Données appliquées à ${guids.length} éléments`);
-            
-            // Actualiser les données
-            await loadEOLManagementData();
-            
-            // Réinitialiser les champs
-            document.getElementById('bulk-eol-strategy').value = '';
-            document.getElementById('bulk-eol-destination').value = '';
-            document.getElementById('bulk-eol-responsible').value = '';
-            
-        } else {
-            notifications.error(`Erreur: ${result.error}`);
-        }
-        
-    } catch (error) {
-        console.error('Erreur application en lot EOL:', error);
-        notifications.error('Erreur lors de l\'application en lot');
-        
-    } finally {
-        const applyBtn = document.getElementById('apply-bulk-eol-btn');
-        applyBtn.disabled = false;
-        applyBtn.textContent = originalText;
-    }
-}
-
-/**
- * Met à jour les statistiques EOL
- */
-function updateEOLStatistics() {
-    if (!eolElements.length) return;
-    
-    // Calculer les statistiques
-    const totalElements = eolElements.length;
-    const elementsWithStrategy = eolElements.filter(el => el.Strategy).length;
-    const totalCost = eolElements.reduce((sum, el) => sum + (el.Cost || 0), 0);
-    const uniqueDestinations = new Set(eolElements.filter(el => el.Destination).map(el => el.Destination)).size;
-    
-    // Recyclabilité (stratégies circulaires)
-    const recyclableStrategies = ['Recycle', 'Reuse', 'Repurpose'];
-    const recyclableElements = eolElements.filter(el => recyclableStrategies.includes(el.Strategy)).length;
-    const recyclabilityPercent = totalElements > 0 ? (recyclableElements / totalElements * 100) : 0;
-    
-    // Mettre à jour l'affichage
-    const recyclabilityEl = document.getElementById('eol-recyclability-percent');
-    const totalElementsEl = document.getElementById('eol-total-elements');
-    const totalCostEl = document.getElementById('eol-total-cost');
-    const destinationsEl = document.getElementById('eol-destinations-count');
-    
-    if (recyclabilityEl) recyclabilityEl.textContent = `${recyclabilityPercent.toFixed(1)}%`;
-    if (totalElementsEl) totalElementsEl.textContent = `${elementsWithStrategy}/${totalElements}`;
-    if (totalCostEl) totalCostEl.textContent = `${new Intl.NumberFormat('fr-FR').format(totalCost)} €`;
-    if (destinationsEl) destinationsEl.textContent = uniqueDestinations;
-}
-
-/**
- * Actualise les données EOL
- */
-async function refreshEOLData() {
-    await loadEOLManagementData();
-    notifications.success('Données EOL actualisées');
-}
-
-/**
- * Exporte les données EOL en Excel
- */
-async function exportEOLExcel() {
-    try {
-        // Préparer les données pour l'export
-        const exportData = eolElements.map(element => ({
-            'GUID': element.GlobalId,
-            'Élément': element.UniformatDesc || element.GlobalId,
-            'Stratégie': element.Strategy || '',
-            'Destination': element.Destination || '',
-            'Responsable': element.Responsible || '',
-            'Coût (€)': element.Cost || 0
-        }));
-        
-        if (exportData.length === 0) {
-            notifications.warning('Aucune donnée à exporter');
-            return;
-        }
-        
-        // Convertir en CSV et télécharger
-        const csv = convertToCSV(exportData);
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `gestion_fin_de_vie_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
-        
-        notifications.success('Export Excel généré');
-        
-    } catch (error) {
-        console.error('Erreur export EOL:', error);
-        notifications.error('Erreur lors de l\'export');
-    }
-}
-
-/**
- * Efface toutes les données EOL
- */
-async function clearAllEOLData() {
-    if (!confirm('Êtes-vous sûr de vouloir effacer toutes les données de gestion fin de vie ?')) {
-        return;
-    }
-    
-    notifications.warning('Fonctionnalité à implémenter');
-}
-
-/**
- * Initialise l'onglet EOL quand il est sélectionné
- */
-function initializeEOLTab() {
-    console.log('🔄 Initialisation de l\'onglet Gestion Fin de Vie...');
-    
-    if (eolElements.length === 0) {
-        loadEOLManagementData();
-    }
-    
-    if (availableStrategies.length === 0) {
-        loadEndOfLifeStrategies().then(() => {
-            populateEOLStrategies();
-        });
-    } else {
-        populateEOLStrategies();
-    }
-    
-    console.log('✅ Onglet Gestion Fin de Vie initialisé');
-}
-
-// Event listener pour l'activation de l'onglet EOL
-document.addEventListener('DOMContentLoaded', function() {
-    const eolTab = document.getElementById('nav-eol-tab');
-    if (eolTab) {
-        eolTab.addEventListener('shown.bs.tab', initializeEOLTab);
-    }
-});

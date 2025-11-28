@@ -1,6 +1,7 @@
 import os
 import io
 import tempfile
+import traceback
 import ifcopenshell
 import pandas as pd
 import requests
@@ -48,6 +49,17 @@ EOL_PROPERTIES = {
 }
 
 app = Flask(__name__)
+
+# Fonction helper pour créer des URIs valides à partir de GUIDs
+def create_element_uri(guid):
+    """
+    Crée une URI valide pour un élément IFC à partir de son GUID.
+    Encode les caractères spéciaux (espaces, etc.) pour éviter les erreurs GraphDB.
+    """
+    guid_str = str(guid).strip()
+    # Encoder le GUID pour créer une URI valide
+    guid_encoded = urllib.parse.quote(guid_str, safe='')
+    return f"http://example.com/ifc#{guid_encoded}"
 
 @app.route('/')
 def root():
@@ -147,13 +159,17 @@ def parse_ifc():
             name = elem.Name or ''
             etype = elem.is_a()
             uniformat_code, uniformat_desc = extract_uniformat_props(elem)
-            uri = f"http://example.com/ifc#{guid}"
+            uri = create_element_uri(guid)
             
             # Insérer dans l'ontologie
             insert_element(uri)
             insert_global_id(uri, guid)
             insert_denomination(uri, name)
             material = extract_material(elem)
+            
+            # Insérer la classe IFC
+            from sparql_client import insert_ifc_class
+            insert_ifc_class(uri, etype)
             
             if uniformat_code:
                 insert_uniformat_code(uri, uniformat_code)
@@ -223,33 +239,122 @@ def reset():
 @app.route('/update-costs', methods=['POST'])
 def update_costs():
     data = request.get_json()
+    print(f"🔍 update_costs - Données reçues: {data}")
+    print(f"🔍 update_costs - Type: {type(data)}")
+    
     if not data:
+        print("❌ update_costs - Aucune donnée reçue")
         return jsonify({"error": "Aucune donnée reçue"}), 400
+    
+    # Vérifier que data est une liste
+    if not isinstance(data, list):
+        print(f"❌ update_costs - Pas une liste: {type(data)}")
+        return jsonify({"error": "Les données doivent être une liste d'éléments"}), 400
+    
     try:
-        for item in data:
+        updated_count = 0
+        errors = []
+        
+        print(f"📝 update_costs - Traitement de {len(data)} élément(s)")
+        
+        for idx, item in enumerate(data):
+            print(f"  📦 Item {idx}: {item}")
+            
+            if not isinstance(item, dict):
+                error_msg = f"Élément invalide (doit être un dictionnaire): {item}"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+                continue
+                
             guid = item.get('guid')
             cost = item.get('cost')
             category = item.get('category')
-            if guid and cost is not None and category:
-                elem_uri = f"http://example.com/ifc#{guid}"
-                update_cost_for_element(elem_uri, cost, category)
+            
+            print(f"  🔑 guid={guid}, cost={cost}, category={category}")
+            
+            if not guid:
+                error_msg = "GUID manquant dans un élément"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+                continue
+                
+            if cost is None:
+                error_msg = f"Coût manquant pour l'élément {guid}"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+                continue
+                
+            if not category:
+                error_msg = f"Catégorie manquante pour l'élément {guid}"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+                continue
+            
+            try:
+                # Convertir le coût en float si nécessaire
+                cost_float = float(cost)
+                # Créer une URI valide (gérer les espaces et caractères spéciaux)
+                elem_uri = create_element_uri(guid)
+                print(f"  ✅ Mise à jour: {elem_uri} → {cost_float} ({category})")
+                update_cost_for_element(elem_uri, cost_float, category)
+                updated_count += 1
+                print(f"  ✅ Succès pour {guid}")
+            except ValueError as e:
+                error_msg = f"Coût invalide pour l'élément {guid}: {str(e)}"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+            except requests.exceptions.RequestException as e:
+                error_msg = f"Erreur de connexion GraphDB pour l'élément {guid}: {str(e)}"
+                print(f"  ❌ {error_msg}")
+                errors.append(error_msg)
+            except Exception as e:
+                error_msg = f"Erreur lors de la mise à jour de l'élément {guid}: {str(e)}"
+                print(f"  ❌ {error_msg}")
+                print(f"  ❌ Traceback: {traceback.format_exc()}")
+                errors.append(error_msg)
+        
+        if updated_count == 0 and errors:
+            return jsonify({
+                "error": "Aucun coût n'a pu être mis à jour",
+                "details": errors
+            }), 500
         
         # NOUVEAU: Vérification automatique des doublons après mise à jour
-        cleanup_result = auto_check_and_clean_duplicates()
+        cleanup_result = {}
+        try:
+            cleanup_result = auto_check_and_clean_duplicates()
+        except Exception as e:
+            print(f"⚠️ Erreur lors du nettoyage automatique des doublons: {str(e)}")
+            cleanup_result = {'auto_cleaned': False, 'error': str(e)}
         
         # IMPORTANT: Relancer la liaison avec les années après mise à jour
-        relink_costs_to_years()
+        try:
+            relink_costs_to_years()
+        except Exception as e:
+            print(f"⚠️ Erreur lors de la reliaison des coûts aux années: {str(e)}")
         
-        base_message = "Coûts mis à jour avec succès"
+        base_message = f"{updated_count} coût(s) mis à jour avec succès"
         if cleanup_result.get('auto_cleaned'):
             base_message += f" 🧹 Nettoyage automatique: {cleanup_result['duplicates_removed']} doublons supprimés."
         
-        return jsonify({
+        response = {
             "status": base_message,
+            "updated_count": updated_count,
             "auto_cleanup": cleanup_result
-        })
+        }
+        
+        if errors:
+            response["warnings"] = errors
+        
+        return jsonify(response)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        error_details = traceback.format_exc()
+        print(f"❌ Erreur dans update_costs: {str(e)}")
+        print(f"Traceback: {error_details}")
+        return jsonify({
+            "error": f"Erreur lors de la mise à jour des coûts: {str(e)}",
+            "details": error_details
+        }), 500
 
 @app.route('/update-material', methods=['POST'])
 def update_material():
@@ -262,7 +367,7 @@ def update_material():
             guid = item.get('guid')
             material = item.get('material')
             if guid and material is not None:
-                elem_uri = f"http://example.com/ifc#{guid}"
+                elem_uri = create_element_uri(guid)
                 update_material_for_element(elem_uri, material)
                 updated_count += 1
         
@@ -292,7 +397,7 @@ def bulk_update_materials():
         
         for guid in guids:
             try:
-                elem_uri = f"http://example.com/ifc#{guid}"
+                elem_uri = create_element_uri(guid)
                 update_material_for_element(elem_uri, material)
                 updated_count += 1
             except Exception as e:
@@ -897,6 +1002,10 @@ def parse_ifc_groups():
                 insert_global_id(group_uri, group.GlobalId)
                 insert_denomination(group_uri, group.Name or '')
                 
+                # Insérer la classe IFC du groupe
+                from sparql_client import insert_ifc_class
+                insert_ifc_class(group_uri, group.is_a())
+                
                 # Ajouter des propriétés spécifiques aux groupes avec codes Uniformat détaillés
                 if group.GlobalId == '0_JYouFmz7oe6DE7pllGxF':  # Groupe Équipements de Chauffage
                     insert_uniformat_code(group_uri, 'GRP_CHAUFFAGE_GENERAL')
@@ -1064,11 +1173,11 @@ def get_stakeholders():
         sparql = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        SELECT ?stakeholder ?type ?name WHERE {
-            ?stakeholder a ?type .
-            ?type rdfs:subClassOf* wlc:Stakeholder .
+        SELECT DISTINCT ?stakeholder ?type ?name WHERE {
+            ?stakeholder a ?type ;
+                        wlc:hasName ?name .
             
-            # Filtrer les classes génériques
+            # Filtrer les classes de base (ne garder que les instances)
             FILTER(?stakeholder != wlc:Stakeholder)
             FILTER(?stakeholder != wlc:PropertyOwner)
             FILTER(?stakeholder != wlc:AssetOperator)
@@ -1076,13 +1185,11 @@ def get_stakeholders():
             FILTER(?stakeholder != wlc:MaintenanceProvider)
             FILTER(?stakeholder != wlc:EnergyProvider)
             
-            # Ne récupérer que les instances qui ont un nom
-            FILTER(EXISTS { ?stakeholder wlc:hasName ?name })
-            
-            # Ne récupérer que le type le plus spécifique
+            # Ne récupérer que le type le plus spécifique (pas wlc:Stakeholder)
             FILTER(?type != wlc:Stakeholder)
             
-            ?stakeholder wlc:hasName ?name .
+            # Vérifier que c'est bien un stakeholder
+            ?type rdfs:subClassOf* wlc:Stakeholder .
         }
         ORDER BY ?name
         """
@@ -1187,6 +1294,7 @@ def delete_all_stakeholders():
         
         delete_query = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         DELETE {
             ?stakeholder ?p ?o .
         }
@@ -1216,6 +1324,43 @@ def delete_all_stakeholders():
             return jsonify({'error': 'Erreur lors de la suppression dans GraphDB'}), 500
         
     except Exception as e:
+        return jsonify({'error': f'Erreur lors de la suppression: {str(e)}'}), 500
+
+@app.route('/api/stakeholders/<path:stakeholder_uri>', methods=['DELETE'])
+def delete_specific_stakeholder(stakeholder_uri):
+    """Supprime une partie prenante spécifique par son URI"""
+    try:
+        import requests
+        from urllib.parse import unquote
+        
+        # Décoder l'URI si nécessaire
+        stakeholder_uri = unquote(stakeholder_uri)
+        
+        print(f"🗑️ Suppression de la partie prenante: {stakeholder_uri}")
+        
+        delete_query = f"""
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        DELETE {{
+            <{stakeholder_uri}> ?p ?o .
+        }}
+        WHERE {{
+            <{stakeholder_uri}> ?p ?o .
+        }}
+        """
+        
+        response = requests.post(GRAPHDB_REPO.rstrip("/") + "/statements", data={"update": delete_query})
+        
+        if response.ok:
+            return jsonify({
+                'success': True,
+                'message': f'Partie prenante supprimée avec succès'
+            })
+        else:
+            return jsonify({'error': f'Erreur GraphDB: {response.text}'}), 500
+        
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': f'Erreur lors de la suppression: {str(e)}'}), 500
 
 @app.route('/api/stakeholder-attributions', methods=['GET'])
@@ -1402,7 +1547,7 @@ def create_stakeholder_attribution():
         attributions_created = 0
         
         for element_guid in elements_to_process:
-            element_uri = f"http://example.com/ifc#{element_guid}"
+            element_uri = create_element_uri(element_guid)
             
             for cost_type in cost_types:
                 # Générer un URI unique pour l'attribution
@@ -1895,31 +2040,55 @@ def calculate_wlc():
         endoflife_results = query_graphdb(sparql_endoflife)
         
         # Calculer les coûts par phase
+        # IMPORTANT : Opération = coût ANNUEL, Maintenance = coût PONCTUEL
         construction_cost = float(construction_results[0].get('totalCost', 0)) if construction_results and construction_results[0] else 0
-        operation_annual_cost = float(operation_results[0].get('totalAnnualCost', 0)) if operation_results and operation_results[0] else 0
-        maintenance_annual_cost = float(maintenance_results[0].get('totalAnnualCost', 0)) if maintenance_results and maintenance_results[0] else 0
+        operation_annual_cost = float(operation_results[0].get('totalAnnualCost', 0)) if operation_results and operation_results[0] else 0  # Coût ANNUEL cumulé
+        maintenance_unit_cost = float(maintenance_results[0].get('totalAnnualCost', 0)) if maintenance_results and maintenance_results[0] else 0  # Coût UNITAIRE cumulé
         
-        # Calculer les coûts de remplacements et fin de vie
-        replacement_costs_by_year = {}  # {année: coût}
-        total_endoflife_cost = 0
+        # Calculer les coûts de remplacements (maintenance) et démolition finale (fin de vie)
+        maintenance_costs_by_year = {}  # {année: coût de remplacement}
+        endoflife_costs_by_year = {}  # {année N: coût de démolition finale}
         
-        if endoflife_results:
-            for row in endoflife_results:
-                cost_value = float(row.get('costValue', 0))
-                element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
-                
-                if cost_value > 0:
-                    # Coût de fin de vie à la fin du projet (tous les éléments)
-                    total_endoflife_cost += cost_value
+        if maintenance_results and maintenance_results[0]:
+            # Récupérer les détails pour calculer les remplacements
+            sparql_maintenance_detail = """
+            PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+            SELECT ?element ?guid ?costValue ?lifespan
+            WHERE {
+              ?element wlc:hasCost ?cost .
+              ?element wlc:globalId ?guid .
+              ?cost a wlc:MaintenanceCosts ;
+                    wlc:hasCostValue ?costValue .
+              
+              OPTIONAL { ?element wlc:hasDuration ?lifespan . }
+            }
+            """
+            maintenance_detail_results = query_graphdb(sparql_maintenance_detail)
+            
+            if maintenance_detail_results:
+                for row in maintenance_detail_results:
+                    cost_value = float(row.get('costValue', 0))
+                    element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
                     
-                    # Remplacements pendant le projet
-                    if element_lifespan > 0 and element_lifespan < project_lifespan:
+                    if cost_value > 0 and element_lifespan > 0 and element_lifespan < project_lifespan:
+                        # Calculer les années de remplacement (pas dernière année)
                         replacement_year = element_lifespan
                         while replacement_year < project_lifespan:
-                            if replacement_year not in replacement_costs_by_year:
-                                replacement_costs_by_year[replacement_year] = 0
-                            replacement_costs_by_year[replacement_year] += cost_value
+                            if replacement_year not in maintenance_costs_by_year:
+                                maintenance_costs_by_year[replacement_year] = 0
+                            maintenance_costs_by_year[replacement_year] += cost_value
                             replacement_year += element_lifespan
+        
+        # Calculer les coûts de démolition finale
+        if endoflife_results:
+            total_demolition_cost = 0
+            for row in endoflife_results:
+                cost_value = float(row.get('costValue', 0))
+                if cost_value > 0:
+                    total_demolition_cost += cost_value
+            
+            if total_demolition_cost > 0:
+                endoflife_costs_by_year[project_lifespan] = total_demolition_cost
         
         # Récupérer les taux d'actualisation
         sparql_discount_rates = """
@@ -1957,27 +2126,25 @@ def calculate_wlc():
                 nominal_cost += construction_cost
                 cost_breakdown['construction'] = construction_cost
                 
-            elif year == project_lifespan:
-                # Dernière année : Fin de vie de tous les éléments
-                nominal_cost += total_endoflife_cost
-                cost_breakdown['end_of_life'] = total_endoflife_cost
+            elif year > 0 and year <= project_lifespan:
+                # Années 1 à N : Opération + Maintenance (remplacements) + Fin de vie (démolition)
                 
-            elif year > 0 and year < project_lifespan:
-                # Années intermédiaires : Opération + Maintenance + Remplacements
+                # Opération annuelle (sauf dernière année)
+                if year < project_lifespan:
+                    nominal_cost += operation_annual_cost
+                    cost_breakdown['operation'] = operation_annual_cost
                 
-                # Opération annuelle
-                nominal_cost += operation_annual_cost
-                cost_breakdown['operation'] = operation_annual_cost
+                # Remplacements (maintenance ponctuelle)
+                if year in maintenance_costs_by_year:
+                    maint_cost = maintenance_costs_by_year[year]
+                    nominal_cost += maint_cost
+                    cost_breakdown['maintenance'] = maint_cost
                 
-                # Maintenance annuelle
-                nominal_cost += maintenance_annual_cost
-                cost_breakdown['maintenance'] = maintenance_annual_cost
-                
-                # Remplacements (fin de vie d'équipements)
-                if year in replacement_costs_by_year:
-                    replacement_cost = replacement_costs_by_year[year]
-                    nominal_cost += replacement_cost
-                    cost_breakdown['replacements'] = replacement_cost
+                # Démolition finale (fin de vie)
+                if year in endoflife_costs_by_year:
+                    eol_cost = endoflife_costs_by_year[year]
+                    nominal_cost += eol_cost
+                    cost_breakdown['end_of_life'] = eol_cost
             
             # Calcul NPV
             if discount_rate > 0:
@@ -1998,12 +2165,27 @@ def calculate_wlc():
         # Calculer les totaux par type pour compatibilité
         costs_by_type = {
             'ConstructionCosts': construction_cost,
-            'OperationCosts': operation_annual_cost * max(0, project_lifespan - 1),
-            'MaintenanceCosts': maintenance_annual_cost * project_lifespan + sum(replacement_costs_by_year.values()),
-            'EndOfLifeCosts': total_endoflife_cost
+            'OperationCosts': operation_annual_cost * (project_lifespan - 1),  # Coût annuel × (N-1) ans
+            'MaintenanceCosts': sum(maintenance_costs_by_year.values()),  # Somme des remplacements
+            'EndOfLifeCosts': sum(endoflife_costs_by_year.values())  # Démolition finale
         }
         
         total_nominal = sum(costs_by_type.values())
+        
+        # Vérification : calculer la somme des coûts nominaux et actualisés année par année
+        sum_nominal_by_year = sum(year_data['nominal_cost'] for year_data in costs_by_year)
+        sum_discounted_by_year = sum(year_data['discounted_cost'] for year_data in costs_by_year)
+        
+        print(f"🔍 WLC Vérification:")
+        print(f"  Construction: {construction_cost:.2f}")
+        print(f"  Opération: {operation_annual_cost:.2f}/an × {project_lifespan-1} ans = {costs_by_type['OperationCosts']:.2f}")
+        print(f"  Maintenance (remplacements): {len(maintenance_costs_by_year)} événements = {costs_by_type['MaintenanceCosts']:.2f}")
+        print(f"  Fin de vie (démolition): {costs_by_type['EndOfLifeCosts']:.2f}")
+        print(f"  Total nominal (par type): {total_nominal:.2f}")
+        print(f"  Total nominal (par année): {sum_nominal_by_year:.2f}")
+        print(f"  Total WLC actualisé: {total_wlc:.2f}")
+        print(f"  Somme des coûts actualisés: {sum_discounted_by_year:.2f}")
+        print(f"  Différence: {abs(total_wlc - sum_discounted_by_year):.6f}")
         
         # Calculer le taux d'actualisation moyen pondéré
         if total_nominal > 0:
@@ -2035,6 +2217,9 @@ def calculate_wlc():
             
             requests.post(GRAPHDB_REPO.rstrip("/") + "/statements", data={"update": update_query})
         
+        # Vérifier la cohérence des calculs
+        verification_ok = abs(total_wlc - sum_discounted_by_year) < 0.01
+        
         return jsonify({
             "success": True,
             "total_wlc": total_wlc,
@@ -2044,10 +2229,17 @@ def calculate_wlc():
             "years_analyzed": project_lifespan + 1,
             "costs_by_year": costs_by_year,
             "costs_by_type": costs_by_type,
-            "replacement_events": len(replacement_costs_by_year),
+            "replacement_events": len(maintenance_costs_by_year),
             "npv_formula_applied": True,
-            "logic_applied": "Même logique que l'analyse par phases : Construction (an 0), Opération (an 1 à n-1), Maintenance (an 1 à n) + remplacements, Fin de vie (an n)",
-            "message": f"WLC calculé avec NPV actualisé et logique WLC correcte: {total_wlc:,.2f}$ (nominal: {total_nominal:,.2f}$)"
+            "logic_applied": f"Construction (an 0), Opération {operation_annual_cost:.2f}$/an × {project_lifespan-1} ans, Maintenance (remplacements ponctuels), Fin de vie (démolition finale à an {project_lifespan})",
+            "message": f"WLC calculé avec NPV actualisé et logique WLC correcte: {total_wlc:,.2f}$ (nominal: {total_nominal:,.2f}$)",
+            "verification": {
+                "sum_nominal_by_year": sum_nominal_by_year,
+                "sum_discounted_by_year": sum_discounted_by_year,
+                "total_wlc_calculated": total_wlc,
+                "calculation_ok": verification_ok,
+                "difference": abs(total_wlc - sum_discounted_by_year)
+            }
         })
         
     except Exception as e:
@@ -2055,25 +2247,37 @@ def calculate_wlc():
 
 @app.route('/analyze-cost-impact')
 def analyze_cost_impact():
-    """Analyse de l'impact des coûts - Top 20 des éléments les plus coûteux avec détail par phases"""
+    """Analyse de l'impact des coûts - Top 20 des éléments les plus coûteux avec détail par phases (calcul WLC correct)"""
     try:
         from sparql_client import query_graphdb
         
-        # Requête modifiée pour récupérer les coûts par phase
+        # Récupérer la durée de vie du projet
+        sparql_lifespan = """
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        SELECT ?lifespan WHERE {
+          <http://example.com/ifc#Project> wlc:hasDuration ?lifespan .
+        }
+        """
+        lifespan_result = query_graphdb(sparql_lifespan)
+        project_lifespan = int(float(lifespan_result[0]['lifespan'])) if lifespan_result and 'lifespan' in lifespan_result[0] else 50
+        
+        # Requête pour récupérer les coûts par phase
         sparql = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
-        SELECT ?element ?guid ?description ?uniformatDesc ?material
+        SELECT ?element ?guid ?description ?uniformatCode ?uniformatDesc ?material ?ifcClass ?lifespan
                (SUM(?constructionCost) AS ?totalConstruction)
                (SUM(?operationCost) AS ?totalOperation)
                (SUM(?maintenanceCost) AS ?totalMaintenance)
                (SUM(?endOfLifeCost) AS ?totalEndOfLife)
-               (SUM(?constructionCost + ?operationCost + ?maintenanceCost + ?endOfLifeCost) AS ?totalCost)
         WHERE {
           ?element wlc:globalId ?guid .
           
           OPTIONAL { ?element wlc:hasDenomination ?description . }
+          OPTIONAL { ?element wlc:hasUniformatCode ?uniformatCode . }
           OPTIONAL { ?element wlc:hasUniformatDescription ?uniformatDesc . }
           OPTIONAL { ?element wlc:hasIfcMaterial ?material . }
+          OPTIONAL { ?element wlc:hasIfcClass ?ifcClass . }
+          OPTIONAL { ?element wlc:hasDuration ?lifespan . }
           
           # Coûts de construction
           OPTIONAL {
@@ -2082,14 +2286,14 @@ def analyze_cost_impact():
                                 wlc:hasCostValue ?constructionCost .
           }
           
-          # Coûts d'opération  
+          # Coûts d'opération (ANNUELS)
           OPTIONAL {
             ?element wlc:hasCost ?operationCostObj .
             ?operationCostObj a wlc:OperationCosts ;
                              wlc:hasCostValue ?operationCost .
           }
           
-          # Coûts de maintenance
+          # Coûts de maintenance (ANNUELS)
           OPTIONAL {
             ?element wlc:hasCost ?maintenanceCostObj .
             ?maintenanceCostObj a wlc:MaintenanceCosts ;
@@ -2106,49 +2310,99 @@ def analyze_cost_impact():
           # Filtrer seulement les éléments qui ont au moins un coût
           FILTER(BOUND(?constructionCost) || BOUND(?operationCost) || BOUND(?maintenanceCost) || BOUND(?endOfLifeCost))
         }
-        GROUP BY ?element ?guid ?description ?uniformatDesc ?material
-        ORDER BY DESC(?totalCost)
-        LIMIT 20
+        GROUP BY ?element ?guid ?description ?uniformatCode ?uniformatDesc ?material ?ifcClass ?lifespan
         """
         
         results = query_graphdb(sparql)
         
+        # Calculer les coûts WLC pour chaque élément
         analysis_results = []
-        total_project_cost = 0
         
         for row in results:
-            construction_cost = float(row.get('totalConstruction', 0))
-            operation_cost = float(row.get('totalOperation', 0))
-            maintenance_cost = float(row.get('totalMaintenance', 0))
-            end_of_life_cost = float(row.get('totalEndOfLife', 0))
-            total_cost = float(row.get('totalCost', 0))
+            # Coûts bruts depuis GraphDB
+            construction_cost_raw = float(row.get('totalConstruction', 0))
+            operation_cost_annual = float(row.get('totalOperation', 0))
+            maintenance_cost_annual = float(row.get('totalMaintenance', 0))
+            end_of_life_cost_unit = float(row.get('totalEndOfLife', 0))
+            element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
             
-            total_project_cost += total_cost
+            # CALCUL WLC CORRECT - LOGIQUE FINALE
+            # Construction : une fois (année 0)
+            construction_cost_wlc = construction_cost_raw
+            
+            # Opération : coût ANNUEL × (durée projet - 1)
+            operation_cost_wlc = operation_cost_annual * (project_lifespan - 1)
+            
+            # Maintenance : coût PONCTUEL de remplacement (apparaît à chaque fin de cycle)
+            # Pas de calcul ici, sera calculé avec les remplacements
+            maintenance_cost_wlc = 0  # Sera ajouté via les remplacements
+            
+            # Maintenance (remplacements) + Fin de vie (démolition finale)
+            # Maintenance = coût de remplacement à chaque fin de cycle
+            # Fin de vie = coût de démolition finale
+            # Ex: Projet 80 ans, élément 25 ans → maintenance années 25, 50, 75 + fin de vie année 80
+            
+            maintenance_events = 0
+            if element_lifespan > 0 and element_lifespan < project_lifespan:
+                # Compter combien de fois l'élément atteint sa fin de vie pendant le projet (avant dernière année)
+                maintenance_events = project_lifespan // element_lifespan
+                # Si division exacte, soustraire 1 car le dernier événement est la démolition finale
+                if (project_lifespan % element_lifespan) == 0:
+                    maintenance_events -= 1
+            
+            # Coûts de maintenance = remplacements pendant le projet
+            maintenance_cost_wlc = maintenance_cost_annual * maintenance_events
+            
+            # Fin de vie = démolition finale à l'année N (toujours 1 fois)
+            end_of_life_cost_wlc = end_of_life_cost_unit
+            
+            # Total WLC
+            total_cost_wlc = construction_cost_wlc + operation_cost_wlc + maintenance_cost_wlc + end_of_life_cost_wlc
             
             analysis_results.append({
                 'guid': row.get('guid', ''),
+                'ifc_class': row.get('ifcClass', 'N/A'),
+                'uniformat_code': row.get('uniformatCode', 'N/A'),
                 'description': row.get('uniformatDesc', '') or row.get('description', '') or 'Sans description',
                 'material': row.get('material', 'Non spécifié'),
-                'construction_cost': construction_cost,
-                'operation_cost': operation_cost,
-                'maintenance_cost': maintenance_cost,
-                'end_of_life_cost': end_of_life_cost,
-                'total_cost': total_cost
+                'lifespan': element_lifespan,
+                'construction_cost': construction_cost_wlc,
+                'operation_cost': operation_cost_wlc,
+                'maintenance_cost': maintenance_cost_wlc,
+                'end_of_life_cost': end_of_life_cost_wlc,
+                'total_cost': total_cost_wlc,
+                # Données brutes pour référence
+                '_operation_annual': operation_cost_annual,
+                '_maintenance_unit': maintenance_cost_annual,
+                '_replacements': maintenance_events
             })
         
+        # Trier par coût total WLC décroissant et limiter à 20
+        analysis_results.sort(key=lambda x: x['total_cost'], reverse=True)
+        analysis_results = analysis_results[:20]
+        
+        # Calculer les statistiques pour le résumé
+        total_project_cost = sum([r['total_cost'] for r in analysis_results])
+        average_cost = total_project_cost / len(analysis_results) if analysis_results else 0
+        max_cost = max([r['total_cost'] for r in analysis_results]) if analysis_results else 0
+        
         summary = {
-            'total_project_cost': total_project_cost,
-            'top_cost_element': analysis_results[0] if analysis_results else None
+            'total_cost': total_project_cost,
+            'average_cost': average_cost,
+            'max_cost': max_cost,
+            'criteria': f'Top 20 éléments par coût WLC total (projet {project_lifespan} ans)'
         }
         
         return jsonify({
             "success": True,
             "results": analysis_results,
             "summary": summary,
-            "description": "Analyse des éléments ayant le plus gros impact sur le coût global du projet avec détail par phases"
+            "description": f"Analyse des éléments ayant le plus gros impact WLC sur {project_lifespan} ans avec calculs corrects (opération × {project_lifespan-1} ans, maintenance × {project_lifespan} ans + remplacements)"
         })
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": f"Erreur lors de l'analyse d'impact: {str(e)}"}), 500
 
 @app.route('/analyze-frequent-replacements')
@@ -2214,13 +2468,41 @@ def analyze_frequent_replacements():
             except:
                 maintenance_cost = 0
             
+            # Récupérer la durée de vie du projet pour calculer les remplacements
+            project_lifespan_query = """
+            PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+            SELECT ?lifespan WHERE {
+              <http://example.com/ifc#Project> wlc:hasDuration ?lifespan .
+            }
+            """
+            proj_lifespan_result = query_graphdb(project_lifespan_query)
+            proj_lifespan = int(float(proj_lifespan_result[0]['lifespan'])) if proj_lifespan_result and 'lifespan' in proj_lifespan_result[0] else 50
+            
+            # Calculer le nombre d'événements de REMPLACEMENT (pas démolition)
+            replacement_events = 0
+            if lifespan > 0 and lifespan < proj_lifespan:
+                replacement_events = proj_lifespan // lifespan
+                # Si division exacte, soustraire 1 (dernier événement = démolition)
+                if (proj_lifespan % lifespan) == 0:
+                    replacement_events -= 1
+            
+            # Coût total de maintenance = coût unitaire × nombre de remplacements
+            total_maintenance_cost = maintenance_cost * replacement_events if maintenance_cost else 0
+            
             analysis_results.append({
                 'guid': guid,
+                'ifc_class': 'N/A',  # Non disponible dans cette analyse
+                'uniformat_code': 'N/A',  # Non disponible dans cette analyse
                 'description': description,
                 'material': material,
+                'construction_cost': 0,  # Non pertinent
+                'operation_cost': 0,  # Non pertinent
+                'maintenance_cost': total_maintenance_cost,  # Coût total des remplacements
+                'end_of_life_cost': 0,  # Non disponible dans cette requête
                 'lifespan': lifespan,
-                'maintenance_cost': maintenance_cost,
-                'replacement_frequency': f"Tous les {lifespan} ans"
+                'total_cost': total_maintenance_cost,
+                '_replacement_frequency': f"Tous les {lifespan} ans ({replacement_events} remplacements)",
+                '_num_replacements': replacement_events
             })
         
         return jsonify({
@@ -2240,25 +2522,44 @@ def analyze_frequent_replacements():
 
 @app.route('/analyze-high-maintenance')
 def analyze_high_maintenance():
-    """Analyse des coûts de maintenance élevés"""
+    """Analyse des coûts de maintenance élevés (calcul WLC correct)"""
     try:
         from sparql_client import query_graphdb
         
+        # Récupérer la durée de vie du projet
+        sparql_lifespan = """
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        SELECT ?lifespan WHERE {
+          <http://example.com/ifc#Project> wlc:hasDuration ?lifespan .
+        }
+        """
+        lifespan_result = query_graphdb(sparql_lifespan)
+        project_lifespan = int(float(lifespan_result[0]['lifespan'])) if lifespan_result and 'lifespan' in lifespan_result[0] else 50
+        
         sparql = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
-        SELECT ?element ?guid ?description ?uniformatDesc ?material
+        SELECT ?element ?guid ?description ?uniformatDesc ?material ?lifespan
                (SUM(?maintenanceCost) AS ?totalMaintenance)
+               (SUM(?endOfLifeCost) AS ?totalEndOfLife)
         WHERE {
           ?element wlc:globalId ?guid ;
                   wlc:hasCost ?cost .
           ?cost a wlc:MaintenanceCosts ;
-                              wlc:hasCostValue ?maintenanceCost .
+                wlc:hasCostValue ?maintenanceCost .
           
+          OPTIONAL { ?element wlc:hasDuration ?lifespan . }
           OPTIONAL { ?element wlc:hasDenomination ?description . }
           OPTIONAL { ?element wlc:hasUniformatDescription ?uniformatDesc . }
           OPTIONAL { ?element wlc:hasIfcMaterial ?material . }
+          
+          # Récupérer aussi les coûts de fin de vie pour calculer les remplacements
+          OPTIONAL {
+            ?element wlc:hasCost ?eolCost .
+            ?eolCost a wlc:EndOfLifeCosts ;
+                     wlc:hasCostValue ?endOfLifeCost .
+          }
         }
-        GROUP BY ?element ?guid ?description ?uniformatDesc ?material
+        GROUP BY ?element ?guid ?description ?uniformatDesc ?material ?lifespan
         ORDER BY DESC(?totalMaintenance)
         LIMIT 20
         """
@@ -2267,29 +2568,75 @@ def analyze_high_maintenance():
         
         analysis_results = []
         for row in results:
-            maintenance_cost = float(row.get('totalMaintenance', 0))
+            maintenance_cost_annual = float(row.get('totalMaintenance', 0))
+            end_of_life_cost_unit = float(row.get('totalEndOfLife', 0))
+            element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
+            
+            # CALCUL WLC CORRECT : Maintenance = coût PONCTUEL × nombre de remplacements
+            maintenance_cost_unit = maintenance_cost_annual  # C'est le coût par remplacement
+            
+            # Calculer le nombre de remplacements (pas démolition)
+            replacement_events = 0
+            if element_lifespan > 0 and element_lifespan < project_lifespan:
+                replacement_events = project_lifespan // element_lifespan
+                # Si division exacte, soustraire 1 (dernier événement = démolition)
+                if (project_lifespan % element_lifespan) == 0:
+                    replacement_events -= 1
+            
+            # Coût total de maintenance = coût unitaire × nombre de remplacements
+            maintenance_cost_wlc = maintenance_cost_unit * replacement_events
+            
+            # Fin de vie = démolition finale (1 fois)
+            endoflife_cost_wlc = end_of_life_cost_unit
                 
             analysis_results.append({
-                    'guid': row.get('guid', ''),
+                'guid': row.get('guid', ''),
+                'ifc_class': 'N/A',  # Non disponible dans cette analyse
+                'uniformat_code': 'N/A',  # Non disponible dans cette analyse
                 'description': row.get('uniformatDesc', '') or row.get('description', '') or 'Sans description',
                 'material': row.get('material', 'Non spécifié'),
-                'maintenance_cost': maintenance_cost
-                })
+                'construction_cost': 0,  # Non pertinent pour cette analyse
+                'operation_cost': 0,  # Non pertinent pour cette analyse
+                'maintenance_cost': maintenance_cost_wlc,  # Coût total des remplacements
+                'end_of_life_cost': endoflife_cost_wlc,  # Démolition finale
+                'lifespan': element_lifespan,
+                'total_cost': maintenance_cost_wlc + endoflife_cost_wlc,  # Total = remplacements + démolition
+                '_unit_maintenance_cost': maintenance_cost_unit,
+                '_replacements': replacement_events
+            })
+        
+        # Re-trier par coût WLC total
+        analysis_results.sort(key=lambda x: x['total_cost'], reverse=True)
         
         return jsonify({
             "success": True,
             "results": analysis_results,
-            "description": "Éléments avec les coûts de maintenance les plus élevés"
+            "summary": {
+                'criteria': f'Coûts maintenance WLC sur {project_lifespan} ans (incluant remplacements)'
+            },
+            "description": f"Éléments avec coûts de maintenance WLC les plus élevés (annuel × {project_lifespan} ans + remplacements)"
         })
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": f"Erreur lors de l'analyse de maintenance: {str(e)}"}), 500
 
 @app.route('/analyze-high-operation')
 def analyze_high_operation():
-    """Analyse des coûts d'opération élevés sur la durée de vie"""
+    """Analyse des coûts d'opération élevés sur la durée de vie (calcul WLC correct)"""
     try:
         from sparql_client import query_graphdb
+        
+        # Récupérer la durée de vie du projet AVANT la requête principale
+        sparql_lifespan = """
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        SELECT ?lifespan WHERE {
+          <http://example.com/ifc#Project> wlc:hasDuration ?lifespan .
+        }
+        """
+        lifespan_result = query_graphdb(sparql_lifespan)
+        project_lifespan = int(float(lifespan_result[0]['lifespan'])) if lifespan_result and 'lifespan' in lifespan_result[0] else 50
         
         sparql = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
@@ -2313,40 +2660,43 @@ def analyze_high_operation():
         
         results = query_graphdb(sparql)
         
-        # Récupérer la durée de vie du projet pour calculer les coûts cumulés
-        sparql_lifespan = """
-        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
-        SELECT ?lifespan WHERE {
-          <http://example.com/ifc#Project> wlc:hasDuration ?lifespan .
-        }
-        """
-        lifespan_result = query_graphdb(sparql_lifespan)
-        project_lifespan = int(float(lifespan_result[0]['lifespan'])) if lifespan_result and 'lifespan' in lifespan_result[0] else 50
-        
         analysis_results = []
         for row in results:
-            operation_cost = float(row.get('totalOperation', 0))
-            element_lifespan = int(float(row.get('lifespan', project_lifespan)))
+            operation_cost_annual = float(row.get('totalOperation', 0))
+            element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
             
-            # Calculer le coût cumulé sur la durée de vie
-            cumulative_cost = operation_cost * min(element_lifespan, project_lifespan)
+            # CALCUL WLC CORRECT : Opération = coût ANNUEL × (durée projet - 1)
+            # Le coût d'opération dans GraphDB est ANNUEL
+            operation_cost_wlc = operation_cost_annual * (project_lifespan - 1)
                 
             analysis_results.append({
-                    'guid': row.get('guid', ''),
+                'guid': row.get('guid', ''),
+                'ifc_class': 'N/A',  # Non disponible dans cette analyse
+                'uniformat_code': 'N/A',  # Non disponible dans cette analyse
                 'description': row.get('uniformatDesc', '') or row.get('description', '') or 'Sans description',
                 'material': row.get('material', 'Non spécifié'),
-                    'annual_operation_cost': operation_cost,
-                'cumulative_cost': cumulative_cost,
-                'lifespan': element_lifespan
-                })
+                'construction_cost': 0,  # Non pertinent pour cette analyse
+                'operation_cost': operation_cost_wlc,  # Coût WLC total
+                'maintenance_cost': 0,  # Non pertinent pour cette analyse
+                'end_of_life_cost': 0,  # Non pertinent pour cette analyse
+                'lifespan': element_lifespan,
+                'total_cost': operation_cost_wlc,  # Le total est le coût d'opération WLC
+                '_annual_operation_cost': operation_cost_annual,
+                '_years_operated': project_lifespan - 1
+            })
         
         return jsonify({
             "success": True,
             "results": analysis_results,
-            "description": "Éléments avec les coûts d'opération cumulés les plus élevés sur la durée de vie"
+            "summary": {
+                'criteria': f'Coûts opération cumulés sur {project_lifespan - 1} ans'
+            },
+            "description": f"Éléments avec les coûts d'opération cumulés les plus élevés (annuel × {project_lifespan - 1} ans)"
         })
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": f"Erreur lors de l'analyse d'opération: {str(e)}"}), 500
 
 @app.route('/analyze-cost-by-phase')
@@ -2484,16 +2834,16 @@ def analyze_cost_by_phase():
                     'element_count': element_count
                 })
         
-        # Traitement de l'opération (avec multiplication par durée de vie - 1)
+        # Traitement de l'opération (coût ANNUEL × (durée projet - 1))
         operation_results = query_graphdb(sparql_operation)
         if operation_results and operation_results[0]:
             row = operation_results[0]
-            annual_cost = float(row.get('totalAnnualCost', 0))
+            annual_cost = float(row.get('totalAnnualCost', 0))  # Coût annuel cumulé
             cost_count = int(row.get('costCount', 0))
             element_count = int(row.get('elementCount', 0))
             
-            # Multiplier par la durée de vie moins 1 (pas d'opération la dernière année)
-            operation_years = max(0, project_lifespan - 1)
+            # Multiplier par le nombre d'années d'opération
+            operation_years = project_lifespan - 1
             total_cost = annual_cost * operation_years
             
             if total_cost > 0:
@@ -2518,15 +2868,19 @@ def analyze_cost_by_phase():
         
         if maintenance_results and maintenance_results[0]:
             row = maintenance_results[0]
-            maintenance_annual_cost = float(row.get('totalAnnualCost', 0))
+            maintenance_total_cost = float(row.get('totalAnnualCost', 0))  # Mal nommé, c'est le total
             maintenance_cost_count = int(row.get('costCount', 0))
             maintenance_element_count = int(row.get('elementCount', 0))
         
-        # Récupérer et calculer les coûts de fin de vie (remplacements) à intégrer dans la maintenance
+        # Récupérer et calculer les coûts de remplacements (maintenance ponctuelle) + démolition finale
         endoflife_results = query_graphdb(sparql_endoflife)
-        replacement_total_cost = 0
-        total_replacements = 0
+        endoflife_total_cost = 0  # Coûts de démolition finale uniquement
+        total_demolitions = 0
         endoflife_element_count = 0
+        
+        # Calculer aussi les remplacements pour la maintenance
+        maintenance_from_replacements = 0
+        total_replacements = 0
         
         if endoflife_results:
             elements_processed = set()
@@ -2537,66 +2891,89 @@ def analyze_cost_by_phase():
                 element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
                 
                 if guid and cost_value > 0:
-                    # Calculer le nombre de remplacements pendant la durée du projet
+                    # Séparer remplacements et démolition finale
+                    replacement_events = 0
                     if element_lifespan > 0 and element_lifespan < project_lifespan:
-                        replacements = project_lifespan // element_lifespan
-                        # Ne pas compter la fin de vie finale du projet
+                        replacement_events = project_lifespan // element_lifespan
+                        # Si division exacte, soustraire 1 (dernier = démolition)
                         if (project_lifespan % element_lifespan) == 0:
-                            replacements -= 1
-                    else:
-                        # Si la durée de vie est >= durée du projet, pas de remplacement pendant le projet
-                        replacements = 0
+                            replacement_events -= 1
                     
-                    # Coût total des remplacements = coût unitaire × nombre de remplacements
-                    element_replacement_cost = cost_value * replacements
-                    replacement_total_cost += element_replacement_cost
-                    total_replacements += replacements
+                    # Maintenance = coût unitaire × nombre de remplacements
+                    maintenance_from_replacements += cost_value * replacement_events
+                    total_replacements += replacement_events
+                    
+                    # Fin de vie = coût de démolition finale (toujours 1)
+                    endoflife_total_cost += cost_value
+                    total_demolitions += 1
                     
                     if guid not in elements_processed:
                         elements_processed.add(guid)
                         endoflife_element_count += 1
         
-        # Combiner maintenance classique + coûts de remplacement
-        maintenance_years = project_lifespan
-        maintenance_classic_cost = maintenance_annual_cost * maintenance_years
-        total_maintenance_cost = maintenance_classic_cost + replacement_total_cost
+        # Maintenance : coût annuel + coûts de remplacements
+        # Note: maintenance_total_cost est le coût ponctuel unitaire
+        # Il faut calculer combien de remplacements pour chaque élément
+        total_maintenance_cost = 0
+        
+        # Pour calculer la maintenance correctement, on doit récupérer les durées de vie
+        sparql_maintenance_detail = f"""
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        SELECT ?element ?guid ?costValue ?lifespan
+        WHERE {{
+          ?element wlc:hasCost ?cost .
+          ?element wlc:globalId ?guid .
+          ?cost a wlc:MaintenanceCosts ;
+                wlc:hasCostValue ?costValue .
+          
+          OPTIONAL {{ ?element wlc:hasDuration ?lifespan . }}
+          OPTIONAL {{ ?element wlc:hasUniformatCode ?uniformatCode . }}
+          
+          {guid_filter}
+        }}
+        """
+        
+        maintenance_detail_results = query_graphdb(sparql_maintenance_detail)
+        if maintenance_detail_results:
+            for row in maintenance_detail_results:
+                cost_value = float(row.get('costValue', 0))
+                element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
+                
+                # Calculer le nombre de remplacements pour cet élément
+                replacement_events = 0
+                if element_lifespan > 0 and element_lifespan < project_lifespan:
+                    replacement_events = project_lifespan // element_lifespan
+                    if (project_lifespan % element_lifespan) == 0:
+                        replacement_events -= 1
+                
+                total_maintenance_cost += cost_value * replacement_events
         
         if total_maintenance_cost > 0:
             total_project_cost += total_maintenance_cost
-            total_elements_analyzed = max(total_elements_analyzed, max(maintenance_element_count, endoflife_element_count))
+            total_elements_analyzed = max(total_elements_analyzed, maintenance_element_count)
             
             phase_distribution.append({
                 'phase': 'Maintenance',
                 'cost_type': 'MaintenanceCosts',
                 'total_cost': total_maintenance_cost,
-                'annual_cost': maintenance_annual_cost,
-                'maintenance_years': maintenance_years,
-                'classic_maintenance_cost': maintenance_classic_cost,
-                'replacement_cost': replacement_total_cost,
-                'total_replacements': total_replacements,
                 'cost_count': maintenance_cost_count,
-                'element_count': max(maintenance_element_count, endoflife_element_count)
+                'element_count': maintenance_element_count,
+                'total_replacements': total_replacements,
+                'description': f'Coûts de remplacements ({total_replacements} événements)'
             })
         
-        # Phase fin de vie séparée - TOUS les éléments à la fin du projet
-        total_endoflife_cost = 0
-        if endoflife_results:
-            for row in endoflife_results:
-                cost_value = float(row.get('costValue', 0))
-                if cost_value > 0:
-                    total_endoflife_cost += cost_value
-        
-        if total_endoflife_cost > 0:
-            total_project_cost += total_endoflife_cost
+        # Phase fin de vie (démolitions finales uniquement)
+        if endoflife_total_cost > 0:
+            total_project_cost += endoflife_total_cost
             total_elements_analyzed = max(total_elements_analyzed, endoflife_element_count)
             
             phase_distribution.append({
                 'phase': 'Fin de vie',
                 'cost_type': 'EndOfLifeCosts',
-                'total_cost': total_endoflife_cost,
-                'cost_count': endoflife_element_count,
+                'total_cost': endoflife_total_cost,
+                'cost_count': total_demolitions,
                 'element_count': endoflife_element_count,
-                'description': 'Coût de fin de vie de tous les éléments à la fin du projet'
+                'description': f'Coûts de démolitions finales ({total_demolitions} éléments)'
             })
         
         # Calculer les pourcentages et préparer les données pour le graphique
@@ -2628,7 +3005,7 @@ def analyze_cost_by_phase():
             },
             "phase_distribution": phase_distribution,
             "description": f"Répartition des coûts par phases du cycle de vie{additional_description}",
-            "calculation_note": f"Coûts d'opération calculés sur {max(0, project_lifespan - 1)} années (durée projet - 1) | Coûts de maintenance calculés sur {project_lifespan} années (durée complète) + coûts de fin de vie des éléments remplacés pendant le projet | Coûts de fin de vie de TOUS les éléments à la fin du projet"
+            "calculation_note": f"Construction (année 0) | Opération : coût annuel × {max(0, project_lifespan - 1)} ans | Maintenance : remplacements ponctuels ({total_replacements} événements) | Fin de vie : démolitions finales ({total_demolitions} éléments)"
         })
         
     except Exception as e:
@@ -2679,7 +3056,7 @@ def set_element_duration(guid, duration):
     """Mettre à jour la durée de vie d'un élément dans GraphDB"""
     import requests
     
-    uri = f"http://example.com/ifc#{guid}"
+    uri = create_element_uri(guid)
     update = f"""
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -2763,11 +3140,12 @@ def costs_by_year():
         endoflife_results = query_graphdb(sparql_endoflife)
         
         # Calculer les coûts par phase
+        # IMPORTANT : Opération = ANNUEL, Maintenance = PONCTUEL
         construction_cost = float(construction_results[0].get('totalCost', 0)) if construction_results and construction_results[0] else 0
-        operation_annual_cost = float(operation_results[0].get('totalAnnualCost', 0)) if operation_results and operation_results[0] else 0
-        maintenance_annual_cost = float(maintenance_results[0].get('totalAnnualCost', 0)) if maintenance_results and maintenance_results[0] else 0
+        operation_annual_cost = float(operation_results[0].get('totalAnnualCost', 0)) if operation_results and operation_results[0] else 0  # Coût ANNUEL cumulé
+        maintenance_unit_cost = float(maintenance_results[0].get('totalAnnualCost', 0)) if maintenance_results and maintenance_results[0] else 0  # Coût UNITAIRE cumulé
         
-        print(f"📊 costs-by-year: Construction={construction_cost}, Opération annuelle={operation_annual_cost}, Maintenance annuelle={maintenance_annual_cost}")
+        print(f"📊 costs-by-year: Construction={construction_cost}, Opération annuelle={operation_annual_cost:.2f}, Maintenance unitaire={maintenance_unit_cost:.2f}")
         
         # Initialiser la structure des données par année
         data_by_year = []
@@ -2781,50 +3159,53 @@ def costs_by_year():
                 'total': 0
             })
         
-        # 1. Construction en année 0
+        # 1. Construction en année 0 UNIQUEMENT
         if construction_cost > 0:
             data_by_year[0]['ConstructionCosts'] = construction_cost
         
-        # 2. Opération années 1 à (durée-1)
+        # 2. Opération années 1 à (durée-1) UNIQUEMENT (pas année 0, pas année finale)
         if operation_annual_cost > 0:
             for year in range(1, project_lifespan):
                 data_by_year[year]['OperationCosts'] = operation_annual_cost
         
-        # 3. Maintenance classique toutes les années
-        if maintenance_annual_cost > 0:
-            for year in range(project_lifespan + 1):
-                data_by_year[year]['MaintenanceCosts'] = maintenance_annual_cost
+        # 3. Maintenance (remplacements ponctuels) - calculer avec les durées de vie
+        sparql_maintenance_detail = """
+        PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
+        SELECT ?element ?guid ?costValue ?lifespan
+        WHERE {
+          ?element wlc:hasCost ?cost .
+          ?element wlc:globalId ?guid .
+          ?cost a wlc:MaintenanceCosts ;
+                wlc:hasCostValue ?costValue .
+          
+          OPTIONAL { ?element wlc:hasDuration ?lifespan . }
+        }
+        """
         
-        # 4. Traitement des coûts de fin de vie avec remplacements
-        replacement_costs_by_year = {}  # {année: coût_total}
-        total_endoflife_final = 0
+        maintenance_detail_results = query_graphdb(sparql_maintenance_detail)
         
-        if endoflife_results:
-            for row in endoflife_results:
+        if maintenance_detail_results:
+            for row in maintenance_detail_results:
                 cost_value = float(row.get('costValue', 0))
                 element_lifespan = int(float(row.get('lifespan', project_lifespan))) if row.get('lifespan') else project_lifespan
                 
+                if cost_value > 0 and element_lifespan > 0 and element_lifespan < project_lifespan:
+                    # Calculer les années de remplacement (pas dernière année)
+                    replacement_year = element_lifespan
+                    while replacement_year < project_lifespan:
+                        data_by_year[replacement_year]['MaintenanceCosts'] += cost_value
+                        replacement_year += element_lifespan
+        
+        # 4. Fin de vie (démolitions finales) - toujours à l'année N
+        if endoflife_results:
+            total_demolition_cost = 0
+            for row in endoflife_results:
+                cost_value = float(row.get('costValue', 0))
                 if cost_value > 0:
-                    # Coût de fin de vie à la fin du projet (TOUS les éléments)
-                    total_endoflife_final += cost_value
-                    
-                    # Remplacements pendant le projet (ajoutés à la maintenance)
-                    if element_lifespan > 0 and element_lifespan < project_lifespan:
-                        replacement_year = element_lifespan
-                        while replacement_year < project_lifespan:
-                            if replacement_year not in replacement_costs_by_year:
-                                replacement_costs_by_year[replacement_year] = 0
-                            replacement_costs_by_year[replacement_year] += cost_value
-                            replacement_year += element_lifespan
-        
-        # Ajouter les coûts de remplacements à la maintenance
-        for year, replacement_cost in replacement_costs_by_year.items():
-            if year < len(data_by_year):
-                data_by_year[year]['MaintenanceCosts'] += replacement_cost
-        
-        # Ajouter le coût de fin de vie final (année finale)
-        if total_endoflife_final > 0:
-            data_by_year[project_lifespan]['EndOfLifeCosts'] = total_endoflife_final
+                    total_demolition_cost += cost_value
+            
+            if total_demolition_cost > 0:
+                data_by_year[project_lifespan]['EndOfLifeCosts'] = total_demolition_cost
         
         # Calculer les totaux
         for year_data in data_by_year:
@@ -3954,6 +4335,7 @@ def get_end_of_life_statistics():
         stats_query = """
         PREFIX wlc: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#>
         PREFIX wlcpo: <http://www.semanticweb.org/adamy/ontologies/2025/WLCPO#>
+        PREFIX eol: <http://www.w3id.org/dpp/EoL#>
         
         SELECT ?strategy (COUNT(?element) as ?count) WHERE {
             ?element a wlc:Element .
