@@ -70,6 +70,7 @@ uploads/
 *.json
 !package.json
 !package-lock.json
+!docs/webvowl/data/*.json
 
 # Fichiers de développement et scripts de test
 dev-tools/
