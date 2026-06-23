@@ -1,0 +1,914 @@
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/dc/terms/contributor> "École de Technologie Supérieure (ÉTS)" .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/dc/terms/creator> "Adam Yousfi" .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/dc/terms/date> "2025-06-23"^^<http://www.w3.org/2001/XMLSchema#date> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/dc/terms/license> <https://creativecommons.org/publicdomain/zero/1.0/> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/dc/terms/title> "WLCONTO: Whole-Life Costing Ontology"@en .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/vocab/vann/preferredNamespacePrefix> "wlconto" .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://purl.org/vocab/vann/preferredNamespaceUri> "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#" .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://www.w3.org/2000/01/rdf-schema#comment> "Ontology describing the ISO 15686-5 Whole-Life Costing standard.\nAdam Yousfi, École de Technologie Supérieure (ÉTS), Montréal."@en .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://adamY76.github.io/WLC-PLATFORM-ETS/> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://w3id.org/wlconto> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> <http://www.w3.org/2002/07/owl#versionInfo> "1.0.0" .
+# 
+# 
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+# 
+# 
+# http://purl.org/dc/terms/contributor
+<http://purl.org/dc/terms/contributor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/date
+<http://purl.org/dc/terms/date> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/vocab/vann/preferredNamespacePrefix
+<http://purl.org/vocab/vann/preferredNamespacePrefix> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://purl.org/vocab/vann/preferredNamespaceUri
+<http://purl.org/vocab/vann/preferredNamespaceUri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Datatypes
+# #
+# #################################################################
+# 
+# 
+# http://www.w3.org/2001/XMLSchema#date
+<http://www.w3.org/2001/XMLSchema#date> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+# 
+# http://www.w3.org/2002/07/owl#$
+<http://www.w3.org/2002/07/owl#$> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Datatype> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasConstructionCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasConstructionCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasConstructionCosts> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#SymmetricProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountRate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#PeriodOfAnalysis> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEnd
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEnd> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEnd> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEnd> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEndOfLifeCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEndOfLifeCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEndOfLifeCosts> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasMaintenanceCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasMaintenanceCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasMaintenanceCosts> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasOperationCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasOperationCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasOperationCosts> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/2002/07/owl#topObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ConstructionCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ConstructionCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ConstructionCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DateOfInstallation
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DateOfInstallation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DateOfInstallation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedConstructionCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedConstructionCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedConstructionCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEndOfLifeCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEndOfLifeCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEndOfLifeCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Element
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Element> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Element> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeDate
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeDate> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#PeriodOfAnalysis> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#PeriodOfAnalysis
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#PeriodOfAnalysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Project> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Individuals
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetLifeSpan
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetLifeSpan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetLifeSpan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeSpan> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasWLC> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination> "Building" .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "5000.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.05"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.03"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.04"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.05"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.04"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> "0.04"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEndOfLifeCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedEnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "3000.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedIncome> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedMaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedNonConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedOperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isDiscountedValueOf> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "1000.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "900.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "950.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "1100.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "1400.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "-7000.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "-7000.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LCC
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LCC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LCC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "800.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "800.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "800.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "800.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "1500.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "500.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "200.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "200.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "200.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "500.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#OperationCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "100.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "0.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "1.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "2.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "3.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "4.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> "5.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "125.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "200.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "225.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "225.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> "300.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    General axioms
+# #
+# #################################################################
+# 
+# 
+_:genid1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AllDisjointClasses> .
+_:genid1 <http://www.w3.org/2002/07/owl#members> _:genid5 .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid4 .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid3 .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid2 .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NonConstructionCosts> .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LifeCycleCost> .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income> .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ExternalitiesCosts> .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Rules
+# #
+# #################################################################
+# 
+# 
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Y> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#dc> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#base> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#denominator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DC> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Variable> .
+_:genid27 <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:genid27 <http://www.w3.org/2000/01/rdf-schema#comment> "" .
+_:genid27 <http://www.w3.org/2000/01/rdf-schema#label> "S2" .
+_:genid27 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Imp> .
+_:genid27 <http://www.w3.org/2003/11/swrl#body> _:genid61 .
+_:genid61 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid59 .
+_:genid59 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid57 .
+_:genid57 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid55 .
+_:genid55 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid53 .
+_:genid53 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid51 .
+_:genid51 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid49 .
+_:genid49 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid47 .
+_:genid47 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid45 .
+_:genid45 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid40 .
+_:genid40 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid35 .
+_:genid35 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid30 .
+_:genid30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid28 .
+_:genid28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid29 .
+_:genid29 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DC> .
+_:genid29 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#dc> .
+_:genid29 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDiscountedCostValue> .
+_:genid29 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid31 .
+_:genid31 <http://www.w3.org/2003/11/swrl#arguments> _:genid34 .
+_:genid34 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid33 .
+_:genid33 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid32 .
+_:genid32 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid32 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#denominator> .
+_:genid32 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid33 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> .
+_:genid33 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid34 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DC> .
+_:genid34 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid31 <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#divide> .
+<http://www.w3.org/2003/11/swrlb#divide> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Builtin> .
+_:genid31 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#BuiltinAtom> .
+_:genid30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid35 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid36 .
+_:genid36 <http://www.w3.org/2003/11/swrl#arguments> _:genid39 .
+_:genid39 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid38 .
+_:genid38 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid37 .
+_:genid37 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid37 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Y> .
+_:genid37 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid38 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#base> .
+_:genid38 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid39 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#denominator> .
+_:genid39 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid36 <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#pow> .
+<http://www.w3.org/2003/11/swrlb#pow> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Builtin> .
+_:genid36 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#BuiltinAtom> .
+_:genid35 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid40 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid41 .
+_:genid41 <http://www.w3.org/2003/11/swrl#arguments> _:genid44 .
+_:genid44 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid43 .
+_:genid43 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid42 .
+_:genid42 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid42 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> .
+_:genid42 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid43 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:genid43 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid44 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#base> .
+_:genid44 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid41 <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#add> .
+<http://www.w3.org/2003/11/swrlb#add> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Builtin> .
+_:genid41 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#BuiltinAtom> .
+_:genid40 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid45 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid46 .
+_:genid46 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#dc> .
+_:genid46 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountedCosts> .
+_:genid46 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid45 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid47 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid48 .
+_:genid48 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Y> .
+_:genid48 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid48 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate> .
+_:genid48 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid47 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid49 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid50 .
+_:genid50 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid50 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+_:genid50 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid49 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid51 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid52 .
+_:genid52 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid52 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid52 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> .
+_:genid52 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> .
+_:genid51 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid53 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid54 .
+_:genid54 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> .
+_:genid54 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid54 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> .
+_:genid54 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid53 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid55 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid56 .
+_:genid56 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid56 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+_:genid56 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid55 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid57 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid58 .
+_:genid58 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid58 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid58 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> .
+_:genid58 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> .
+_:genid57 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid59 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid60 .
+_:genid60 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> .
+_:genid60 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid60 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> .
+_:genid60 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid59 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid61 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid62 .
+_:genid62 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid62 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+_:genid62 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid61 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid27 <http://www.w3.org/2003/11/swrl#head> _:genid63 .
+_:genid63 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid63 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid64 .
+_:genid64 <http://www.w3.org/2003/11/swrl#arguments> _:genid69 .
+_:genid69 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid68 .
+_:genid68 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid67 .
+_:genid67 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid66 .
+_:genid66 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid65 .
+_:genid65 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid65 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Y> .
+_:genid65 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid66 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> .
+_:genid66 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid67 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DC> .
+_:genid67 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid68 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> .
+_:genid68 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid69 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid69 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid64 <http://www.w3.org/2003/11/swrl#builtin> <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> .
+<http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Builtin> .
+_:genid64 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#BuiltinAtom> .
+_:genid63 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid6 <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:genid6 <http://www.w3.org/2000/01/rdf-schema#comment> "" .
+_:genid6 <http://www.w3.org/2000/01/rdf-schema#label> "S1" .
+_:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#Imp> .
+_:genid6 <http://www.w3.org/2003/11/swrl#body> _:genid19 .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid17 .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid15 .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid13 .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid11 .
+_:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid9 .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid7 .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid8 .
+_:genid8 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid8 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid8 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> .
+_:genid8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid10 .
+_:genid10 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> .
+_:genid10 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid10 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasRateValue> .
+_:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid12 .
+_:genid12 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#r> .
+_:genid12 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DiscountRate> .
+_:genid12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid14 .
+_:genid14 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> .
+_:genid14 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid14 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCostValue> .
+_:genid14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid16 .
+_:genid16 <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid16 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid16 <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ForDate> .
+_:genid16 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid18 .
+_:genid18 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid18 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Time> .
+_:genid18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid20 .
+_:genid20 <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid20 <http://www.w3.org/2003/11/swrl#classPredicate> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs> .
+_:genid20 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#ClassAtom> .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+_:genid6 <http://www.w3.org/2003/11/swrl#head> _:genid21 .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid22 .
+_:genid22 <http://www.w3.org/2003/11/swrl#arguments> _:genid26 .
+_:genid26 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid25 .
+_:genid25 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid24 .
+_:genid24 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid23 .
+_:genid23 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid23 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#R> .
+_:genid23 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid24 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#year> .
+_:genid24 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid25 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#value> .
+_:genid25 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid26 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#c> .
+_:genid26 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#List> .
+_:genid22 <http://www.w3.org/2003/11/swrl#builtin> <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> .
+_:genid22 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#BuiltinAtom> .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/11/swrl#AtomList> .
+# Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/

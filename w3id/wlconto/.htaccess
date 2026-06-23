@@ -1,0 +1,5 @@
+# W3ID permanent redirect for WLCONTO ontology documentation
+# Submit this folder via PR to https://github.com/perma-id/w3id
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^(.*)$ https://adamY76.github.io/WLC-PLATFORM-ETS/$1 [R=302,L]
