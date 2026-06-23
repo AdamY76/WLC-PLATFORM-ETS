@@ -8,13 +8,23 @@
 @prefix swrla: <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#> .
 @prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
 @prefix WLCONTO: <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTOLOGY#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
 @base <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#> .
 
 <http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO> rdf:type owl:Ontology ;
-                                                            rdfs:comment """Ontology describing the ISO 15686-5 standard
-Adam Yousfi
-École de Technologie Supérieure (ÉTS)
-Montréal"""@en .
+                                                            dc:title "WLCONTO: Whole-Life Costing Ontology"@en ;
+                                                            dc:creator "Adam Yousfi" ;
+                                                            dc:contributor "École de Technologie Supérieure (ÉTS)" ;
+                                                            dc:date "2025-06-23"^^xsd:date ;
+                                                            owl:versionInfo "1.0.0" ;
+                                                            vann:preferredNamespacePrefix "wlconto" ;
+                                                            vann:preferredNamespaceUri "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#" ;
+                                                            dc:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+                                                            rdfs:seeAlso <https://w3id.org/wlconto> ,
+                                                                         <https://adamY76.github.io/WLC-PLATFORM-ETS/> ;
+                                                            rdfs:comment """Ontology describing the ISO 15686-5 Whole-Life Costing standard.
+Adam Yousfi, École de Technologie Supérieure (ÉTS), Montréal."""@en .
 
 #################################################################
 #    Annotation properties
