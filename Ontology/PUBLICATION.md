@@ -9,16 +9,19 @@
 | IRI de l'ontologie | http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO |
 | Licence | [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) |
 
+La version publiée utilise `Ontology/WLCONTO-public.ttl` (schéma TBox uniquement, sans individuals d'exemple).
+
 ## Regénérer la documentation
 
 ```bash
 java -jar widoco.jar \
-  -ontFile Ontology/WLCONTO.ttl \
+  -ontFile Ontology/WLCONTO-public.ttl \
   -outFolder docs \
   -rewriteAll \
   -getOntologyMetadata \
   -htaccess \
   -webVowl \
+  -ignoreIndividuals \
   -lang en \
   -rewriteBase /WLC-PLATFORM-ETS/
 
