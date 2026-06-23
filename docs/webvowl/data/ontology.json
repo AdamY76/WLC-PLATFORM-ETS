@@ -10,7 +10,7 @@
     "version" : "1.0.0",
     "author" : [ "Adam Yousfi" ],
     "comments" : {
-      "en" : "Ontology describing the ISO 15686-5 Whole-Life Costing standard.\nAdam Yousfi, École de Technologie Supérieure (ÉTS), Montréal."
+      "en" : "Public release of WLCONTO (schema only, without example individuals). Ontology describing the ISO 15686-5 Whole-Life Costing standard.\nAdam Yousfi, École de Technologie Supérieure (ÉTS), Montréal."
     },
     "other" : {
       "date" : [ {
@@ -64,12 +64,12 @@
       "seeAlso" : [ {
         "identifier" : "seeAlso",
         "language" : "undefined",
-        "value" : "https://w3id.org/wlconto",
+        "value" : "https://adamY76.github.io/WLC-PLATFORM-ETS/",
         "type" : "iri"
       }, {
         "identifier" : "seeAlso",
         "language" : "undefined",
-        "value" : "https://adamY76.github.io/WLC-PLATFORM-ETS/",
+        "value" : "https://w3id.org/wlconto",
         "type" : "iri"
       } ]
     }
@@ -97,13 +97,13 @@
     "id" : "22",
     "type" : "owl:Class"
   }, {
-    "id" : "29",
-    "type" : "owl:Class"
-  }, {
-    "id" : "10",
+    "id" : "27",
     "type" : "owl:Class"
   }, {
     "id" : "30",
+    "type" : "owl:Class"
+  }, {
+    "id" : "10",
     "type" : "owl:Class"
   }, {
     "id" : "18",
@@ -203,31 +203,6 @@
     "label" : {
       "IRI-based" : "DiscountedMaintenanceCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dm4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dm3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dm2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dm1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dm1"
-      }
-    } ],
     "id" : "8",
     "superClasses" : [ "5" ]
   }, {
@@ -237,13 +212,6 @@
     "label" : {
       "IRI-based" : "LifeCycleCost"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#LCC",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "LCC"
-      }
-    } ],
     "id" : "9",
     "superClasses" : [ "10" ]
   }, {
@@ -253,43 +221,6 @@
     "label" : {
       "IRI-based" : "DiscountRate"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR0",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR0"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR5"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DR2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DR2"
-      }
-    } ],
     "id" : "14"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EnvironmentalCosts",
@@ -298,37 +229,6 @@
     "label" : {
       "IRI-based" : "EnvironmentalCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Electricity1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Electricity2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Electricity3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Electricity4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Electricity5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Electricity5"
-      }
-    } ],
     "id" : "17",
     "superClasses" : [ "18" ]
   }, {
@@ -338,13 +238,6 @@
     "label" : {
       "IRI-based" : "DiscountedConstructionCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#DCC",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "DCC"
-      }
-    } ],
     "id" : "19",
     "superClasses" : [ "5" ]
   }, {
@@ -354,37 +247,6 @@
     "label" : {
       "IRI-based" : "OperationCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Op4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Op3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Op2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Op1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Op5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Op5"
-      }
-    } ],
     "id" : "22",
     "superClasses" : [ "18" ]
   }, {
@@ -394,24 +256,8 @@
     "label" : {
       "IRI-based" : "EndOfLifeDate"
     },
-    "id" : "29",
+    "id" : "27",
     "superClasses" : [ "21" ]
-  }, {
-    "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost",
-    "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-    "instances" : 0,
-    "label" : {
-      "IRI-based" : "WholeLifeCost"
-    },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WLC",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "WLC"
-      }
-    } ],
-    "subClasses" : [ "9" ],
-    "id" : "10"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#EndOfLifeCosts",
     "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
@@ -419,15 +265,17 @@
     "label" : {
       "IRI-based" : "EndOfLifeCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Demolition",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Demolition"
-      }
-    } ],
     "id" : "30",
     "superClasses" : [ "18" ]
+  }, {
+    "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#WholeLifeCost",
+    "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "WholeLifeCost"
+    },
+    "subClasses" : [ "9" ],
+    "id" : "10"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Costs",
     "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
@@ -444,37 +292,6 @@
     "label" : {
       "IRI-based" : "DiscountedExternalitiesCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dghg1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dghg3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dghg2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dghg5"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dghg4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dghg4"
-      }
-    } ],
     "id" : "4",
     "superClasses" : [ "5" ]
   }, {
@@ -484,19 +301,6 @@
     "label" : {
       "IRI-based" : "DiscountedIncome"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dincome4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dincome3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dincome3"
-      }
-    } ],
     "id" : "44",
     "superClasses" : [ "5" ]
   }, {
@@ -506,13 +310,6 @@
     "label" : {
       "IRI-based" : "DiscountedEndOfLifeCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Ddemolition",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Ddemolition"
-      }
-    } ],
     "id" : "26",
     "superClasses" : [ "5" ]
   }, {
@@ -527,7 +324,7 @@
   }, {
     "instances" : 0,
     "union" : [ "6", "12" ],
-    "attributes" : [ "anonymous", "union" ],
+    "attributes" : [ "union", "anonymous" ],
     "id" : "58"
   }, {
     "iri" : "http://www.w3.org/2001/XMLSchema#decimal",
@@ -557,37 +354,6 @@
     "label" : {
       "IRI-based" : "ExternalitiesCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "ghg1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "ghg5"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "ghg4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "ghg3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#ghg2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "ghg2"
-      }
-    } ],
     "id" : "33",
     "superClasses" : [ "18" ]
   }, {
@@ -597,19 +363,6 @@
     "label" : {
       "IRI-based" : "NonConstructionCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NC1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "NC1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#NCdemolition",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "NCdemolition"
-      }
-    } ],
     "id" : "35",
     "superClasses" : [ "18" ]
   }, {
@@ -656,37 +409,6 @@
     "label" : {
       "IRI-based" : "DiscountedEnvironmentalCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "De4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "De3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "De2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "De1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#De5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "De5"
-      }
-    } ],
     "id" : "32",
     "superClasses" : [ "5" ]
   }, {
@@ -705,19 +427,6 @@
     "label" : {
       "IRI-based" : "Income"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Income4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Income3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Income3"
-      }
-    } ],
     "id" : "34",
     "superClasses" : [ "18" ]
   }, {
@@ -736,13 +445,6 @@
     "label" : {
       "IRI-based" : "LifeSpan"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetLifeSpan",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "AssetLifeSpan"
-      }
-    } ],
     "id" : "7",
     "superClasses" : [ "6" ]
   }, {
@@ -752,37 +454,6 @@
     "label" : {
       "IRI-based" : "DiscountedOperationCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dop4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dop3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dop2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dop1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dop5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dop5"
-      }
-    } ],
     "id" : "41",
     "superClasses" : [ "5" ]
   }, {
@@ -792,19 +463,6 @@
     "label" : {
       "IRI-based" : "DiscountedNonConstructionCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dnc1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dnc1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Dncdemolition",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Dncdemolition"
-      }
-    } ],
     "id" : "24",
     "superClasses" : [ "5" ]
   }, {
@@ -814,44 +472,7 @@
     "label" : {
       "IRI-based" : "Time"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year0",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year0"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year1"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Year5",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Year5"
-      }
-    } ],
-    "subClasses" : [ "76", "29" ],
+    "subClasses" : [ "76", "27" ],
     "id" : "21"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#MaintenanceCosts",
@@ -860,31 +481,6 @@
     "label" : {
       "IRI-based" : "MaintenanceCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance4",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Maintenance4"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance3",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Maintenance3"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance2",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Maintenance2"
-      }
-    }, {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Maintenance1",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Maintenance1"
-      }
-    } ],
     "id" : "36",
     "superClasses" : [ "18" ]
   }, {
@@ -894,13 +490,6 @@
     "label" : {
       "IRI-based" : "Asset"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#AssetTest",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "AssetTest"
-      }
-    } ],
     "subClasses" : [ "49" ],
     "id" : "50",
     "superClasses" : [ "12" ]
@@ -911,13 +500,6 @@
     "label" : {
       "IRI-based" : "ConstructionCosts"
     },
-    "individuals" : [ {
-      "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#Asset_Construction",
-      "baseIri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO",
-      "labels" : {
-        "IRI-based" : "Asset_Construction"
-      }
-    } ],
     "id" : "37",
     "superClasses" : [ "18" ]
   } ],
@@ -943,7 +525,7 @@
     "id" : "25",
     "type" : "rdfs:SubClassOf"
   }, {
-    "id" : "27",
+    "id" : "28",
     "type" : "owl:objectProperty"
   }, {
     "id" : "31",
@@ -1039,7 +621,7 @@
     "id" : "77",
     "type" : "owl:objectProperty"
   }, {
-    "id" : "28",
+    "id" : "29",
     "type" : "owl:objectProperty"
   }, {
     "id" : "78",
@@ -1080,7 +662,7 @@
   }, {
     "range" : "5",
     "domain" : "4",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "3"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDenomination",
@@ -1110,17 +692,17 @@
       "IRI-based" : "hasDiscountRate"
     },
     "domain" : "21",
-    "attributes" : [ "object", "symmetric" ],
+    "attributes" : [ "symmetric", "object" ],
     "id" : "20"
   }, {
     "range" : "5",
     "domain" : "24",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "23"
   }, {
     "range" : "5",
     "domain" : "26",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "25"
   }, {
     "iri" : "http://www.w3.org/2002/07/owl#topObjectProperty",
@@ -1130,48 +712,48 @@
       "IRI-based" : "topObjectProperty"
     },
     "domain" : "1",
-    "subproperty" : [ "28" ],
-    "attributes" : [ "external", "object" ],
-    "id" : "27"
+    "subproperty" : [ "29" ],
+    "attributes" : [ "object", "external" ],
+    "id" : "28"
   }, {
     "range" : "5",
     "domain" : "32",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "31"
   }, {
     "range" : "5",
     "domain" : "19",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "38"
   }, {
     "range" : "5",
     "domain" : "8",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "39"
   }, {
     "range" : "5",
     "domain" : "41",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "40"
   }, {
     "range" : "18",
     "domain" : "30",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "42"
   }, {
     "range" : "18",
     "domain" : "22",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "43"
   }, {
     "range" : "18",
     "domain" : "37",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "45"
   }, {
     "range" : "18",
     "domain" : "17",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "46"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasTotalValue",
@@ -1186,7 +768,7 @@
   }, {
     "range" : "18",
     "domain" : "35",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "51"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDate",
@@ -1201,7 +783,7 @@
   }, {
     "range" : "18",
     "domain" : "34",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "54"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#isSumOf",
@@ -1216,22 +798,22 @@
   }, {
     "range" : "18",
     "domain" : "36",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "56"
   }, {
     "range" : "6",
     "domain" : "7",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "57"
   }, {
     "range" : "18",
     "domain" : "33",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "59"
   }, {
     "range" : "10",
     "domain" : "9",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "60"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasDuration",
@@ -1266,22 +848,22 @@
   }, {
     "range" : "35",
     "domain" : "33",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "64"
   }, {
     "range" : "9",
     "domain" : "34",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "65"
   }, {
     "range" : "35",
     "domain" : "34",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "66"
   }, {
     "range" : "35",
     "domain" : "9",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "67"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasEndOfLifeCosts",
@@ -1307,12 +889,12 @@
   }, {
     "range" : "34",
     "domain" : "33",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "72"
   }, {
     "range" : "9",
     "domain" : "33",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "73"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasOperationCosts",
@@ -1352,14 +934,14 @@
     "label" : {
       "IRI-based" : "hasWLC"
     },
-    "superproperty" : [ "27" ],
+    "superproperty" : [ "28" ],
     "domain" : "12",
     "attributes" : [ "object" ],
-    "id" : "28"
+    "id" : "29"
   }, {
     "range" : "50",
     "domain" : "49",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "78"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasConstructionCosts",
@@ -1375,12 +957,12 @@
   }, {
     "range" : "12",
     "domain" : "50",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "80"
   }, {
     "range" : "5",
     "domain" : "44",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "81"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasStart",
@@ -1394,8 +976,8 @@
     "id" : "82"
   }, {
     "range" : "21",
-    "domain" : "29",
-    "attributes" : [ "anonymous", "object" ],
+    "domain" : "27",
+    "attributes" : [ "object", "anonymous" ],
     "id" : "83"
   }, {
     "iri" : "http://www.semanticweb.org/adamy/ontologies/2025/WLCONTO#hasCosts",
@@ -1411,7 +993,7 @@
   }, {
     "range" : "21",
     "domain" : "76",
-    "attributes" : [ "anonymous", "object" ],
+    "attributes" : [ "object", "anonymous" ],
     "id" : "84"
   } ]
 }
