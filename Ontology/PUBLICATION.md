@@ -23,6 +23,7 @@ java -jar widoco.jar \
   -rewriteBase /WLC-PLATFORM-ETS/
 
 cp docs/index-en.html docs/index.html
+git add -f docs/webvowl/data/*.json docs/.nojekyll
 ```
 
 ## Activer GitHub Pages
