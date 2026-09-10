@@ -99,6 +99,7 @@ start_app*.sh
 # IDE et éditeurs
 .vscode/
 .idea/
+.cursor/
 *.sublime-project
 *.sublime-workspace
 .project
